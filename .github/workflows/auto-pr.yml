@@ -1,0 +1,42 @@
+name: Criar PR Automática
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - develop
+
+jobs:
+  criar-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Criar ou atualizar Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Verifica se já existe uma PR aberta pra essa branch
+          PR_EXISTENTE=$(gh pr list --head "${{ github.ref_name }}" --base develop --state open --json number --jq '.[0].number')
+
+          if [ -n "$PR_EXISTENTE" ]; then
+            echo "✅ PR #$PR_EXISTENTE já existe para essa branch. Nada a fazer."
+          else
+            echo "📝 Criando PR para ${{ github.ref_name }} → develop..."
+            gh pr create \
+              --base develop \
+              --head "${{ github.ref_name }}" \
+              --title "🔀 Merge ${{ github.ref_name }} → develop" \
+              --body "PR criada automaticamente após push na branch \`${{ github.ref_name }}\`.
+
+          **Autor do push:** @${{ github.actor }}
+          **Branch:** \`${{ github.ref_name }}\`
+
+          ---
+          > Revise as mudanças e aprove o merge."
+          fi

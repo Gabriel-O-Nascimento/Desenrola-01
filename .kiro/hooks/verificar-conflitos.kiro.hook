@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "name": "Verificar Conflitos após Modificação",
+  "description": "Após qualquer escrita em arquivo, verifica se há marcadores de conflito no código e se existem conflitos potenciais com o repositório remoto. Se encontrar, avisa para resolver antes de continuar.",
+  "version": "1",
+  "when": {
+    "type": "postToolUse",
+    "toolTypes": [
+      "write"
+    ]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "bash .kiro/scripts/verificar-conflitos.sh",
+    "timeout": 30
+  }
+}

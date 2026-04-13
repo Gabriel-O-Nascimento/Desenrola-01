@@ -1,0 +1,36 @@
+# Arquivo de configuração do Docker para o Projeto Integrador
+# Este arquivo sobe os serviços necessários para o backend (Banco de Dados e Mensageria)
+
+version: '3.8'
+
+services:
+  # Serviço de Mensageria (Obrigatório para o projeto)
+  servidor-mensageria:
+    image: rabbitmq:3-management
+    container_name: projeto_rabbitmq
+    ports:
+      - "5672:5672"   # Porta para o código se conectar (AMQP)
+      - "15672:15672" # Porta para o painel administrativo no navegador
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin123
+    volumes:
+      - dados_rabbitmq:/var/lib/rabbitmq
+
+  # Serviço de Banco de Dados
+  banco-dados:
+    image: postgres:15
+    container_name: projeto_postgres
+    ports:
+      - "5432:5432"   # Porta padrão do PostgreSQL
+    environment:
+      POSTGRES_DB: projeto_db
+      POSTGRES_USER: usuario_projeto
+      POSTGRES_PASSWORD: senha_projeto
+    volumes:
+      - dados_postgres:/var/lib/postgresql/data
+
+# Volumes garantem que os dados não sejam perdidos ao desligar o Docker
+volumes:
+  dados_rabbitmq:
+  dados_postgres:
