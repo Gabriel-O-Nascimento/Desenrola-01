@@ -18,22 +18,7 @@ O plano cobre testes em todas as camadas do sistema:
 
 ## 2. Estratégia de Testes
 
-### 2.1 Pirâmide de Testes
-
-```
-           /\
-          /  \
-         / E2E \          ← Poucos testes (10%)
-        /--------\
-       /          \
-      / Integração \      ← Testes moderados (30%)
-     /--------------\
-    /                \
-   /   Unitários      \   ← Muitos testes (60%)
-  /____________________\
-```
-
-### 2.2 Tipos de Testes
+### 2.1 Tipos de Testes
 
 | Tipo | Objetivo | Ferramentas | Cobertura Alvo |
 |------|----------|-------------|----------------|
@@ -254,12 +239,12 @@ O plano cobre testes em todas as camadas do sistema:
 
 ## 6. Cronograma de Testes
 
-### Fase N1 (até 08/04/2026)
+### Fase N1 
 - [x] Definir plano de testes
 - [ ] Configurar ambiente de testes
 - [ ] Criar estrutura de testes unitários
 
-### Fase N2 (até 22/05/2026)
+### Fase N2 
 - [ ] Implementar testes unitários (80% cobertura)
 - [ ] Implementar testes de integração
 - [ ] Implementar testes E2E dos fluxos críticos

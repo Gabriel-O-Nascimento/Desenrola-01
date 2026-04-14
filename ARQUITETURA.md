@@ -1,4 +1,4 @@
-# 🏗️ Por que Arquitetura em Camadas?
+# Por que Arquitetura em Camadas?
 
 ## O que é
 

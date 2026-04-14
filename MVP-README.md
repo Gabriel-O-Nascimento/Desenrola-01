@@ -51,9 +51,6 @@ Você verá:
 ```
 🚀 Desenrola Backend iniciado em http://localhost:8080
 ```
-
-**Deixe este terminal aberto!** É aqui que você verá as mensagens sendo processadas.
-
 ---
 
 ### Passo 3: Abrir o Frontend
