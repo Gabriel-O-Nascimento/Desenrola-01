@@ -2,9 +2,11 @@
 
 Solução distribuída com **Arquitetura em Camadas** e **Mensageria Assíncrona** (RabbitMQ).
 
+**Repositório:** [https://github.com/Gabriel-O-Nascimento/Desenrola-01](https://github.com/Gabriel-O-Nascimento/Desenrola-01)
+
 > Para entender por que escolhemos essa arquitetura, leia o [ARQUITETURA.md](ARQUITETURA.md).
 
-## 👥 Equipe e Responsabilidades
+## Equipe e Responsabilidades
 
 | Pasta | Integrante | Responsabilidade |
 |-------|-----------|-----------------|
