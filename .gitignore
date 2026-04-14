@@ -1,6 +1,11 @@
 # macOS
 .DS_Store
 
+# Arquivos internos do grupo (NÃO COMMITAR)
+GUIA-INTERNO-GRUPO.md
+*INTERNO*.md
+*RASCUNHO*.md
+
 # Logs
 logs
 *.log

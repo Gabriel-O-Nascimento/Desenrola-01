@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desenrola - MVP N1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .status.loading {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .test-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .log {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        
+        .log-entry {
+            margin: 5px 0;
+        }
+        
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><span class="emoji">🚀</span>Desenrola</h1>
+        <p class="subtitle">MVP - Demonstração da Arquitetura (N1)</p>
+        
+        <div id="status" class="status loading">
+            Verificando conexão com o backend...
+        </div>
+        
+        <div class="test-section">
+            <h2>🔌 Teste 1: Conexão com Backend</h2>
+            <button onclick="testarConexao()">Testar Conexão</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>📨 Teste 2: Mensageria (RabbitMQ)</h2>
+            <input type="text" id="mensagem" placeholder="Digite uma mensagem para enviar..." value="Olá do Frontend!">
+            <button onclick="testarMensageria()">Enviar para Fila RabbitMQ</button>
+            
+            <div class="log" id="log">
+                <div class="log-entry">📋 Aguardando ações...</div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>ℹ️ Informações da Arquitetura</h2>
+            <p><strong>Frontend:</strong> HTML + JavaScript (este arquivo)</p>
+            <p><strong>Backend:</strong> Spring Boot (porta 8080)</p>
+            <p><strong>Mensageria:</strong> RabbitMQ (porta 5672)</p>
+            <p><strong>Banco:</strong> PostgreSQL (porta 5432)</p>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'http://localhost:8080/api';
+        
+        // Testa conexão ao carregar a página
+        window.onload = function() {
+            testarConexao();
+        };
+        
+        function addLog(message) {
+            const log = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            const timestamp = new Date().toLocaleTimeString();
+            entry.textContent = `[${timestamp}] ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+        
+        function setStatus(message, type) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+        
+        async function testarConexao() {
+            setStatus('Testando conexão...', 'loading');
+            addLog('🔄 Testando conexão com backend...');
+            
+            try {
+                const response = await fetch(`${API_URL}/health`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    setStatus('✅ Backend conectado com sucesso!', 'success');
+                    addLog('✅ Backend respondeu: ' + data.message);
+                } else {
+                    throw new Error('Resposta inválida');
+                }
+            } catch (error) {
+                setStatus('❌ Erro ao conectar com backend. Verifique se está rodando.', 'error');
+                addLog('❌ Erro: ' + error.message);
+                addLog('💡 Dica: Execute "docker compose up -d" e "mvn spring-boot:run"');
+            }
+        }
+        
+        async function testarMensageria() {
+            const mensagem = document.getElementById('mensagem').value;
+            
+            if (!mensagem.trim()) {
+                alert('Digite uma mensagem primeiro!');
+                return;
+            }
+            
+            addLog('📤 Enviando mensagem para backend...');
+            
+            try {
+                const response = await fetch(`${API_URL}/teste-mensageria`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ mensagem: mensagem })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    addLog('✅ Backend recebeu a mensagem');
+                    addLog('📨 Mensagem enviada para RabbitMQ: "' + mensagem + '"');
+                    addLog('🔄 Worker está processando a mensagem...');
+                    addLog('💡 Verifique o console do backend para ver o worker em ação!');
+                    setStatus('✅ Mensageria funcionando! Verifique o console do backend.', 'success');
+                } else {
+                    throw new Error('Erro ao enviar mensagem');
+                }
+            } catch (error) {
+                addLog('❌ Erro: ' + error.message);
+                setStatus('❌ Erro ao testar mensageria', 'error');
+            }
+        }
+    </script>
+</body>
+</html>
