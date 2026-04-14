@@ -1,4 +1,4 @@
-# 🚀 MVP - Desenrola (N1)
+# MVP - Desenrola (N1)
 
 ## O que é este MVP?
 
@@ -11,7 +11,7 @@ Este é um **Minimum Viable Product (Produto Mínimo Viável)** que demonstra a 
 
 ---
 
-## 📋 Pré-requisitos
+## Pré-requisitos
 
 Antes de rodar, você precisa ter instalado:
 
@@ -21,7 +21,7 @@ Antes de rodar, você precisa ter instalado:
 
 ---
 
-## 🏃 Como Rodar
+## Como Rodar
 
 ### Passo 1: Subir a Infraestrutura (Docker)
 
@@ -35,8 +35,6 @@ Isso vai subir:
 - PostgreSQL (banco de dados)
 - RabbitMQ (mensageria)
 
-**Aguarde 30 segundos** para os serviços iniciarem completamente.
-
 ---
 
 ### Passo 2: Rodar o Backend
@@ -49,7 +47,7 @@ mvn spring-boot:run
 
 Você verá:
 ```
-🚀 Desenrola Backend iniciado em http://localhost:8080
+ Desenrola Backend iniciado em http://localhost:8080
 ```
 ---
 
@@ -68,12 +66,12 @@ Abra o arquivo `frontend/index.html` no navegador:
 
 ---
 
-## 🧪 Testando a Arquitetura
+## Testando a Arquitetura
 
 ### Teste 1: Conexão com Backend
 
 1. Clique no botão **"Testar Conexão"**
-2. Você deve ver: ✅ Backend conectado com sucesso!
+2. Você deve ver: Backend conectado com sucesso!
 
 ### Teste 2: Mensageria (RabbitMQ)
 
@@ -82,14 +80,14 @@ Abra o arquivo `frontend/index.html` no navegador:
 3. Observe o log no frontend
 4. **Olhe o terminal do backend** - você verá:
    ```
-   📤 Enviando mensagem para RabbitMQ: Olá do Frontend!
-   📥 Worker recebeu mensagem: Olá do Frontend!
-   ✅ Mensagem processada com sucesso!
+   Enviando mensagem para RabbitMQ: Olá do Frontend!
+   Worker recebeu mensagem: Olá do Frontend!
+   Mensagem processada com sucesso!
    ```
 
 ---
 
-## 🎯 O que está sendo demonstrado?
+## O que está sendo demonstrado?
 
 ### Fluxo Completo:
 
@@ -120,7 +118,7 @@ Abra o arquivo `frontend/index.html` no navegador:
 
 ---
 
-## 🔍 Verificando os Serviços
+## Verificando os Serviços
 
 ### RabbitMQ Management
 
@@ -145,7 +143,7 @@ Conecte usando qualquer cliente SQL:
 
 ---
 
-## 📁 Estrutura do MVP
+## Estrutura do MVP
 
 ```
 Desenrola-01/
@@ -168,7 +166,7 @@ Desenrola-01/
 
 ---
 
-## 🐛 Problemas Comuns
+## Problemas Comuns
 
 ### Backend não inicia
 
@@ -193,7 +191,6 @@ lsof -ti:8080 | xargs kill -9
 **Solução**: Verifique se o Docker está rodando
 ```bash
 docker ps
-# Deve mostrar rabbitmq e postgres rodando
 ```
 
 Se não estiver:
@@ -212,35 +209,18 @@ docker compose up -d
 2. Limpe o cache do navegador (Ctrl+Shift+Delete)
 3. Tente outro navegador
 
----
+## Conceitos Demonstrados
 
-## 📊 Para a Apresentação N1
-
-Na apresentação, mostre:
-
-1. **Frontend funcionando** (interface bonita)
-2. **Teste de conexão** (backend respondendo)
-3. **Teste de mensageria** (enviar mensagem)
-4. **Console do backend** (worker processando)
-5. **RabbitMQ Management** (fila funcionando)
-
-Fale:
-> "Implementamos um MVP que demonstra nossa arquitetura em camadas funcionando. O frontend se comunica com o backend via API REST, o backend publica mensagens no RabbitMQ de forma assíncrona, e um worker consome essas mensagens. Isso atende o requisito de mensageria obrigatória do projeto."
+✅ **Arquitetura em Camadas** 
+✅ **API REST**   
+✅ **Mensageria Assíncrona**  
+✅ **Padrão Repository**  
+✅ **Dependency Injection**  
+✅ **Containerização** 
 
 ---
 
-## 🎓 Conceitos Demonstrados
-
-✅ **Arquitetura em Camadas** (Frontend → Controlador → Serviço → Mensageria)  
-✅ **API REST** (HTTP endpoints)  
-✅ **Mensageria Assíncrona** (RabbitMQ)  
-✅ **Padrão Repository** (preparado para N2)  
-✅ **Dependency Injection** (Spring Boot)  
-✅ **Containerização** (Docker)  
-
----
-
-## 🚀 Próximos Passos (N2)
+## Próximos Passos (N2)
 
 Este MVP é só o começo! Na N2 vocês vão:
 
@@ -253,7 +233,7 @@ Este MVP é só o começo! Na N2 vocês vão:
 
 ---
 
-## 📞 Ajuda
+## Ajuda
 
 Se algo não funcionar:
 
@@ -262,7 +242,3 @@ Se algo não funcionar:
 3. Verifique se Maven está instalado (`mvn -version`)
 4. Leia as mensagens de erro no console
 5. Consulte este README novamente
-
----
-
-**Boa sorte na apresentação! 🎉**
