@@ -1,29 +1,35 @@
-# 📘 Guia Mestre — Projeto Integrador ADS 2026/1
+# Guia — Projeto Integrador ADS 2026/1
 _____________________________________________________________________________
 
-## 📋 Resumo Executivo
+## Resumo
 
 | Informação | Detalhe |
-| **Tema Atual** | **Livre** (Aguardando definição) |
-| **Arquitetura** | Em Camadas (Layered Architecture) |
-| **Tecnologia Chave** | Mensageria Assíncrona (RabbitMQ/Kafka) |
+| **Nome do Projeto** | Desenrola
+
+| **Tema** | Plataforma de conexão entre clientes e profissionais autônomos
+
+| **Integrantes do Grupo** | Matheus Oliveira Mitter, Gabriel de Oliveira Nascimento, Huan Cláudio Souza Viana e Felipe Milhomem Rocha
+
+| **Descrição da Proposta do Sistema**| O Desenrola é uma plataforma que conecta clientes a profissionais autônomos, permitindo que os usuários encontrem serviços de qualidade e que os profissionais divulguem seus trabalhos. A plataforma conta com um sistema de avaliações, um sistema de mensagens e um sistema de agendamento de serviços
+
+| **Arquitetura** | Em Camadas (Layered Architecture)
+
+| **Tecnologia Chave** | Mensageria Assíncrona (RabbitMQ/Kafka)
 
 _____________________________________________________________________________
 
-## 🚀 Divisão de Entrega e Prazos
+## Divisão de Entrega 
 
-### 🗓️ ETAPA N1: Fundação e Design
-**Prazo Final:** 14/04/2026
+### ETAPA N1: Fundação e Design
 
 - [ ] **Modelagem de Software:** Diagramas C4 (Níveis 1 e 2) e Diagrama de Classes.
-- [ ] **Interface (UI):** Protótipo de alta fidelidade no Figma + Design System.
+- [ ] **Interface (UI):** Protótipo de média/ alta fidelidade no Figma + Design System.
 - [ ] **Documentação:** Plano de testes e requisitos não-funcionais.
 - [ ] **Ambiente:** Repo Git organizado e infraestrutura base via Docker.
 
 _____________________________________________________________________________
 
-### 🗓️ ETAPA N2: Produto Funcional
-**Prazo Final:** 22/05/2026
+### ETAPA N2: Produto Funcional
 
 - [ ] **Fluxo Assíncrono:** Cadastro → Fila → Worker → WebSocket → Tela atualizada.
 - [ ] **Código Limpo:** Uso de Injeção de Dependência e Padrões de Projeto.
@@ -31,12 +37,9 @@ _____________________________________________________________________________
 
 _____________________________________________________________________________
 
-## ⚖️ Critérios de Avaliação
-
-### Distribuição da Pontuação:
+## Critérios de Avaliação
 
 | Critério | O que a banca busca? |
-| :--- | :---: | :---: | :--- |
 | **Arquitetura/Técnica** | Desacoplamento e uso de mensageria. |
 | **Qualidade/Código** | Design Patterns e Clean Code. |
 | **Interface/UI** | Fidelidade ao Figma e usabilidade. |
@@ -45,9 +48,8 @@ _____________________________________________________________________________
 
 _____________________________________________________________________________
 
-## 🏗️ Pilares da Solução Distribuída
+## Pilares da Solução Distribuída
 
-> [!IMPORTANT]
 > **Não será aceito um "CRUD simples"**. O diferencial do semestre é a **reatividade assíncrona**.
 
 1. **Mensageria:** Toda ação pesada ou atualização de status deve passar por uma fila (Broker).
@@ -56,9 +58,7 @@ _____________________________________________________________________________
 
 _____________________________________________________________________________
 
-
-2. **Mock-up Figma:** Começar a desenhar a jornada do Cliente e do Admin.
-## 📋 Divisão de Tarefas Sugerida
+## Divisão de Tarefas Sugerida
 
 | Quem | Responsabilidade Principal | Foco em Pastas |
 | **Integrante 1** | **Backend Principal + API** | `src/controladores/` |
@@ -67,5 +67,3 @@ _____________________________________________________________________________
 | **Integrante 4** | **Frontend + Real-time (WebSocket)** | `src/frontend/` |
 
 _____________________________________________________________________________
-
-> 📌 *Dica: Cada integrante cuida de uma camada diferente da arquitetura, minimizando conflitos de código. Veja o [ARQUITETURA.md](ARQUITETURA.md) para entender como as camadas se conectam.*

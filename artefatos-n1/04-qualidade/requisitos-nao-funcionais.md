@@ -1,4 +1,4 @@
-# 📋 Requisitos Não-Funcionais - Desenrola
+# Requisitos Não-Funcionais - Desenrola
 
 ## 1. Introdução
 
@@ -290,22 +290,22 @@ Os Requisitos Não-Funcionais (RNFs) definem as características de qualidade do
 ## 14. Priorização dos RNFs
 
 ### Críticos (Obrigatórios para N2)
-- ✅ Performance (tempo de resposta)
-- ✅ Segurança (autenticação, HTTPS)
-- ✅ Disponibilidade (uptime 99%)
-- ✅ Usabilidade (responsividade)
+- Performance (tempo de resposta)
+- Segurança (autenticação, HTTPS)
+- Disponibilidade
+- Usabilidade
 
 ### Importantes (Desejáveis para N2)
-- ⚠️ Escalabilidade horizontal
-- ⚠️ Monitoramento básico
-- ⚠️ Logs estruturados
-- ⚠️ Cobertura de testes 75%
+- Escalabilidade horizontal
+- Monitoramento básico
+- Logs estruturados
+- Cobertura de testes 75%
 
 ### Opcionais (Futuro)
-- 🔮 2FA
-- 🔮 Internacionalização
-- 🔮 Webhooks
-- 🔮 Nota Fiscal Eletrônica
+- 2FA
+- Internacionalização
+- Webhooks
+- Nota Fiscal Eletrônica
 
 ---
 
@@ -325,9 +325,7 @@ Os Requisitos Não-Funcionais (RNFs) definem as características de qualidade do
 ## 16. Conclusão
 
 Estes requisitos não-funcionais garantem que o sistema Desenrola não apenas funcione corretamente, mas também seja:
-- **Rápido** e responsivo
-- **Seguro** e confiável
-- **Escalável** e sustentável
-- **Fácil** de usar e manter
-
-O cumprimento destes RNFs é essencial para o sucesso do projeto e satisfação dos usuários.
+- Rápido e responsivo
+- Seguro e confiável
+- Escalável e sustentável
+- Fácil de usar e manter

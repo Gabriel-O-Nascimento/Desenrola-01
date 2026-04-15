@@ -1,8 +1,8 @@
-# 🎨 Guia de Estilos (Design System)
+# Guia de Estilos (Design System)
 
 Este documento contém a referência visual e de usabilidade para as interfaces do projeto Desenrola, extraídos do Figma da equipe.
 
-## ✨ Paleta de Cores
+## Paleta de Cores
 
 As cores abaixo definem a identidade visual da plataforma, variando entre tons vibrantes para chamadas de ação e escalas de cinza para fundos e textos.
 
@@ -17,7 +17,7 @@ As cores abaixo definem a identidade visual da plataforma, variando entre tons v
 - **Cinza Claro 2 (Fundos de Seção):** `#F5F5F5`
 - **Branco (Superfícies / Cards):** `#FFFFFF`
 
-## 🔤 Tipografia
+## Tipografia
 
 A família tipográfica utilizada na interface é a **Inter (Sans Serif)**.
 - **Tamanho Base (Base Value):** `16px`

@@ -17,7 +17,7 @@ Solução distribuída com **Arquitetura em Camadas** e **Mensageria Assíncrona
 
 > Cada pasta tem um `INSTRUCOES.md` com tudo que precisa ser feito.
 
-## 🏗️ Como as camadas se conectam
+## Como as camadas se conectam
 
 ```
 ┌─────────────────────┐
@@ -37,7 +37,7 @@ Solução distribuída com **Arquitetura em Camadas** e **Mensageria Assíncrona
 └─────────────────────┘
 ```
 
-## 🚀 Como preparar o ambiente
+## Como preparar o ambiente
 
 Todos devem ter o **Docker Desktop** instalado.
 

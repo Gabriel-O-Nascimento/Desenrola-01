@@ -1,4 +1,4 @@
-# 🧪 Plano de Testes - Desenrola
+# Plano de Testes - Desenrola
 
 ## 1. Introdução
 

@@ -62,13 +62,3 @@ Repositórios  → conhece o Banco de Dados
 ```
 
 Nunca o contrário. Um repositório nunca chama um controlador. Um serviço nunca chama um controlador.
-
-## Comparação com Hexagonal
-
-| Aspecto | Hexagonal | Camadas |
-|---------|-----------|---------|
-| Complexidade | Alta (portas, adaptadores, interfaces) | Baixa (3-4 camadas diretas) |
-| Curva de aprendizado | Íngreme | Suave |
-| Ideal para | Sistemas grandes e de longo prazo | Projetos acadêmicos e MVPs |
-| Testabilidade | Excelente | Boa |
-| Documentação disponível | Moderada | Abundante |
