@@ -8,7 +8,7 @@ O Diagrama de Contexto mostra o sistema Desenrola no centro, rodeado por seus us
 
 > **Visualize a Imagem Original abaixo:**
 
-![Diagrama de Contexto C4 - Nível 1](./diagrama-c4-contexto.png)
+![Diagrama de Contexto C4 - Nível 1](./imagens-c4model/diagrama-c4-contexto.png)
 
 ---
 
@@ -18,7 +18,7 @@ O Diagrama de Container dá um "zoom" no sistema Desenrola, mostrando os contain
 
 > **Visualize a Imagem Original abaixo:**
 
-![Diagrama de Container C4 - Nível 2](./diagrama-c4-container.png)
+![Diagrama de Container C4 - Nível 2](./imagens-c4model/diagrama-c4-container.png)
 
 ---
 
