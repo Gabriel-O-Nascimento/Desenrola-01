@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Serviços - Desenrola</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="servicos-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">D</div>
+                    <span class="logo-text">Desenrola</span>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="servicos.html" class="nav-link active">Serviços</a>
+                    <a href="#profissionais" class="nav-link">Profissionais</a>
+                    <a href="#como-funciona" class="nav-link">Como Funciona</a>
+                </nav>
+                <div class="header-actions">
+                    <button class="btn-icon">
+                        <span class="icon-user">👤</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Serviços Section -->
+    <section class="servicos-section">
+        <div class="container">
+            <div class="servicos-header">
+                <h1>Meus Serviços</h1>
+            </div>
+
+            <!-- Filtros -->
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="todos">Todos</button>
+                <button class="filter-tab" data-filter="aguardando">Aguardando orçamento</button>
+                <button class="filter-tab" data-filter="andamento">Em andamento</button>
+            </div>
+
+            <!-- Lista de Serviços -->
+            <div class="servicos-list">
+                <!-- Serviço 1 - Aguardando Orçamento -->
+                <div class="servico-card" data-status="aguardando">
+                    <div class="servico-header">
+                        <h3 class="servico-title">Conserto de vazamento</h3>
+                        <span class="badge badge-warning">Aguardando orçamento</span>
+                    </div>
+                    <div class="servico-info">
+                        <div class="info-item">
+                            <span class="info-icon">👤</span>
+                            <span class="info-text">Profissional: <strong>Marcus Antonio</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📅</span>
+                            <span class="info-text">Data: <strong>02/04/2026</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🕐</span>
+                            <span class="info-text">Horário: <strong>12:03</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            <span class="info-text">Rua das Flores, 123 - Centro</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">💰</span>
+                            <span class="info-text">Valor estimado: <strong class="price">R$ 80,00</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🔧</span>
+                            <span class="info-text">Categoria: <strong>Hidráulica</strong></span>
+                        </div>
+                    </div>
+                    <div class="servico-actions">
+                        <button class="btn-outline">Ver Orçamento</button>
+                        <button class="btn-secondary">
+                            <span class="icon">💬</span>
+                            Mensagem
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Serviço 2 - Em Andamento -->
+                <div class="servico-card" data-status="andamento">
+                    <div class="servico-header">
+                        <h3 class="servico-title">Instalação de tomada</h3>
+                        <span class="badge badge-info">Em andamento</span>
+                    </div>
+                    <div class="servico-info">
+                        <div class="info-item">
+                            <span class="info-icon">👤</span>
+                            <span class="info-text">Profissional: <strong>João Silva</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📅</span>
+                            <span class="info-text">Data: <strong>01/04/2026</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🕐</span>
+                            <span class="info-text">Horário: <strong>14:51</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            <span class="info-text">Rua das Flores, 123 - Centro</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">💰</span>
+                            <span class="info-text">Valor estimado: <strong class="price">R$ 80,00</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🔧</span>
+                            <span class="info-text">Categoria: <strong>Elétrica</strong></span>
+                        </div>
+                    </div>
+                    <div class="servico-actions">
+                        <button class="btn-outline">Ver acompanhamento</button>
+                        <button class="btn-secondary">
+                            <span class="icon">💬</span>
+                            Mensagem
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Serviço 3 - Aprovado -->
+                <div class="servico-card" data-status="andamento">
+                    <div class="servico-header">
+                        <h3 class="servico-title">Instalação de ar-condicionado</h3>
+                        <span class="badge badge-success">Aprovado</span>
+                    </div>
+                    <div class="servico-info">
+                        <div class="info-item">
+                            <span class="info-icon">👤</span>
+                            <span class="info-text">Profissional: <strong>Carlos Mendes</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📅</span>
+                            <span class="info-text">Data: <strong>29/03/2026</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🕐</span>
+                            <span class="info-text">Horário: <strong>20:30</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            <span class="info-text">Rua das Flores, 123 - Centro</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">💰</span>
+                            <span class="info-text">Valor estimado: <strong class="price">R$ 200,00</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🔧</span>
+                            <span class="info-text">Categoria: <strong>Climatização</strong></span>
+                        </div>
+                    </div>
+                    <div class="servico-actions">
+                        <button class="btn-outline">Ver acompanhamento</button>
+                        <button class="btn-secondary">
+                            <span class="icon">💬</span>
+                            Mensagem
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Serviço 4 - Concluído -->
+                <div class="servico-card" data-status="concluido">
+                    <div class="servico-header">
+                        <h3 class="servico-title">Manutenção elétrica</h3>
+                        <span class="badge badge-completed">Concluído</span>
+                    </div>
+                    <div class="servico-info">
+                        <div class="info-item">
+                            <span class="info-icon">👤</span>
+                            <span class="info-text">Profissional: <strong>João Silva</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📅</span>
+                            <span class="info-text">Data: <strong>15/12/2025</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🕐</span>
+                            <span class="info-text">Horário: <strong>08:00</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            <span class="info-text">Rua das Flores, 123 - Centro</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">💰</span>
+                            <span class="info-text">Valor estimado: <strong class="price">R$ 180,00</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🔧</span>
+                            <span class="info-text">Categoria: <strong>Elétrica</strong></span>
+                        </div>
+                    </div>
+                    <div class="servico-actions">
+                        <button class="btn-outline">Ver acompanhamento</button>
+                        <button class="btn-secondary">
+                            <span class="icon">💬</span>
+                            Mensagem
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Serviço 5 - Aguardando Orçamento -->
+                <div class="servico-card" data-status="aguardando">
+                    <div class="servico-header">
+                        <h3 class="servico-title">Pintura de parede</h3>
+                        <span class="badge badge-warning">Aguardando orçamento</span>
+                    </div>
+                    <div class="servico-info">
+                        <div class="info-item">
+                            <span class="info-icon">👤</span>
+                            <span class="info-text">Profissional: <strong>Ana Paula</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📅</span>
+                            <span class="info-text">Data: <strong>05/04/2026</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🕐</span>
+                            <span class="info-text">Horário: <strong>10:00</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            <span class="info-text">Av. Principal, 456 - Jardim</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">💰</span>
+                            <span class="info-text">Valor estimado: <strong class="price">R$ 450,00</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🔧</span>
+                            <span class="info-text">Categoria: <strong>Pintura</strong></span>
+                        </div>
+                    </div>
+                    <div class="servico-actions">
+                        <button class="btn-outline">Ver Orçamento</button>
+                        <button class="btn-secondary">
+                            <span class="icon">💬</span>
+                            Mensagem
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" style="display: none;">
+                <div class="empty-icon">📋</div>
+                <h3>Nenhum serviço encontrado</h3>
+                <p>Você ainda não possui serviços nesta categoria.</p>
+                <button class="btn-primary">Solicitar Novo Serviço</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <div class="logo-icon">D</div>
+                        <span class="logo-text">Desenrola</span>
+                    </div>
+                    <p>Conectando pessoas aos melhores profissionais</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Serviços</h4>
+                    <ul>
+                        <li><a href="#">Hidráulica</a></li>
+                        <li><a href="#">Elétrica</a></li>
+                        <li><a href="#">Climatização</a></li>
+                        <li><a href="#">Pintura</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Empresa</h4>
+                    <ul>
+                        <li><a href="#">Sobre Nós</a></li>
+                        <li><a href="#">Como Funciona</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Privacidade</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="#">Suporte</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">contato@desenrola.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Desenrola. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Filtro de serviços
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        const servicoCards = document.querySelectorAll('.servico-card');
+        const emptyState = document.querySelector('.empty-state');
+        const servicosList = document.querySelector('.servicos-list');
+
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const filter = tab.dataset.filter;
+                
+                // Atualizar tab ativo
+                filterTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Filtrar cards
+                let visibleCount = 0;
+                servicoCards.forEach(card => {
+                    const status = card.dataset.status;
+                    
+                    if (filter === 'todos') {
+                        card.style.display = 'block';
+                        visibleCount++;
+                    } else if (filter === status) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Mostrar/ocultar empty state
+                if (visibleCount === 0) {
+                    servicosList.style.display = 'none';
+                    emptyState.style.display = 'flex';
+                } else {
+                    servicosList.style.display = 'grid';
+                    emptyState.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

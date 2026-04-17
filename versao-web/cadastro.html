@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Desenrola</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cadastro-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">D</div>
+                    <span class="logo-text">Desenrola</span>
+                </div>
+                <div class="header-actions">
+                    <a href="index.html" class="btn-secondary">Voltar</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cadastro Section -->
+    <section class="cadastro-section">
+        <div class="container">
+            <div class="cadastro-container">
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab active" data-tab="usuario">Cadastro de Usuário</button>
+                    <button class="tab" data-tab="profissional">Cadastro de Profissional</button>
+                </div>
+
+                <!-- Formulário de Usuário -->
+                <div class="tab-content active" id="usuario">
+                    <div class="form-header">
+                        <div class="logo-icon-large">D</div>
+                        <h2>Desenrola</h2>
+                        <p>Entrar na sua conta</p>
+                    </div>
+
+                    <form class="cadastro-form">
+                        <div class="form-group">
+                            <label for="email-usuario">E-mail *</label>
+                            <input type="email" id="email-usuario" placeholder="seu.email@exemplo.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="senha-usuario">Senha *</label>
+                            <input type="password" id="senha-usuario" placeholder="Digite sua senha" required>
+                        </div>
+
+                        <button type="submit" class="btn-primary btn-block btn-large">Entrar</button>
+
+                        <div class="divider">
+                            <span>ou</span>
+                        </div>
+
+                        <button type="button" class="btn-social btn-google">
+                            <span class="social-icon">G</span>
+                            Entrar com Google
+                        </button>
+
+                        <button type="button" class="btn-social btn-apple">
+                            <span class="social-icon">🍎</span>
+                            Entrar com Apple
+                        </button>
+
+                        <p class="form-footer">
+                            Não tem uma conta? <a href="#" class="link-primary">Cadastre-se</a>
+                        </p>
+
+                        <p class="terms-text">
+                            Ao continuar, você concorda com nossos <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a>
+                        </p>
+                    </form>
+                </div>
+
+                <!-- Formulário de Profissional -->
+                <div class="tab-content" id="profissional">
+                    <div class="form-header">
+                        <div class="logo-icon-large">D</div>
+                        <h2>Seja um Desenrolado!</h2>
+                        <p>Cadastre-se como profissional e comece a oferecer seus serviços na plataforma. Conecte-se com clientes que precisam do seu trabalho!</p>
+                    </div>
+
+                    <form class="cadastro-form">
+                        <h3 class="section-subtitle">📋 Dados Pessoais</h3>
+                        
+                        <div class="form-group">
+                            <label for="nome-completo">Nome Completo *</label>
+                            <input type="text" id="nome-completo" placeholder="Digite o nome da sua empresa" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email-profissional">E-mail *</label>
+                            <input type="email" id="email-profissional" placeholder="seu.email@exemplo.com" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="telefone">Telefone / WhatsApp *</label>
+                                <input type="tel" id="telefone" placeholder="(00) 00000-0000" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Tipo de Documento *</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="tipo-doc" value="cpf" checked>
+                                        <span>CPF</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="tipo-doc" value="cnpj">
+                                        <span>CNPJ</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="documento">CPF / CNPJ *</label>
+                            <input type="text" id="documento" placeholder="000.000.000-00" required>
+                        </div>
+
+                        <h3 class="section-subtitle">📍 Localização</h3>
+
+                        <div class="form-group">
+                            <label for="cep">CEP *</label>
+                            <input type="text" id="cep" placeholder="00000-000" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cidade">Cidade *</label>
+                                <input type="text" id="cidade" placeholder="Ex: São Paulo" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="estado">Estado *</label>
+                                <select id="estado" required>
+                                    <option value="">Selecione</option>
+                                    <option value="SP">São Paulo</option>
+                                    <option value="RJ">Rio de Janeiro</option>
+                                    <option value="MG">Minas Gerais</option>
+                                    <!-- Outros estados -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <h3 class="section-subtitle">🔧 Informações do Serviço</h3>
+
+                        <div class="form-group">
+                            <label for="categoria">Categoria Principal *</label>
+                            <select id="categoria" required>
+                                <option value="">Selecione uma categoria</option>
+                                <option value="hidraulica">Hidráulica</option>
+                                <option value="eletrica">Elétrica</option>
+                                <option value="climatizacao">Climatização</option>
+                                <option value="pintura">Pintura</option>
+                                <option value="construcao">Construção</option>
+                                <option value="jardinagem">Jardinagem</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descricao">Sobre o Profissional *</label>
+                            <textarea id="descricao" rows="4" placeholder="Descreva sua experiência, especialidades e diferenciais..." required></textarea>
+                            <small class="form-hint">Mínimo 50 caracteres</small>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" required>
+                                <span>Li e aceito os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a></span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn-primary btn-block btn-large">Criar Conta Profissional</button>
+
+                        <p class="form-footer">
+                            Já tem uma conta? <a href="#" class="link-primary">Entrar</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Tab switching
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.dataset.tab;
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(tc => tc.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+            });
+        });
+
+        // CEP auto-fill (simulação)
+        document.getElementById('cep')?.addEventListener('blur', function(e) {
+            const cep = e.target.value.replace(/\D/g, '');
+            if (cep.length === 8) {
+                // Simulação de busca de CEP
+                console.log('Buscando CEP:', cep);
+            }
+        });
+    </script>
+</body>
+</html>

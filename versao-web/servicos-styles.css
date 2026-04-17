@@ -1,0 +1,262 @@
+/* Serviços Styles */
+.servicos-section {
+    min-height: calc(100vh - 80px);
+    background-color: var(--gray-50);
+    padding: var(--spacing-2xl) 0;
+}
+
+.servicos-header {
+    margin-bottom: var(--spacing-xl);
+}
+
+.servicos-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--black);
+}
+
+/* Filtros */
+.filter-tabs {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-2xl);
+    overflow-x: auto;
+    padding-bottom: var(--spacing-sm);
+}
+
+.filter-tab {
+    padding: 0.625rem 1.5rem;
+    border-radius: var(--radius-full);
+    background-color: var(--white);
+    border: 1px solid var(--gray-300);
+    color: var(--gray-700);
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.filter-tab:hover {
+    background-color: var(--gray-50);
+    border-color: var(--gray-400);
+}
+
+.filter-tab.active {
+    background-color: var(--primary-yellow);
+    border-color: var(--primary-yellow);
+    color: var(--black);
+}
+
+/* Lista de Serviços */
+.servicos-list {
+    display: grid;
+    gap: var(--spacing-xl);
+}
+
+/* Card de Serviço */
+.servico-card {
+    background-color: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s;
+    border: 1px solid var(--gray-200);
+}
+
+.servico-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.servico-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-lg);
+    gap: var(--spacing-md);
+}
+
+.servico-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--black);
+    margin: 0;
+}
+
+/* Badges de Status */
+.badge-info {
+    background-color: #DBEAFE;
+    color: var(--info);
+    border: 1px solid var(--info);
+}
+
+.badge-completed {
+    background-color: #D1FAE5;
+    color: var(--success);
+    border: 1px solid var(--success);
+}
+
+/* Informações do Serviço */
+.servico-info {
+    display: grid;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--gray-600);
+    font-size: 0.875rem;
+}
+
+.info-icon {
+    font-size: 1.125rem;
+    flex-shrink: 0;
+}
+
+.info-text {
+    line-height: 1.5;
+}
+
+.info-text strong {
+    color: var(--gray-900);
+    font-weight: 600;
+}
+
+.price {
+    color: var(--primary-yellow-dark);
+}
+
+/* Ações do Serviço */
+.servico-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--gray-200);
+}
+
+.servico-actions .btn-outline,
+.servico-actions .btn-secondary {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+.servico-actions .icon {
+    font-size: 1.125rem;
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-3xl) var(--spacing-xl);
+    text-align: center;
+    background-color: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: var(--spacing-sm);
+}
+
+.empty-state p {
+    color: var(--gray-600);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Button Icon */
+.btn-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background-color: var(--white);
+    border: 1px solid var(--gray-300);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-icon:hover {
+    background-color: var(--gray-50);
+    border-color: var(--gray-400);
+}
+
+.icon-user {
+    font-size: 1.25rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .servicos-section {
+        padding: var(--spacing-xl) 0;
+    }
+
+    .servicos-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .filter-tabs {
+        gap: var(--spacing-sm);
+    }
+
+    .filter-tab {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+
+    .servico-card {
+        padding: var(--spacing-lg);
+    }
+
+    .servico-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .servico-title {
+        font-size: 1.125rem;
+    }
+
+    .servico-actions {
+        flex-direction: column;
+    }
+
+    .servico-actions .btn-outline,
+    .servico-actions .btn-secondary {
+        width: 100%;
+    }
+
+    .info-item {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .servico-card {
+        padding: var(--spacing-md);
+    }
+
+    .servico-info {
+        gap: var(--spacing-sm);
+    }
+}

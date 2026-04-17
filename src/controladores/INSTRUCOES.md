@@ -1,18 +1,37 @@
-# 🌐 Camada de Controladores (API REST)
+# Camada de Controladores (API REST)
 
 > **Responsável:** Integrante 1
 > **Foco:** Receber requisições HTTP e devolver respostas
 
-## O que esta pasta precisa conter
+## Disciplinas Envolvidas
 
-- **Controladores:** Um arquivo por recurso (ex: `PedidoController`, `UsuarioController`). Recebem a requisição, validam os dados de entrada e chamam o serviço correto.
-- **Rotas:** Definição dos endpoints (GET, POST, PUT, DELETE).
-- **DTOs:** Objetos que definem o formato dos dados de entrada e saída da API.
-- **Validações:** Schemas de validação dos dados recebidos.
+- **Desenvolvimento de Software Web** - Implementação da API REST
+- **Design de Software** - Aplicação de Design Patterns (DTO, Dependency Injection)
+- **Qualidade de Software** - Testes de integração dos endpoints
 
-## Regra
+## O que você precisa criar
 
-Controladores não têm lógica de negócio. Eles apenas:
+### Controladores principais do Desenrola:
+- `SolicitacaoController` - Criar, listar e gerenciar solicitações de serviço
+- `ProfissionalController` - Buscar profissionais, ver perfil e avaliações
+- `ClienteController` - Gerenciar dados do cliente
+- `AvaliacaoController` - Criar e listar avaliações de serviços
+
+### Exemplos de endpoints:
+```
+POST   /api/solicitacoes          - Cliente cria solicitação
+GET    /api/solicitacoes/:id      - Ver detalhes da solicitação
+GET    /api/profissionais         - Buscar profissionais disponíveis
+POST   /api/avaliacoes            - Cliente avalia serviço
+```
+
+### Também precisa:
+- **DTOs:** Objetos que definem formato de entrada/saída (ex: `CriarSolicitacaoDTO`)
+- **Validações:** Verificar se dados estão corretos antes de processar
+
+## Regra importante
+
+Controladores **NÃO** têm lógica de negócio. Eles apenas:
 1. Recebem a requisição
 2. Validam os dados
 3. Chamam o serviço correspondente

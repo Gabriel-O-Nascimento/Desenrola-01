@@ -10,7 +10,7 @@ _____________________________________________________________________________
 
 | **Integrantes do Grupo** | Matheus Oliveira Mitter, Gabriel de Oliveira Nascimento, Huan Cláudio Souza Viana e Felipe Milhomem Rocha
 
-| **Descrição da Proposta do Sistema**| O Desenrola é uma plataforma que conecta clientes a profissionais autônomos, permitindo que os usuários encontrem serviços de qualidade e que os profissionais divulguem seus trabalhos. A plataforma conta com um sistema de avaliações, um sistema de mensagens e um sistema de agendamento de serviços
+| **Descrição da Proposta do Sistema**| O Desenrola é um aplicativo de intermediação de serviços que conecta clientes a profissionais qualificados. A proposta do app é facilitar a busca por especialistas capazes de resolver problemas do dia a dia que o cliente não consegue ou não tem tempo de resolver. Além de apresentar profissionais disponíveis, o Desenrola exibe avaliações de outros usuários, bem como fotos e vídeos de serviços realizados anteriormente, proporcionando mais segurança e confiança na escolha. O aplicativo também tem como objetivo apoiar os profissionais autônomos, ajudando-os a aumentar sua visibilidade e faturamento. Para isso, oferece ferramentas e informações que contribuem para o aprimoramento dos serviços prestados e para o crescimento profissional dos usuários da plataforma.
 
 | **Arquitetura** | Em Camadas (Layered Architecture)
 

@@ -136,5 +136,3 @@ artefatos-n1/
 - [Docker Compose](../docker-compose.yml)
 
 ---
-
-**Última atualização**: 15/04/2026

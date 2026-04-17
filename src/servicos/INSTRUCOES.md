@@ -1,29 +1,50 @@
-# ⚙️ Camada de Serviços (Regras de Negócio + Mensageria)
+# Camada de Serviços (Regras de Negócio + Mensageria)
 
 > **Responsável:** Integrante 2
-> **Foco:** Lógica de negócio, orquestração e comunicação assíncrona (RabbitMQ)
+> **Foco:** Lógica de negócio e comunicação assíncrona (RabbitMQ)
 
-## O que esta pasta precisa conter
+## Disciplinas Envolvidas
 
-- **Serviços:** Um arquivo por domínio (ex: `PedidoService`, `UsuarioService`). Contêm toda a lógica de negócio — validações de regra, cálculos, decisões.
-- **Publicadores:** Código que envia mensagens para as filas do RabbitMQ.
-- **Consumidores (Workers):** Código que escuta as filas e processa mensagens.
-- **Config de mensageria:** Setup de conexão, filas e exchanges do RabbitMQ.
+- **Mensageria e Streams** - Implementação do RabbitMQ (filas, workers, eventos)
+- **Design de Software** - Aplicação de Design Patterns (Strategy, Observer, Factory)
+- **Desenvolvimento de Software Web** - Lógica de negócio e orquestração
+- **Qualidade de Software** - Testes unitários dos serviços
 
-## Fluxo assíncrono
+## O que você precisa criar
 
+### Serviços principais do Desenrola:
+- `SolicitacaoService` - Criar solicitação, validar dados, publicar na fila
+- `NotificacaoService` - Enviar notificações para clientes e profissionais
+- `AvaliacaoService` - Processar avaliações e calcular média
+- `ChatService` - Gerenciar mensagens entre cliente e profissional
+
+### Workers (Consumidores de fila):
+- `NotificacaoProfissionalWorker` - Escuta fila e notifica profissionais quando há nova solicitação
+- `AtualizacaoStatusWorker` - Atualiza status da solicitação e notifica cliente
+
+### Eventos do RabbitMQ:
 ```
-Controlador chama Serviço
-    → Serviço executa regra de negócio
-    → Serviço publica mensagem na fila (RabbitMQ)
-    → Worker consome a mensagem
-    → Worker atualiza banco via Repositório
-    → Worker emite evento via WebSocket → Tela atualiza
+SolicitacaoCriadaEvent    → Notifica profissionais disponíveis
+SolicitacaoAceitaEvent    → Ativa chat entre cliente e profissional
+ServicoConcluidoEvent     → Solicita avaliação ao cliente
 ```
 
-## Regra
+## Fluxo assíncrono do Desenrola
+dis
+```
+Cliente cria solicitação
+    → SolicitacaoService valida e salva
+    → Publica "SolicitacaoCriadaEvent" na fila RabbitMQ
+    → NotificacaoProfissionalWorker consome mensagem
+    → Envia notificação para profissionais
+    → Profissional aceita
+    → Publica "SolicitacaoAceitaEvent"
+    → ChatService ativa chat
+```
 
-Serviços chamam repositórios para acessar dados, nunca acessam o banco diretamente.
+## Regra importante
+
+Serviços chamam repositórios para acessar dados, **nunca** acessam o banco diretamente.
 
 ## Critérios de avaliação
 

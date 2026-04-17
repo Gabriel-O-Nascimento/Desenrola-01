@@ -1,29 +1,58 @@
-# 🖥️ Frontend (Interface + Real-time)
+# Frontend (Interface + Real-time)
 
-> **Responsável:** Integrante 4
+> **Responsável:** Gabriel
 > **Foco:** Interface do usuário e conexão WebSocket para atualizações em tempo real
 
-## O que esta pasta precisa conter
+## Disciplinas Envolvidas
 
-- **Componentes:** Componentes reutilizáveis (Botão, Card, Modal, etc.).
-- **Páginas/Telas:** Cada tela da aplicação seguindo o protótipo do Figma.
-- **Serviços HTTP:** Funções que chamam a API REST do backend (fetch/axios).
-- **WebSocket:** Conexão que escuta eventos do servidor e atualiza a tela sem refresh.
-- **Estilos:** CSS/Design System baseado no Figma.
+- **Modelagem de Interfaces (UI)** - Implementação do protótipo Figma e Design System
+- **Desenvolvimento de Software Web** - Implementação do frontend (React/Vue)
+- **Mensageria e Streams** - Conexão WebSocket para atualizações em tempo real
+- **Qualidade de Software** - Testes de componentes
+
+## O que você precisa criar
+
+### Telas principais do Desenrola (baseadas no Figma):
+
+**Para o Cliente:**
+- Home - Tela inicial com categorias de serviços
+- Busca de Profissionais - Listar profissionais por categoria
+- Solicitar Serviço - Formulário para criar solicitação
+- Chat - Conversar com profissional
+- Histórico - Ver solicitações passadas
+- Avaliação - Avaliar serviço concluído
+
+**Para o Profissional:**
+- Cadastro - Cadastrar como profissional
+- Perfil - Editar dados e portfólio
+- Solicitações - Ver solicitações recebidas
+- Orçamento - Criar orçamento para cliente
+- Chat - Conversar com cliente
+- Histórico - Ver serviços realizados
+
+### Também precisa:
+- **Componentes reutilizáveis:** Botão, Card, Modal, Input, etc.
+- **Serviços HTTP:** Funções que chamam a API (fetch/axios)
+- **WebSocket:** Conexão para receber notificações em tempo real
+- **Estilos:** CSS baseado no Design System do Figma
 
 ## Fluxo de atualização em tempo real
 
 ```
-Usuário clica "Criar Pedido"
-    → Faz POST na API (camada de controladores)
+Cliente cria solicitação
+    → Frontend faz POST na API
     → Backend processa via fila (assíncrono)
     → Worker finaliza e emite evento via WebSocket
-    → Tela atualiza automaticamente
+    → Frontend recebe notificação
+    → Tela atualiza automaticamente (sem refresh)
 ```
 
-## Regra
+## Regra importante
 
-A interface nunca contém lógica de negócio. Ela exibe dados e envia ações para a API.
+A interface **nunca** contém lógica de negócio. Ela apenas:
+- Exibe dados vindos da API
+- Envia ações para a API
+- Atualiza em tempo real via WebSocket
 
 ## Critérios de avaliação
 
