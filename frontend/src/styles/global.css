@@ -125,3 +125,53 @@ img {
 .nav a:hover {
   color: var(--color-primary);
 }
+
+/* Botão Hamburger */
+.menu-toggle {
+  font-size: 24px;
+  padding: 5px;
+  display: none; /* Ocultar WEB */
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+  /* mostra botão */
+  .menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+  }
+
+  /* NAV vira menu lateral */
+  .nav {
+    position: fixed;
+    top: 0;
+    right: -100%; /* escondido */
+    width: 250px;
+    height: 100vh;
+    background: var(--color-bg-tertiary);
+    transition: right 0.3s ease;
+    padding: 25px 20px;
+  }
+
+  /* Quando abre */
+  .nav.open {
+    right: 0; /* entra na tela */
+  }
+
+  /* Lista vertical no mobile */
+  .nav ul {
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+}
+
+/* Botão fechar Menu */
+.close-menu {
+  font-size: 24px;
+  background: none;
+  border: none;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
