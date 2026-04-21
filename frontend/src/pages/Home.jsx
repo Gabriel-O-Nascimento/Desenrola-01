@@ -1,0 +1,10 @@
+import React, { createElement } from 'react';
+import { Link } from 'react-router-dom';
+
+function Home() {
+  return (
+    <div> teste </div>
+  );
+}
+
+export default Home;
