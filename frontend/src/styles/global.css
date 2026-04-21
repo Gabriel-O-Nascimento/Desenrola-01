@@ -1,0 +1,127 @@
+/* ===================================================
+   DESENROLA — Global Styles (ESSENCIAL)
+=================================================== */
+
+
+/* ── Importação de fontes e tokens ───────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import './tokens.css';
+
+
+/* ── Reset global (remove margens e padroniza box) ─ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ── Configuração base do HTML ───────────────────── */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+
+/* ── Configuração geral do body ──────────────────── */
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+
+/* ── Tipografia base (títulos) ───────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+
+/* ── Parágrafos ─────────────────────────────────── */
+p {
+  color: var(--color-text-secondary);
+}
+
+
+/* ── Links ──────────────────────────────────────── */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* ── Imagens ────────────────────────────────────── */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+
+/* ── Container padrão (centralização do layout) ─── */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding-inline: var(--container-pad);
+}
+
+
+/* ===================================================
+   HEADER
+=================================================== */
+
+
+/* ── Estrutura principal do header ──────────────── */
+.header {
+  background-color: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+
+/* ── Layout interno (logo + nav) ────────────────── */
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+/* ── Remove padding lateral só no header ───────── */
+.header .container {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+
+/* ── Logo ───────────────────────────────────────── */
+.logo img {
+  width: 120px;
+  height: auto;
+  object-fit: contain;
+}
+
+
+/* ── Lista de navegação ─────────────────────────── */
+.nav ul {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  list-style: none;
+}
+
+
+/* ── Links do menu ─────────────────────────────── */
+.nav a {
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+
+/* ── Hover dos links ───────────────────────────── */
+.nav a:hover {
+  color: var(--color-primary);
+}
