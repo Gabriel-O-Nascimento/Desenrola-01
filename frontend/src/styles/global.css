@@ -133,6 +133,10 @@ img {
   display: none; /* Ocultar WEB */
 }
 
+.close-menu {
+  display: none; /* Ocultar WEB */
+}
+
 /* MOBILE */
 @media (max-width: 768px) {
 
