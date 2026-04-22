@@ -33,6 +33,17 @@ body {
   background-color: var(--color-bg);
 }
 
+/* ── Container principal React ───────────────────── */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── Conteudo principal da pagina ────────────────── */
+main {
+  flex: 1; /* faz com que o main ocupe o espaço disponível */
+}
 
 /* ── Tipografia base (títulos) ───────────────────── */
 h1, h2, h3, h4, h5, h6 {
@@ -69,6 +80,13 @@ img {
   padding-inline: var(--container-pad);
 }
 
+/* ── Logo ───────────────────────────────────────── */
+.logo img {
+  width: 120px;
+  height: auto;
+  object-fit: contain;
+}
+
 
 /* ===================================================
    HEADER
@@ -77,7 +95,7 @@ img {
 
 /* ── Estrutura principal do header ──────────────── */
 .header {
-  background-color: var(--color-bg-secondary);
+  background-color: var(--color-primary);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -95,15 +113,6 @@ img {
   padding-left: 5px;
   padding-right: 5px;
 }
-
-
-/* ── Logo ───────────────────────────────────────── */
-.logo img {
-  width: 120px;
-  height: auto;
-  object-fit: contain;
-}
-
 
 /* ── Lista de navegação ─────────────────────────── */
 .nav ul {
@@ -123,7 +132,7 @@ img {
 
 /* ── Hover dos links ───────────────────────────── */
 .nav a:hover {
-  color: var(--color-primary);
+  color: var(--color-text-secondary);
 }
 
 /* Botão Hamburger */
@@ -137,9 +146,57 @@ img {
   display: none; /* Ocultar WEB */
 }
 
-/* MOBILE */
+/* ===================================================
+   FOOTER
+=================================================== */
+
+.footer {
+  background-color: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+  padding: var(--space-6) 0;
+  font-size: var(--font-size-sm);
+}
+
+/* PARTE SUPERIOR (logo + nav) */
+.footer-top {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding-bottom: 20px;
+}
+
+/* NAV */
+.footer-nav ul {
+  display: flex; 
+  gap: var(--space-6); 
+  list-style: none;
+}
+
+/* LINKS */
+.footer-nav a {
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Houver dos links */
+.footer-nav a:hover {
+  color: var(--color-primary);
+}
+
+.footer-bottom {
+  font-size: var(--font-size-xs);
+}
+
+/* TABLET & MOBILE */
 @media (max-width: 768px) {
 
+
+/* ===================================================
+   HEADER
+=================================================== */
+  
   /* mostra botão */
   .menu-toggle {
     display: block;
@@ -154,7 +211,7 @@ img {
     right: -100%; /* escondido */
     width: 250px;
     height: 100vh;
-    background: var(--color-bg-tertiary);
+    background: var(--color-primary-light);
     transition: right 0.3s ease;
     padding: 25px 20px;
   }
@@ -169,13 +226,38 @@ img {
     flex-direction: column;
     gap: var(--space-6);
   }
+
+  /* Botão fechar Menu */
+  .close-menu {
+    display: block;
+    font-size: 24px;
+    background: none;
+    border: none;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+
 }
 
-/* Botão fechar Menu */
-.close-menu {
-  font-size: 24px;
-  background: none;
-  border: none;
-  margin-bottom: 20px;
-  cursor: pointer;
+
+/* MOBILE */
+@media (max-width: 480px) {
+
+  /* ===================================================
+   FOOTER
+  =================================================== */
+  .footer-top {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .footer-nav ul {
+  flex-direction: column; 
+  gap: var(--space-2);
+  }
+
+  .footer-bottom {
+    margin-top: var(--space-2);
+  }
+
 }
