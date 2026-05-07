@@ -51,6 +51,29 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-text);
 }
 
+h1 {
+  font-size: var(--font-size-4xl);
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+}
+
+h5 {
+  font-size: var(--font-size-lg);
+}
+
+h6 {
+  font-size: var(--font-size-base);
+}
 
 /* ── Parágrafos ─────────────────────────────────── */
 p {
@@ -88,11 +111,7 @@ img {
 }
 
 
-/* ===================================================
-   HEADER
-=================================================== */
-
-
+/* HEADER */
 /* ── Estrutura principal do header ──────────────── */
 .header {
   background-color: var(--color-primary);
@@ -110,8 +129,8 @@ img {
 
 /* ── Remove padding lateral só no header ───────── */
 .header .container {
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-left: 4vw;
+  padding-right: 4vw;
 }
 
 /* ── Lista de navegação ─────────────────────────── */
@@ -126,6 +145,7 @@ img {
 /* ── Links do menu ─────────────────────────────── */
 .nav a {
   color: var(--color-text);
+  font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
 }
 
@@ -146,10 +166,7 @@ img {
   display: none; /* Ocultar WEB */
 }
 
-/* ===================================================
-   FOOTER
-=================================================== */
-
+/* FOOTER */
 .footer {
   background-color: var(--color-bg-secondary);
   border-top: 1px solid var(--color-border);
@@ -189,14 +206,213 @@ img {
   font-size: var(--font-size-xs);
 }
 
-/* TABLET & MOBILE */
-@media (max-width: 768px) {
+/* HOME */
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  width: 100%;
+  padding: var(--space-6) 0 var(--space-16);
+}
+
+.home-destaque {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: var(--space-6);
+  text-align: center;
+  background-color: var(--color-primary-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.home-destaque__title {
+  margin-bottom: var(--space-3);
+}
+
+.home-destaque__description {
+  max-width: 520px;
+  margin-bottom: var(--space-6);
+  line-height: var(--line-height-base);
+  font-size: var(--font-size-xl);
+}
+
+/* SEARCH BAR */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+}
+
+.search-bar__field {
+  display: flex;
+  align-items: center;
+  width: min(90%, 800px);
+  min-height: 64px;
+  padding: 0 var(--space-6);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-md);
+}
+
+.search-bar__icon {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  margin-right: var(--space-4);
+  color: var(--color-text-muted);
+  stroke-width: 2;
+}
+
+.search-bar__input {
+  width: 100%;
+  min-width: 0;
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--font-size-xl);
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+
+.search-bar__input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+/* ACTION BUTTON */
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  max-width: 60%;
+  padding: 0 var(--space-8);
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  text-align: center;
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary-hover);
+  border-radius: var(--border-radius-lg, var(--radius-lg));
+  cursor: pointer;
+  transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.action-button:hover,
+.action-button:focus-visible {
+  background-color: var(--color-primary-hover);
+  box-shadow: var(--shadow-sm);
+}
+
+.action-button:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+/* Secao centralizada da lista, com padding lateral responsivo. */
+.lista-de-cards {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-3);
+}
+
+/* Titulo alinhado a esquerda, usando a mesma largura da grade. */
+.lista-de-cards__title {
+  margin-bottom: var(--space-4);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Grade com exatamente 4 colunas fluidas, sem wrap e sem overflow horizontal. */
+.lista-de-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(var(--space-2), 2.5vw, var(--space-6));
+  width: 100%;
+}
+
+/* Link principal do card, funcionando como botao clicavel. */
+.card-service {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  color: var(--color-text);
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Container visual fluido: ocupa a largura da coluna e mantem proporcao quadrada. */
+.card-service__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+/* Feedback visual de hover e foco para mouse e teclado. */
+.card-service:hover .card-service__container,
+.card-service:focus-visible .card-service__container {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Remove outline padrao; o destaque aparece no container do card. */
+.card-service:focus-visible {
+  outline: none;
+}
+
+/* Icone centralizado e proporcional ao tamanho do card. */
+.card-service__icon {
+  width: clamp(24px, 38%, 64px);
+  height: clamp(24px, 38%, 64px);
+  color: var(--color-text-secondary);
+  stroke-width: 1.8;
+}
+
+/* Nome abaixo do card, preparado para telas pequenas sem estourar largura. */
+.card-service__name {
+  max-width: 100%;
+  font-size: clamp(var(--font-size-xs), 2.4vw, var(--font-size-2xl));
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-tight);
+  overflow-wrap: anywhere;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* ===================================================
-   HEADER
+   TABLET & MOBILE
 =================================================== */
-  
+@media (max-width: 768px) {
+
+
+  /* HEADER */
   /* mostra botão */
   .menu-toggle {
     display: block;
@@ -237,15 +453,87 @@ img {
     cursor: pointer;
   }
 
+  .header .container {
+    padding-right: 20px;
+  }
+
+
+  .home {
+    gap: var(--space-8);
+  }
+
+  .home-destaque {
+    width: 70%;
+    padding: var(--space-8);
+  }
+
+  .lista-de-cards {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+
 }
 
 
-/* MOBILE */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===================================================
+   MOBILE
+=================================================== */
 @media (max-width: 480px) {
 
-  /* ===================================================
-   FOOTER
-  =================================================== */
+  /* Tipografia base (títulos) */
+  h1 {
+  font-size: var(--font-size-2xl); /* 30px */
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  }
+
+  h2 {
+    font-size: var(--font-size-xl); /* 24px */
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+  }
+
+  h3 {
+    font-size: var(--font-size-lg); /* 20px */
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-base);
+  }
+
+  h4 {
+    font-size: var(--font-size-base); /* 18px */
+    font-weight: var(--font-weight-semibold);
+  }
+
+  h5 {
+    font-size: var(--font-size-sm); /* 16px */
+    font-weight: var(--font-weight-medium);
+  }
+
+  h6 {
+    font-size: var(--font-size-xs); /* 14px */
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+  }
+
+  /* HEADER */
+  .header .container {
+    padding-right: 10px;
+  }
+
+  /* FOOTER */
   .footer-top {
     flex-direction: column;
     gap: var(--space-2);
@@ -258,6 +546,51 @@ img {
 
   .footer-bottom {
     margin-top: var(--space-2);
+  }
+
+  .home {
+    gap: var(--space-6);
+    padding: var(--space-6) 20px var(--space-10);
+  }
+
+  .home-destaque {
+    width: 100%;
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .home-destaque__description {
+    margin-bottom: var(--space-5);
+    font-size: var(--font-size-base);
+  }
+
+  .search-bar__field {
+    min-height: 56px;
+    padding: 0 var(--space-5);
+    width: min(100%,480px);
+  }
+
+  .search-bar__icon {
+    width: 24px;
+    height: 24px;
+    margin-right: var(--space-3);
+  }
+
+  .search-bar__input {
+    font-size: var(--font-size-sm);
+
+  }
+
+  .action-button {
+    width: 100%;
+    font-size: var(--font-size-base);
+    padding-right: var(--space-5);
+    padding-left: var(--space-5);
+  }
+
+  .lista-de-cards {
+    max-width: none;
+    padding-right: 0;
+    padding-left: 0;
   }
 
 }

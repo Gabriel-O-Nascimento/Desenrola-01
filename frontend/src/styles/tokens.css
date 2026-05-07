@@ -13,10 +13,10 @@
   --color-bg-secondary:   #9999aa;
   --color-bg-tertiary:    #F0F2F5;
 
-  --color-text:           #1A1A2E;
+  --color-text:           #00003a;
   --color-text-secondary: #4A5565;
   --color-text-muted:     #8A94A6;
-  --color-text-on-primary:#1A1A2E; /* texto escuro sobre amarelo */
+  --color-text-on-primary:#00003a; /* texto escuro sobre amarelo */
 
   --color-border:         #E2E6ED;
   --color-border-strong:  #C8CDD6;
