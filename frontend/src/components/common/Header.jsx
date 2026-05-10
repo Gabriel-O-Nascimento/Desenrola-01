@@ -20,13 +20,13 @@ const Header = () => {
 
         {/* BOTÃO MOBILE */}
         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
-          <Menu size={32} stroke-width={2.2}/>
+          <Menu size={32} strokeWidth={2.2}/>
         </button>
 
         {/* NAV */}
         <nav className={`nav ${menuOpen ? "open" : ""}`}>
             <button className="close-menu" onClick={() => setMenuOpen(false)}>
-                <CircleX size={32} stroke-width={2}/>
+                <CircleX size={32} strokeWidth={2}/>
             </button>
 
           <ul>
