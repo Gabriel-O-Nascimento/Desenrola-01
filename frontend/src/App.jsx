@@ -4,6 +4,7 @@ import Footer from "./components/common/Footer";
 import Home from "./pages/Home";
 import Chat from "./pages/chat/Chat";
 import ChatInterno from "./pages/chat/ChatInterno";
+import Search from "./pages/search/Search";
 
 function Layout() {
   const location = useLocation();
