@@ -1,6 +1,7 @@
 import "../../styles/global.css";
 
 export default function ActionButton({
+  text,
   children,
   onClick,
   type = "button",
@@ -18,7 +19,7 @@ export default function ActionButton({
       type={type}
       onClick={onClick}
     >
-      {children}
+      {text || children}
     </button>
   );
 }

@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Chat from "./pages/chat/Chat";
 import ChatInterno from "./pages/chat/ChatInterno";
 import Search from "./pages/search/Search";
+import HistoricoServicos from "./pages/historico/HistoricoServicos";
 
 function Layout() {
   const location = useLocation();
@@ -20,6 +21,7 @@ function Layout() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/Services" element={<HistoricoServicos />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/chat/:chatId" element={<ChatInterno />} />
         </Routes>
