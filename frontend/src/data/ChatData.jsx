@@ -1,4 +1,4 @@
-export const SimulChats = [
+export const ChatData = [
   {
     id: 1,
     name: "Joao Silva",
