@@ -61,7 +61,7 @@ function Search() {
     <section className="search-page">
       <SearchBar />
 
-      {/* SegmentedControl controla visualmente qual lista sera exibida. */}
+      {/* SegmentedControl controla visualmente qual lista sera exibida. */}  
       <SegmentedControl
         options={searchTabs}
         activeValue={activeTab}
