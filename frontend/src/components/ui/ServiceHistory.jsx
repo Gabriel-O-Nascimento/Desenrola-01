@@ -6,6 +6,7 @@ import {
   User,
   Wrench,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import ActionButton from "./ActionButton";
 import "../../styles/global.css";
 
@@ -22,7 +23,18 @@ function getPrimaryButtonText(status) {
 }
 
 export default function ServiceHistory({ service }) {
+  const navigate = useNavigate();
   const isCanceled = service.status === "cancelado";
+
+  function handlePrimaryAction() {
+    if (service.status === "aguardando_orcamento") {
+      navigate(`/orcamento/${service.id}`);
+      console.log("Ver orcamento", service.id);
+      return;
+    }
+
+    console.log("Abrir acompanhamento", service.id);
+  }
 
   return (
     <article className="service-history">
@@ -84,7 +96,7 @@ export default function ServiceHistory({ service }) {
             <ActionButton
               text={getPrimaryButtonText(service.status)}
               className="service-history__button"
-              onClick={() => console.log("Abrir servico", service.id)}
+              onClick={handlePrimaryAction}
             />
 
             <ActionButton
