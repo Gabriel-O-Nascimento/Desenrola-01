@@ -450,6 +450,10 @@ img {
   background-color: var(--color-bg-tertiary);
 }
 
+select.form-input__control {
+  cursor: pointer;
+}
+
 .form-input__control[type="file"] {
   display: flex;
   align-items: center;
@@ -1197,6 +1201,161 @@ img {
 }
 
 .service-request-form__button {
+  width: 100%;
+  max-width: none;
+  min-height: 64px;
+  font-size: var(--font-size-lg);
+}
+
+/* USER REGISTER PAGE */
+.user-register-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-6) var(--space-16);
+}
+
+.user-register-header {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+}
+
+.user-register-header__back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--color-text);
+  background-color: transparent;
+  border: 0;
+  border-radius: var(--radius-full);
+}
+
+.user-register-header__title {
+  grid-column: 2;
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-tight);
+  text-align: center;
+}
+
+.user-register-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.user-register-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.user-register-card__title {
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-tight);
+}
+
+.user-register-card__text {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+}
+
+.user-register-card .form-input__label,
+.user-register-field-group__label {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+}
+
+.user-register-card .form-input__control {
+  min-height: 64px;
+  font-size: var(--font-size-lg);
+  border-radius: var(--radius-lg);
+}
+
+.user-register-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.user-register-segmented {
+  width: 500px;
+  align-self: center;
+}
+
+.user-register-segmented .segmented-control__option {
+  flex: 1 1 0;
+  justify-content: center;
+}
+
+.user-register-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 164px;
+  padding: var(--space-6);
+  color: var(--color-text-secondary);
+  text-align: center;
+  background-color: var(--color-bg-tertiary);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.user-register-upload:hover,
+.user-register-upload:focus-visible {
+  background-color: var(--color-bg);
+  border-color: var(--color-primary);
+}
+
+.user-register-upload__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.user-register-upload__icon {
+  width: 40px;
+  height: 40px;
+  color: var(--color-text-muted);
+}
+
+.user-register-upload__text {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  overflow-wrap: anywhere;
+}
+
+.user-register-upload__hint {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.user-register-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.user-register-actions__button {
   width: 100%;
   max-width: none;
   min-height: 64px;
@@ -2419,6 +2578,41 @@ img {
   }
 
   .service-request-form__button {
+    min-height: 56px;
+  }
+
+  .user-register-page {
+    gap: var(--space-5);
+    padding: var(--space-5) 20px var(--space-10);
+  }
+
+  .user-register-card {
+    gap: var(--space-4);
+    padding: var(--space-5);
+    border-radius: var(--radius-md);
+  }
+
+  .user-register-header__title,
+  .user-register-card__title {
+    font-size: var(--font-size-xl);
+  }
+
+  .user-register-card .form-input__label,
+  .user-register-card .form-input__control,
+  .user-register-field-group__label,
+  .user-register-upload__text {
+    font-size: var(--font-size-base);
+  }
+
+  .user-register-card .form-input__control {
+    min-height: 56px;
+  }
+
+  .user-register-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .user-register-actions__button {
     min-height: 56px;
   }
 

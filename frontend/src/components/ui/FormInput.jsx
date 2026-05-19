@@ -35,7 +35,35 @@ const inputConfigMap = {
     accept: "image/*",
   },
   estado: {
-    set: "AC, AL, AP, AM, BA, CE, DF, ES, GO, MA, MT, MS, MG, PA, PB, PR, PE, PI, RJ, RN, RS, RO, RR, SC, SP, SE, TO",
+    options: [
+      "AC",
+      "AL",
+      "AP",
+      "AM",
+      "BA",
+      "CE",
+      "DF",
+      "ES",
+      "GO",
+      "MA",
+      "MT",
+      "MS",
+      "MG",
+      "PA",
+      "PB",
+      "PR",
+      "PE",
+      "PI",
+      "RJ",
+      "RN",
+      "RS",
+      "RO",
+      "RR",
+      "SC",
+      "SP",
+      "SE",
+      "TO",
+    ],
   },
 };
 
@@ -45,6 +73,7 @@ export default function FormInput({
   type = "texto",
   value,
   onChange,
+  onBlur,
   placeholder,
   required = false,
   disabled = false,
@@ -62,6 +91,7 @@ export default function FormInput({
   const errorId = `${inputId}-error`;
   const fieldClassName = ["form-input", className].filter(Boolean).join(" ");
   const isTextarea = as === "textarea" || multiline;
+  const isSelect = htmlType === "select";
 
   return (
     <label className={fieldClassName} htmlFor={inputId}>
@@ -75,6 +105,7 @@ export default function FormInput({
           name={name}
           value={value}
           onChange={onChange}
+          onBlur={onBlur}
           placeholder={placeholder || typeConfig.placeholder}
           required={required}
           disabled={disabled}
@@ -82,6 +113,30 @@ export default function FormInput({
           aria-invalid={Boolean(errorMessage)}
           aria-describedby={errorMessage ? errorId : undefined}
         />
+      ) : isSelect ? (
+        /* Select reutiliza o visual do input para variacoes como estado. */
+        <select
+          className="form-input__control"
+          id={inputId}
+          name={name}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+          required={required}
+          disabled={disabled}
+          ref={inputRef}
+          aria-invalid={Boolean(errorMessage)}
+          aria-describedby={errorMessage ? errorId : undefined}
+        >
+          <option value="" disabled>
+            {placeholder || "Selecione uma opção"}
+          </option>
+          {typeConfig.options?.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
       ) : (
         /* Input controlado por props, com tipos personalizados mapeados para HTML. */
         <input
@@ -91,6 +146,7 @@ export default function FormInput({
           type={htmlType}
           value={htmlType === "file" ? undefined : value}
           onChange={onChange}
+          onBlur={onBlur}
           placeholder={placeholder || typeConfig.placeholder}
           required={required}
           disabled={disabled}
