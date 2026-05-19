@@ -10,6 +10,7 @@ import Profile from "./pages/profile/Profile";
 import Orcamento from "./pages/historico/Orcamento";
 import SolicitarServico from "./pages/servicos/SolicitarServico";
 import CadastroUsuario from "./pages/cadastros/CadastroUsuario";
+import CadastroProfissional from "./pages/cadastros/CadastroProfissional";
 
 function Layout() {
   const location = useLocation();
@@ -29,6 +30,7 @@ function Layout() {
           <Route path="/orcamento/:id" element={<Orcamento />} />
           <Route path="/servicos/solicitar/:id" element={<SolicitarServico />} />
           <Route path="/cadastro/usuario" element={<CadastroUsuario />} />
+          <Route path="/cadastro/profissional" element={<CadastroProfissional />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/chat/:chatId" element={<ChatInterno />} />
