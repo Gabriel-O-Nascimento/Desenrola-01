@@ -30,8 +30,8 @@ public class ServicoService {
                 servico.getId(),
                 servico.getNome(),
                 servico.getDescricao(),
-                servico.getCategoria(),
-                servico.getPrecoBase()
+                servico.getCategoria() != null ? servico.getCategoria().getNome() : null,
+                servico.getPrecoBase() != null ? servico.getPrecoBase().doubleValue() : null
         );
     }
 }

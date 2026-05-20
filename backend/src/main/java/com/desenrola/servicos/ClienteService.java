@@ -3,6 +3,7 @@ package com.desenrola.servicos;
 import com.desenrola.dto.ClienteResponse;
 import com.desenrola.dto.CriarClienteRequest;
 import com.desenrola.modelos.Cliente;
+import com.desenrola.modelos.enums.TipoUsuario;
 import com.desenrola.repositorios.ClienteRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,8 @@ import java.util.List;
 
 @Service
 public class ClienteService {
+
+    private static final String SENHA_PADRAO = "senha-temporaria";
 
     private final ClienteRepository clienteRepository;
 
@@ -22,6 +25,8 @@ public class ClienteService {
         cliente.setNome(request.nome());
         cliente.setEmail(request.email());
         cliente.setTelefone(request.telefone());
+        cliente.setSenhaHash(SENHA_PADRAO);
+        cliente.setTipo(TipoUsuario.CLIENTE);
         cliente.setCpf(request.cpf());
         cliente.setEndereco(request.endereco());
         return toResponse(clienteRepository.save(cliente));

@@ -3,6 +3,7 @@ package com.desenrola.servicos;
 import com.desenrola.dto.CriarProfissionalRequest;
 import com.desenrola.dto.ProfissionalResponse;
 import com.desenrola.modelos.Profissional;
+import com.desenrola.modelos.enums.TipoUsuario;
 import com.desenrola.repositorios.ProfissionalRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,8 @@ import java.util.List;
 
 @Service
 public class ProfissionalService {
+
+    private static final String SENHA_PADRAO = "senha-temporaria";
 
     private final ProfissionalRepository profissionalRepository;
 
@@ -22,9 +25,12 @@ public class ProfissionalService {
         profissional.setNome(request.nome());
         profissional.setEmail(request.email());
         profissional.setTelefone(request.telefone());
+        profissional.setSenhaHash(SENHA_PADRAO);
+        profissional.setTipo(TipoUsuario.PROFISSIONAL);
         profissional.setEspecialidade(request.especialidade());
         profissional.setDisponivel(request.disponivel());
         profissional.setAvaliacaoMedia(0.0);
+        profissional.setTotalAvaliacoes(0);
         return toResponse(profissionalRepository.save(profissional));
     }
 

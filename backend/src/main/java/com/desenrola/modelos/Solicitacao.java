@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "solicitacoes")
+@Table(name = "solicitacao")
 public class Solicitacao {
 
     @Id
@@ -25,15 +25,15 @@ public class Solicitacao {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "profissional_id")
+    @JoinColumn(name = "id_profissional")
     private Profissional profissional;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "servico_id")
+    @JoinColumn(name = "id_servico")
     private Servico servico;
 
     @Enumerated(EnumType.STRING)
@@ -41,16 +41,25 @@ public class Solicitacao {
     private StatusSolicitacao status;
 
     @Column(nullable = false)
+    private String titulo;
+
+    @Column
+    private String descricao;
+
+    @Column(name = "endereco_atendimento")
     private String enderecoAtendimento;
 
-    @Column(nullable = false, length = 500)
+    @Column(name = "valor_final")
+    private BigDecimal valorFinal;
+
+    @Column
     private String observacoes;
 
-    @Column(nullable = false)
-    private BigDecimal valorTotal;
+    @Column(name = "criado_em", nullable = false)
+    private LocalDateTime criadoEm;
 
-    @Column(nullable = false)
-    private LocalDateTime dataCriacao;
+    @Column(name = "data_conclusao")
+    private LocalDateTime dataConclusao;
 
     public Long getId() {
         return id;
@@ -88,12 +97,36 @@ public class Solicitacao {
         this.status = status;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
     public String getEnderecoAtendimento() {
         return enderecoAtendimento;
     }
 
     public void setEnderecoAtendimento(String enderecoAtendimento) {
         this.enderecoAtendimento = enderecoAtendimento;
+    }
+
+    public BigDecimal getValorFinal() {
+        return valorFinal;
+    }
+
+    public void setValorFinal(BigDecimal valorFinal) {
+        this.valorFinal = valorFinal;
     }
 
     public String getObservacoes() {
@@ -104,19 +137,19 @@ public class Solicitacao {
         this.observacoes = observacoes;
     }
 
-    public BigDecimal getValorTotal() {
-        return valorTotal;
+    public LocalDateTime getCriadoEm() {
+        return criadoEm;
     }
 
-    public void setValorTotal(BigDecimal valorTotal) {
-        this.valorTotal = valorTotal;
+    public void setCriadoEm(LocalDateTime criadoEm) {
+        this.criadoEm = criadoEm;
     }
 
-    public LocalDateTime getDataCriacao() {
-        return dataCriacao;
+    public LocalDateTime getDataConclusao() {
+        return dataConclusao;
     }
 
-    public void setDataCriacao(LocalDateTime dataCriacao) {
-        this.dataCriacao = dataCriacao;
+    public void setDataConclusao(LocalDateTime dataConclusao) {
+        this.dataConclusao = dataConclusao;
     }
 }

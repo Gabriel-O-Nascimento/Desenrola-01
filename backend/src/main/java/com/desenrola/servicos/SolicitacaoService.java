@@ -45,10 +45,12 @@ public class SolicitacaoService {
         solicitacao.setCliente(cliente);
         solicitacao.setServico(servico);
         solicitacao.setStatus(StatusSolicitacao.PENDENTE);
+        solicitacao.setTitulo(montarTitulo(request.observacoes(), servico.getNome()));
+        solicitacao.setDescricao(request.observacoes());
         solicitacao.setEnderecoAtendimento(request.enderecoAtendimento());
         solicitacao.setObservacoes(request.observacoes());
-        solicitacao.setValorTotal(BigDecimal.valueOf(servico.getPrecoBase()));
-        solicitacao.setDataCriacao(LocalDateTime.now());
+        solicitacao.setValorFinal(servico.getPrecoBase() != null ? servico.getPrecoBase() : BigDecimal.ZERO);
+        solicitacao.setCriadoEm(LocalDateTime.now());
 
         Solicitacao salva = solicitacaoRepository.save(solicitacao);
         notificacaoService.publicarSolicitacaoCriada(
@@ -83,7 +85,7 @@ public class SolicitacaoService {
         }
 
         solicitacao.setProfissional(profissional);
-        solicitacao.setStatus(StatusSolicitacao.ACEITA);
+        solicitacao.setStatus(StatusSolicitacao.APROVADA);
         profissionalService.atualizarDisponibilidade(profissional, false);
         solicitacaoRepository.save(solicitacao);
 
@@ -96,11 +98,13 @@ public class SolicitacaoService {
 
     public SolicitacaoResponse concluir(Long solicitacaoId) {
         Solicitacao solicitacao = buscarEntidade(solicitacaoId);
-        if (solicitacao.getStatus() != StatusSolicitacao.ACEITA) {
-            throw new IllegalArgumentException("Apenas solicitacoes aceitas podem ser concluidas.");
+        if (solicitacao.getStatus() != StatusSolicitacao.APROVADA
+                && solicitacao.getStatus() != StatusSolicitacao.EM_ANDAMENTO) {
+            throw new IllegalArgumentException("Apenas solicitacoes aprovadas podem ser concluidas.");
         }
 
         solicitacao.setStatus(StatusSolicitacao.CONCLUIDA);
+        solicitacao.setDataConclusao(LocalDateTime.now());
         if (solicitacao.getProfissional() != null) {
             profissionalService.atualizarDisponibilidade(solicitacao.getProfissional(), true);
         }
@@ -120,8 +124,15 @@ public class SolicitacaoService {
                 solicitacao.getStatus().name(),
                 solicitacao.getEnderecoAtendimento(),
                 solicitacao.getObservacoes(),
-                solicitacao.getValorTotal(),
-                solicitacao.getDataCriacao()
+                solicitacao.getValorFinal(),
+                solicitacao.getCriadoEm()
         );
+    }
+
+    private String montarTitulo(String observacoes, String nomeServico) {
+        if (observacoes != null && !observacoes.isBlank()) {
+            return observacoes.length() > 200 ? observacoes.substring(0, 200) : observacoes;
+        }
+        return "Solicitacao para " + nomeServico;
     }
 }

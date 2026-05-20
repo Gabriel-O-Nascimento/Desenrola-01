@@ -45,7 +45,7 @@ public class AvaliacaoService {
         avaliacao.setProfissional(solicitacao.getProfissional());
         avaliacao.setNota(request.nota());
         avaliacao.setComentario(request.comentario());
-        avaliacao.setDataCriacao(LocalDateTime.now());
+        avaliacao.setCriadoEm(LocalDateTime.now());
 
         Avaliacao salva = avaliacaoRepository.save(avaliacao);
         atualizarMediaProfissional(solicitacao.getProfissional());
@@ -74,7 +74,7 @@ public class AvaliacaoService {
                 avaliacao.getProfissional().getNome(),
                 avaliacao.getNota(),
                 avaliacao.getComentario(),
-                avaliacao.getDataCriacao()
+                avaliacao.getCriadoEm()
         );
     }
 }

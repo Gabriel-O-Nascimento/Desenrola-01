@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "avaliacoes")
+@Table(name = "avaliacao")
 public class Avaliacao {
 
     @Id
@@ -21,25 +21,25 @@ public class Avaliacao {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "solicitacao_id")
+    @JoinColumn(name = "id_solicitacao")
     private Solicitacao solicitacao;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "profissional_id")
+    @JoinColumn(name = "id_profissional")
     private Profissional profissional;
 
     @Column(nullable = false)
     private Integer nota;
 
-    @Column(nullable = false, length = 500)
+    @Column
     private String comentario;
 
-    @Column(nullable = false)
-    private LocalDateTime dataCriacao;
+    @Column(name = "criado_em", nullable = false)
+    private LocalDateTime criadoEm;
 
     public Long getId() {
         return id;
@@ -85,11 +85,11 @@ public class Avaliacao {
         this.comentario = comentario;
     }
 
-    public LocalDateTime getDataCriacao() {
-        return dataCriacao;
+    public LocalDateTime getCriadoEm() {
+        return criadoEm;
     }
 
-    public void setDataCriacao(LocalDateTime dataCriacao) {
-        this.dataCriacao = dataCriacao;
+    public void setCriadoEm(LocalDateTime criadoEm) {
+        this.criadoEm = criadoEm;
     }
 }

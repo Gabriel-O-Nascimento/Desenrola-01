@@ -2,16 +2,18 @@ package com.desenrola.modelos;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "clientes")
+@Table(name = "cliente")
+@PrimaryKeyJoinColumn(name = "id_usuario")
 public class Cliente extends Usuario {
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String cpf;
 
-    @Column(nullable = false)
+    @Column
     private String endereco;
 
     public String getCpf() {

@@ -1,12 +1,20 @@
 package com.desenrola.modelos;
 
+import com.desenrola.modelos.enums.TipoUsuario;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Table;
 
-@MappedSuperclass
+@Entity
+@Table(name = "usuario")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Usuario {
 
     @Id
@@ -19,8 +27,15 @@ public abstract class Usuario {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "senha_hash", nullable = false)
+    private String senhaHash;
+
+    @Column
     private String telefone;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TipoUsuario tipo;
 
     public Long getId() {
         return id;
@@ -42,11 +57,27 @@ public abstract class Usuario {
         this.email = email;
     }
 
+    public String getSenhaHash() {
+        return senhaHash;
+    }
+
+    public void setSenhaHash(String senhaHash) {
+        this.senhaHash = senhaHash;
+    }
+
     public String getTelefone() {
         return telefone;
     }
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public TipoUsuario getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoUsuario tipo) {
+        this.tipo = tipo;
     }
 }
