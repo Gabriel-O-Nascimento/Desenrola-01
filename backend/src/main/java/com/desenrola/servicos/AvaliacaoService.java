@@ -61,7 +61,7 @@ public class AvaliacaoService {
     private void atualizarMediaProfissional(Profissional profissional) {
         List<Avaliacao> avaliacoes = avaliacaoRepository.findByProfissionalId(profissional.getId());
         double media = avaliacoes.stream().mapToInt(Avaliacao::getNota).average().orElse(0.0);
-        profissionalService.atualizarAvaliacaoMedia(profissional, media);
+        profissionalService.atualizarMetricasAvaliacao(profissional, media, avaliacoes.size());
     }
 
     private AvaliacaoResponse toResponse(Avaliacao avaliacao) {

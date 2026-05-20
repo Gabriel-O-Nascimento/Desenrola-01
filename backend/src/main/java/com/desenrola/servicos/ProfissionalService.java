@@ -64,6 +64,12 @@ public class ProfissionalService {
         profissionalRepository.save(profissional);
     }
 
+    public void atualizarMetricasAvaliacao(Profissional profissional, double media, int totalAvaliacoes) {
+        profissional.setAvaliacaoMedia(media);
+        profissional.setTotalAvaliacoes(totalAvaliacoes);
+        profissionalRepository.save(profissional);
+    }
+
     public void atualizarDisponibilidade(Profissional profissional, boolean disponivel) {
         profissional.setDisponivel(disponivel);
         profissionalRepository.save(profissional);
