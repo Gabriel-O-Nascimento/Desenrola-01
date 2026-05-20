@@ -332,6 +332,7 @@ function SolicitarServico() {
           text="Enviar solicitacao"
           type="submit"
           className="service-request-form__button"
+          onClick={() => navigate ("/servicos/aprovado")}
         />
       </form>
     </section>
