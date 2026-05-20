@@ -714,7 +714,7 @@ select.form-input__control {
   height: 44px;
   color: var(--color-text);
   background-color: var(--color-bg);
-  border: 1px solid var(--color-border);
+  border: 0px;
   border-radius: var(--radius-full);
   cursor: pointer;
 }
@@ -888,6 +888,174 @@ select.form-input__control {
 .budget-actions__button {
   width: 100%;
   max-width: none;
+}
+
+/* BUDGET RESULT PAGE */
+.budget-result-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-6) var(--space-16);
+}
+
+.budget-result-page__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.budget-result-page__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 112px;
+  height: 112px;
+  border-radius: var(--radius-full);
+}
+
+.budget-result-page__icon svg {
+  width: 56px;
+  height: 56px;
+  stroke-width: 2.5;
+}
+
+.budget-result-page__icon--success {
+  color: var(--color-success);
+  background-color: #dcfce7;
+}
+
+.budget-result-page__icon--danger {
+  color: var(--color-error);
+  background-color: #fee2e2;
+}
+
+.budget-result-page__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.budget-result-page__title {
+  font-size: var(--font-size-3xl);
+  line-height: var(--line-height-tight);
+}
+
+.budget-result-page__message {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-base);
+}
+
+.budget-result-page__button {
+  width: min(100%, 360px);
+  max-width: none;
+  min-height: 52px;
+}
+
+/* SERVICE RESULT PAGE */
+.service-header {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+}
+
+.service-header__title {
+  grid-column: 2;
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-tight);
+  text-align: center;
+}
+
+.service-result-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-6) var(--space-16);
+}
+
+.service-result-page__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.service-result-page__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 112px;
+  height: 112px;
+  border-radius: var(--radius-full);
+}
+
+.service-result-page__icon svg {
+  width: 56px;
+  height: 56px;
+  stroke-width: 2.5;
+}
+
+.service-result-page__icon--success {
+  color: var(--color-success);
+  background-color: #dcfce7;
+}
+
+.service-result-page__icon--danger {
+  color: var(--color-error);
+  background-color: #fee2e2;
+}
+
+.service-result-page__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.service-result-page__title {
+  font-size: var(--font-size-3xl);
+  line-height: var(--line-height-tight);
+}
+
+.service-result-page__message {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-base);
+}
+
+.service-result-page__button {
+  width: min(100%, 360px);
+  max-width: none;
+  min-height: 52px;
+}
+
+.service-header__back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  border: 0px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
 }
 
 /* SERVICE REQUEST PAGE */
@@ -2287,6 +2455,11 @@ select.form-input__control {
     padding-left: var(--space-5);
   }
 
+  .budget-result-page {
+    padding-right: var(--space-5);
+    padding-left: var(--space-5);
+  }
+
   .service-request-page {
     padding-right: var(--space-5);
     padding-left: var(--space-5);
@@ -2529,6 +2702,33 @@ select.form-input__control {
 
   .budget-actions {
     grid-template-columns: 1fr;
+  }
+
+  .budget-result-page {
+    gap: var(--space-8);
+    padding: var(--space-5) 20px var(--space-10);
+  }
+
+  .budget-result-page__content {
+    gap: var(--space-6);
+  }
+
+  .budget-result-page__icon {
+    width: 88px;
+    height: 88px;
+  }
+
+  .budget-result-page__icon svg {
+    width: 44px;
+    height: 44px;
+  }
+
+  .budget-result-page__title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .budget-result-page__message {
+    font-size: var(--font-size-base);
   }
 
   .service-request-page {

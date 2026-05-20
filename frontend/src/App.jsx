@@ -8,9 +8,12 @@ import Search from "./pages/search/Search";
 import HistoricoServicos from "./pages/historico/HistoricoServicos";
 import Profile from "./pages/profile/Profile";
 import Orcamento from "./pages/historico/Orcamento";
+import OrcamentoAprovado from "./pages/historico/OrcamentoAprovado";
+import OrcamentoRecusado from "./pages/historico/OrcamentoRecusado";
 import SolicitarServico from "./pages/servicos/SolicitarServico";
 import CadastroUsuario from "./pages/cadastros/CadastroUsuario";
 import CadastroProfissional from "./pages/cadastros/CadastroProfissional";
+import ServicoAprovado from "./pages/servicos/ServicoAprovado";
 
 function Layout() {
   const location = useLocation();
@@ -26,9 +29,14 @@ function Layout() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/historico" element={<HistoricoServicos />} />
           <Route path="/Services" element={<HistoricoServicos />} />
+          <Route path="/historico/orcamento/:id" element={<Orcamento />} />
+          <Route path="/historico/orcamento-aprovado" element={<OrcamentoAprovado />} />
+          <Route path="/historico/orcamento-recusado" element={<OrcamentoRecusado />} />
           <Route path="/orcamento/:id" element={<Orcamento />} />
           <Route path="/servicos/solicitar/:id" element={<SolicitarServico />} />
+          <Route path="/servicos/aprovado" element={<ServicoAprovado />} />
           <Route path="/cadastro/usuario" element={<CadastroUsuario />} />
           <Route path="/cadastro/profissional" element={<CadastroProfissional />} />
           <Route path="/profile" element={<Profile />} />

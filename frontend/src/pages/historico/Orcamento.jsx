@@ -43,14 +43,6 @@ function Orcamento() {
 
   const activeItems = activeTab === "labor" ? budget.labor : budget.materials;
 
-  function handleRejectBudget() {
-    console.log("Recusar orcamento", budget.id);
-  }
-
-  function handleApproveBudget() {
-    console.log("Aprovar orcamento", budget.id);
-  }
-
   return (
     <section className="budget-page">
       <header className="budget-header">
@@ -131,13 +123,13 @@ function Orcamento() {
         <ActionButton
           text="Aprovar"
           className="action-button--primary budget-actions__button"
-          onClick={handleApproveBudget}
+          onClick={() => navigate("/historico/orcamento-aprovado")}
         />
 
         <ActionButton
           text="Recusar"
           className="action-button--danger-outline budget-actions__button"
-          onClick={handleRejectBudget}
+          onClick={() => navigate("/historico/orcamento-recusado")}
         />
       </div>
     </section>
