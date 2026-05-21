@@ -1,24 +1,25 @@
 export const ChatData = [
   {
     id: 1,
-    name: "Joao Silva",
+    professionalId: 1,
+    name: "João Silva",
     initials: "JS",
     status: "Online agora",
-    lastMessage: "Obrigado pelo servico! Ficou perfeito.",
+    lastMessage: "Obrigado pelo serviço! Ficou perfeito.",
     lastMessageTime: "10:30",
     unreadCount: 2,
     messages: [
       {
         id: 1,
         type: "professional",
-        text: "Ola! Recebi sua solicitacao.",
+        text: "Olá! Recebi sua solicitação.",
         time: "14:15",
         dateLabel: "Ontem",
       },
       {
         id: 2,
         type: "user",
-        text: "Perfeito. Voce tem disponibilidade para hoje?",
+        text: "Perfeito. Você tem disponibilidade para hoje?",
         time: "14:18",
         dateLabel: "Ontem",
       },
@@ -32,7 +33,7 @@ export const ChatData = [
       {
         id: 4,
         type: "user",
-        text: "Obrigado pelo servico! Ficou perfeito.",
+        text: "Obrigado pelo serviço! Ficou perfeito.",
         time: "10:30",
         dateLabel: "Hoje",
       },
@@ -40,24 +41,25 @@ export const ChatData = [
   },
   {
     id: 2,
+    professionalId: 2,
     name: "Maria Santos",
     initials: "MS",
     status: "Online agora",
-    lastMessage: "Pode vir amanha as 14h?",
+    lastMessage: "Pode vir amanhã às 14h?",
     lastMessageTime: "09:15",
     unreadCount: 1,
     messages: [
       {
         id: 1,
         type: "professional",
-        text: "Bom dia! Ja vi sua solicitacao.",
+        text: "Bom dia! Já vi sua solicitação.",
         time: "08:40",
         dateLabel: "Hoje",
       },
       {
         id: 2,
         type: "professional",
-        text: "Pode vir amanha as 14h?",
+        text: "Pode vir amanhã às 14h?",
         time: "09:15",
         dateLabel: "Hoje",
       },
@@ -65,20 +67,49 @@ export const ChatData = [
   },
   {
     id: 3,
+    professionalId: 4,
     name: "Pedro Costa",
     initials: "PC",
-    status: "Visto por ultimo ontem",
-    lastMessage: "Voce tem disponibilidade para sexta?",
+    status: "Visto por último ontem",
+    lastMessage: "Você tem disponibilidade para sexta?",
     lastMessageTime: "Ontem",
     unreadCount: 0,
     messages: [
       {
         id: 1,
         type: "user",
-        text: "Voce tem disponibilidade para sexta?",
+        text: "Você tem disponibilidade para sexta?",
         time: "17:05",
         dateLabel: "Ontem",
       },
     ],
   },
+  {
+    id: 4,
+    professionalId: 3,
+    name: "Carlos Mendes",
+    initials: "CM",
+    status: "Online agora",
+    lastMessage: "Consigo verificar o vazamento amanhã cedo.",
+    lastMessageTime: "Ontem",
+    unreadCount: 0,
+    messages: [
+      {
+        id: 1,
+        type: "professional",
+        text: "Olá! Vi seu pedido de manutenção hidráulica.",
+        time: "16:10",
+        dateLabel: "Ontem",
+      },
+      {
+        id: 2,
+        type: "professional",
+        text: "Consigo verificar o vazamento amanhã cedo.",
+        time: "16:12",
+        dateLabel: "Ontem",
+      },
+    ],
+  },
 ];
+
+export const chats = ChatData;

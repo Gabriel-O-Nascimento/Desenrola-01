@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import SearchBar from "../components/ui/SearchBar";
 import ListaDeCards from "../components/ui/ListaDeCards";
 import { professionalsLists } from "../data/Professionals";
 import ActionButton from "../components/ui/ActionButton";
 
 function HomeDestaque() {
+  const navigate = useNavigate();
   return (
     <section className="home-destaque" aria-labelledby="home-destaque-title">
       <h2 className="home-destaque__title" id="home-destaque-title">
@@ -16,9 +18,10 @@ function HomeDestaque() {
         trabalhe conosco, seja um desenrolado.
       </p>
 
-      <ActionButton>
-        Seja Desenrolado!
-      </ActionButton>
+      <ActionButton
+        text="Seja Desenrolado!"
+        onClick={() => navigate("/cadastro/profissional")}
+      />
     </section>
   );
 }
