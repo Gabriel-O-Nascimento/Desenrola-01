@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { ArrowLeft, MoreVertical, Paperclip, Send } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
+import { cadastrosProfissionais } from "../../data/CadastroProfissional";
 import { ChatData } from "../../data/ChatData";
 import "../../styles/global.css";
 
@@ -30,9 +32,32 @@ function getMessagesWithDateSeparators(messages) {
 }
 
 function ChatInterno() {
-  const { chatId } = useParams();
+  const { chatId, professionalId } = useParams();
   const navigate = useNavigate();
-  const chat = ChatData.find((item) => String(item.id) === chatId);
+  const professional = cadastrosProfissionais.find(
+    (item) => String(item.id) === String(professionalId)
+  );
+  const existingChat = professionalId
+    ? ChatData.find((item) => String(item.professionalId) === String(professionalId))
+    : ChatData.find((item) => String(item.id) === String(chatId));
+  const chat = existingChat || (
+    professional
+      ? {
+          id: `new-${professional.id}`,
+          professionalId: professional.id,
+          name: professional.name,
+          initials: professional.initials,
+          status: "Nova conversa",
+          messages: [],
+        }
+      : null
+  );
+
+  useEffect(() => {
+    if (professionalId) {
+      console.log("Profissional selecionado para chat:", professionalId);
+    }
+  }, [professionalId]);
 
   if (!chat) {
     return (
@@ -41,7 +66,7 @@ function ChatInterno() {
           <ArrowLeft aria-hidden="true" />
           Voltar
         </button>
-        <p>Conversa nao encontrada.</p>
+        <p>Profissional ou conversa não encontrada.</p>
       </section>
     );
   }
@@ -73,6 +98,12 @@ function ChatInterno() {
 
       {/* Area de mensagens renderizada a partir de ChatData. */}
       <div className="chat-interno__messages" aria-label="Mensagens da conversa">
+        {messages.length === 0 && (
+          <p className="chat-interno__empty-message">
+            Nenhuma mensagem ainda. Envie a primeira mensagem.
+          </p>
+        )}
+
         {messages.map((message) => (
           <div className="chat-interno__message-group" key={message.id}>
             {message.shouldShowDate && (
