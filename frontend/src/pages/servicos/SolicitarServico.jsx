@@ -1,8 +1,9 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, Calendar, Camera, Clock, Info, MapPin, Package } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import ActionButton from "../../components/ui/ActionButton";
 import FormInput from "../../components/ui/FormInput";
+import { cadastrosProfissionais } from "../../data/CadastroProfissional";
 import { professionalsLists } from "../../data/Professionals";
 import "../../styles/global.css";
 
@@ -66,16 +67,32 @@ function openNativePicker(inputRef) {
 }
 
 function SolicitarServico() {
-  const { id } = useParams();
+  const { id, professionalId } = useParams();
   const navigate = useNavigate();
   const dateInputRef = useRef(null);
   const timeInputRef = useRef(null);
   const photoInputRef = useRef(null);
 
-  const service = useMemo(
-    () => getAllServices().find((item) => String(item.id) === String(id)),
-    [id]
+  const professional = useMemo(
+    () => cadastrosProfissionais.find((item) => String(item.id) === String(professionalId)),
+    [professionalId]
   );
+
+  const service = useMemo(() => {
+    const services = getAllServices();
+
+    if (professionalId && professional) {
+      return services.find((item) => String(item.id) === String(professional.serviceId));
+    }
+
+    return services.find((item) => String(item.id) === String(id));
+  }, [id, professional, professionalId]);
+
+  useEffect(() => {
+    if (professionalId) {
+      console.log("Profissional selecionado para solicitação:", professionalId);
+    }
+  }, [professionalId]);
 
   const [formData, setFormData] = useState({
     address: "",
@@ -157,6 +174,21 @@ function SolicitarServico() {
     console.log("Solicitacao enviada:", formData);
   }
 
+  if (professionalId && !professional) {
+    return (
+      <section className="service-request-page">
+        <header className="service-request-header">
+          <button className="service-request-header__back" type="button" onClick={() => navigate(-1)} aria-label="Voltar">
+            <ArrowLeft aria-hidden="true" />
+          </button>
+          <h1 className="service-request-header__title">Solicitar Servico</h1>
+        </header>
+
+        <p className="service-request-page__empty">Profissional não encontrado.</p>
+      </section>
+    );
+  }
+
   if (!service) {
     return (
       <section className="service-request-page">
@@ -167,7 +199,9 @@ function SolicitarServico() {
           <h1 className="service-request-header__title">Solicitar Servico</h1>
         </header>
 
-        <p className="service-request-page__empty">Servico nao encontrado.</p>
+        <p className="service-request-page__empty">
+          {professionalId ? "Serviço não encontrado para este profissional." : "Servico nao encontrado."}
+        </p>
       </section>
     );
   }

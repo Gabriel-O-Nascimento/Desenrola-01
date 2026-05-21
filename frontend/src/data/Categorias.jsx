@@ -1,7 +1,8 @@
 export const categorias = [
-  { id: "hidraulica", nome: "Hidráulica" },
-  { id: "eletrica", nome: "Elétrica" },
+  { id: "construcao", nome: "Casa e Construção" },
   { id: "pintura", nome: "Pintura" },
+  { id: "eletrica", nome: "Elétrica" },
+  { id: "hidraulica", nome: "Hidráulica" },
   { id: "climatizacao", nome: "Climatização" },
   { id: "reformas", nome: "Reformas" },
   { id: "jardinagem", nome: "Jardinagem" },

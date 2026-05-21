@@ -13,6 +13,7 @@ import OrcamentoRecusado from "./pages/historico/OrcamentoRecusado";
 import SolicitarServico from "./pages/servicos/SolicitarServico";
 import CadastroUsuario from "./pages/cadastros/CadastroUsuario";
 import CadastroProfissional from "./pages/cadastros/CadastroProfissional";
+import PerfilProfissional from "./pages/profile/PerfilProfissional";
 import ServicoAprovado from "./pages/servicos/ServicoAprovado";
 
 function Layout() {
@@ -36,12 +37,16 @@ function Layout() {
           <Route path="/historico/orcamento-recusado" element={<OrcamentoRecusado />} />
           <Route path="/orcamento/:id" element={<Orcamento />} />
           <Route path="/servicos/solicitar/:id" element={<SolicitarServico />} />
+          <Route path="/servicos/solicitar/profissional/:professionalId" element={<SolicitarServico />} />
           <Route path="/servicos/aprovado" element={<ServicoAprovado />} />
           <Route path="/cadastro/usuario" element={<CadastroUsuario />} />
           <Route path="/cadastro/profissional" element={<CadastroProfissional />} />
+          <Route path="/perfil/profissional" element={<PerfilProfissional />} />
+          <Route path="/perfil/profissional/:professionalId" element={<PerfilProfissional />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/chat/:chatId" element={<ChatInterno />} />
+          <Route path="/chat/profissional/:professionalId" element={<ChatInterno />} />
         </Routes>
       </main>
 
