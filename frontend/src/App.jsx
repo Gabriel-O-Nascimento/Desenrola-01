@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Home from "./pages/Home";
@@ -19,20 +19,25 @@ import CadastroUsuario from "./pages/cadastros/CadastroUsuario";
 import CadastroProfissional from "./pages/cadastros/CadastroProfissional";
 import PerfilProfissional from "./pages/profile/PerfilProfissional";
 import ServicoAprovado from "./pages/servicos/ServicoAprovado";
+import Login from "./pages/login/Login";
 
 function Layout() {
   const location = useLocation();
 
   /* Oculta o footer em todas as rotas do chat */
-  const hideFooter = location.pathname.startsWith("/chat");
+  const isLoginPage = location.pathname === "/login";
+  const hideFooter = location.pathname.startsWith("/chat") || isLoginPage;
+  const hideHeader = isLoginPage;
 
   return (
     <>
-      <Header />
+      {!hideHeader && <Header />}
 
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/historico" element={<HistoricoServicos />} />
           <Route path="/Services" element={<HistoricoServicos />} />

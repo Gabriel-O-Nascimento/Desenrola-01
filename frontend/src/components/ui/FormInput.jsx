@@ -84,6 +84,8 @@ export default function FormInput({
   min,
   inputRef,
   errorMessage,
+  leftIcon,
+  rightElement,
 }) {
   const htmlType = inputTypeMap[type] || "text";
   const typeConfig = inputConfigMap[type] || {};
@@ -138,26 +140,38 @@ export default function FormInput({
           ))}
         </select>
       ) : (
-        /* Input controlado por props, com tipos personalizados mapeados para HTML. */
-        <input
-          className="form-input__control"
-          id={inputId}
-          name={name}
-          type={htmlType}
-          value={htmlType === "file" ? undefined : value}
-          onChange={onChange}
-          onBlur={onBlur}
-          placeholder={placeholder || typeConfig.placeholder}
-          required={required}
-          disabled={disabled}
-          min={min}
-          ref={inputRef}
-          inputMode={typeConfig.inputMode}
-          maxLength={typeConfig.maxLength}
-          accept={typeConfig.accept}
-          aria-invalid={Boolean(errorMessage)}
-          aria-describedby={errorMessage ? errorId : undefined}
-        />
+        /* Slots opcionais mantem icones e acoes alinhados dentro do campo. */
+        <span
+          className={[
+            "form-input__control-wrapper",
+            leftIcon ? "form-input__control-wrapper--with-left-icon" : "",
+            rightElement ? "form-input__control-wrapper--with-right-icon" : "",
+          ].filter(Boolean).join(" ")}
+        >
+          {leftIcon && <span className="form-input__icon form-input__icon--left">{leftIcon}</span>}
+
+          <input
+            className="form-input__control form-input__input"
+            id={inputId}
+            name={name}
+            type={htmlType}
+            value={htmlType === "file" ? undefined : value}
+            onChange={onChange}
+            onBlur={onBlur}
+            placeholder={placeholder || typeConfig.placeholder}
+            required={required}
+            disabled={disabled}
+            min={min}
+            ref={inputRef}
+            inputMode={typeConfig.inputMode}
+            maxLength={typeConfig.maxLength}
+            accept={typeConfig.accept}
+            aria-invalid={Boolean(errorMessage)}
+            aria-describedby={errorMessage ? errorId : undefined}
+          />
+
+          {rightElement}
+        </span>
       )}
 
       {errorMessage && (
