@@ -25,7 +25,7 @@ export default function ChatCard({ chat, onClick }) {
 
   function handleClick() {
     onClick?.(chat);
-    navigate(`/chat/${chat.id}`);
+    navigate(`/chat/profissional/${chat.professionalId ?? chat.id}`);
   }
 
   return (

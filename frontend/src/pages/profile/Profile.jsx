@@ -20,6 +20,7 @@ import SegmentedControl from "../../components/ui/SegmentedControl";
 import ToggleSwitch from "../../components/ui/ToggleSwitch";
 import { profileData } from "../../data/ProfileData";
 import "../../styles/global.css";
+import { useNavigate } from "react-router-dom";
 
 const contactOptions = [
   { label: "Chat", value: "chat" },
@@ -63,6 +64,7 @@ function Profile() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);
   const [contactPreference, setContactPreference] = useState("chat");
+  const navigate = useNavigate();
 
   function handleOpenProfileOption(option) {
     console.log("Abrir opcao:", option);
@@ -178,12 +180,12 @@ function Profile() {
         <ActionButton
           text="Tornar-se profissional"
           className="profile-actions__button"
-          onClick={() => console.log("Tornar-se profissional")}
+          onClick={() => navigate("/cadastro/profissional")}
         />
 
         <ActionButton
           className="action-button__danger profile-actions__button"
-          onClick={() => console.log("Sair da conta")}
+          onClick={() => navigate("/login")}
         >
           <LogOut aria-hidden="true" />
           Sair da conta
