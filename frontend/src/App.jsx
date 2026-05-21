@@ -11,6 +11,9 @@ import Orcamento from "./pages/historico/Orcamento";
 import OrcamentoAprovado from "./pages/historico/OrcamentoAprovado";
 import OrcamentoRecusado from "./pages/historico/OrcamentoRecusado";
 import DetalhesCancelamento from "./pages/historico/DetalhesCancelamento";
+import AcompanhamentoServicos from "./pages/historico/AcompanhamentoServicos";
+import ServicoConcluido from "./pages/historico/ServicoConcluido";
+import AvaliarServico from "./pages/historico/AvaliarServico";
 import SolicitarServico from "./pages/servicos/SolicitarServico";
 import CadastroUsuario from "./pages/cadastros/CadastroUsuario";
 import CadastroProfissional from "./pages/cadastros/CadastroProfissional";
@@ -35,6 +38,9 @@ function Layout() {
           <Route path="/Services" element={<HistoricoServicos />} />
           <Route path="/historico/orcamento/:id" element={<Orcamento />} />
           <Route path="/historico/cancelamento/:id" element={<DetalhesCancelamento />} />
+          <Route path="/historico/acompanhamento/:id" element={<AcompanhamentoServicos />} />
+          <Route path="/historico/servico-concluido/:id" element={<ServicoConcluido />} />
+          <Route path="/historico/avaliar-servico/:id" element={<AvaliarServico />} />
           <Route path="/historico/orcamento-aprovado" element={<OrcamentoAprovado />} />
           <Route path="/historico/orcamento-recusado" element={<OrcamentoRecusado />} />
           <Route path="/orcamento/:id" element={<Orcamento />} />
@@ -45,6 +51,7 @@ function Layout() {
           <Route path="/cadastro/profissional" element={<CadastroProfissional />} />
           <Route path="/perfil/profissional" element={<PerfilProfissional />} />
           <Route path="/perfil/profissional/:professionalId" element={<PerfilProfissional />} />
+          <Route path="/profile/profissional/:professionalId" element={<PerfilProfissional />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/chat/:chatId" element={<ChatInterno />} />

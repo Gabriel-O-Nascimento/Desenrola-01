@@ -19,7 +19,15 @@ const statusLabels = {
 };
 
 function getPrimaryButtonText(status) {
-  return status === "aguardando_orcamento" ? "Ver Orcamento" : "Ver acompanhamento";
+  if (status === "aguardando_orcamento") {
+    return "Ver Orcamento";
+  }
+
+  if (status === "concluido") {
+    return "Ver resumo";
+  }
+
+  return "Ver acompanhamento";
 }
 
 export default function ServiceHistory({ service }) {
@@ -33,7 +41,12 @@ export default function ServiceHistory({ service }) {
       return;
     }
 
-    console.log("Abrir acompanhamento", service.id);
+    if (service.status === "concluido") {
+      navigate(`/historico/servico-concluido/${service.id}`);
+      return;
+    }
+
+    navigate(`/historico/acompanhamento/${service.id}`);
   }
 
   return (
