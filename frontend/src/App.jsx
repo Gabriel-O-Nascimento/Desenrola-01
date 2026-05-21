@@ -10,6 +10,7 @@ import Profile from "./pages/profile/Profile";
 import Orcamento from "./pages/historico/Orcamento";
 import OrcamentoAprovado from "./pages/historico/OrcamentoAprovado";
 import OrcamentoRecusado from "./pages/historico/OrcamentoRecusado";
+import DetalhesCancelamento from "./pages/historico/DetalhesCancelamento";
 import SolicitarServico from "./pages/servicos/SolicitarServico";
 import CadastroUsuario from "./pages/cadastros/CadastroUsuario";
 import CadastroProfissional from "./pages/cadastros/CadastroProfissional";
@@ -33,6 +34,7 @@ function Layout() {
           <Route path="/historico" element={<HistoricoServicos />} />
           <Route path="/Services" element={<HistoricoServicos />} />
           <Route path="/historico/orcamento/:id" element={<Orcamento />} />
+          <Route path="/historico/cancelamento/:id" element={<DetalhesCancelamento />} />
           <Route path="/historico/orcamento-aprovado" element={<OrcamentoAprovado />} />
           <Route path="/historico/orcamento-recusado" element={<OrcamentoRecusado />} />
           <Route path="/orcamento/:id" element={<Orcamento />} />

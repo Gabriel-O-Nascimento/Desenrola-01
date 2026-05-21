@@ -89,7 +89,7 @@ export default function ServiceHistory({ service }) {
           <ActionButton
             text="Ver Detalhes"
             className="action-button__outline service-history__button"
-            onClick={() => console.log("Ver detalhes", service.id)}
+            onClick={() => navigate(`/historico/cancelamento/${service.id}`)}
           />
         ) : (
           <>
