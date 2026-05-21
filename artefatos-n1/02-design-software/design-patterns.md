@@ -1,162 +1,222 @@
-# 🎨 Padrões de Projeto (Design Patterns) - Desenrola
+# 🎨 Padrões de Projeto (Design Patterns) — Desenrola
 
-## O que são Design Patterns?
+## Padrões Implementados
 
-Design Patterns são **soluções prontas para problemas comuns** que aparecem quando estamos programando. É como ter uma "receita de bolo" testada e aprovada para resolver situações específicas no código.
+### 1. Strategy Pattern — Notificações
 
----
+**Problema:** Cada tipo de notificação (nova solicitação, orçamento recebido, serviço concluído, etc.) precisa de um título e mensagem diferentes. Sem um padrão, teríamos um `if/else` gigante dentro do `NotificacaoService`.
 
-## Por que usar?
+**Solução:** Cada tipo de notificação tem sua própria classe (estratégia) que sabe montar o título e a mensagem.
 
-- ✅ Código mais organizado e fácil de entender
-- ✅ Facilita trabalhar em equipe (todo mundo entende o padrão)
-- ✅ Menos bugs
-- ✅ Mais fácil de testar
-- ✅ Professores vão reconhecer que você sabe o que está fazendo
+**Estrutura:**
 
----
-
-## Padrões que vamos usar no Desenrola
-
-### 1. Separação em Camadas (Layered Architecture)
-
-**O que é**: Dividir o código em "andares", cada um com sua responsabilidade.
-
-**Como funciona no nosso projeto**:
 ```
-Frontend (Telas)
-    ↓
-Controladores (Recebe requisições HTTP)
-    ↓
-Serviços (Regras de negócio)
-    ↓
-Repositórios (Banco de dados)
+NotificacaoStrategy (interface)
+├── NovaSolicitacaoStrategy
+├── OrcamentoRecebidoStrategy
+├── SolicitacaoAceitaStrategy
+├── SolicitacaoRecusadaStrategy
+├── ServicoConcluidoStrategy
+├── AvaliacaoRecebidaStrategy
+└── SistemaStrategy
 ```
 
-**Por que usar**: Cada pessoa do grupo cuida de uma camada, menos conflitos no Git.
-
----
-
-### 2. Repository (Repositório)
-
-**O que é**: Uma "gaveta" onde guardamos e buscamos dados do banco.
-
-**Exemplo prático**:
+**Interface:**
 ```java
-// Ao invés de escrever SQL toda hora:
-SELECT * FROM solicitacoes WHERE cliente_id = ?
-
-// Usamos:
-solicitacaoRepository.buscarPorCliente(clienteId);
-```
-
-**Por que usar**: Se mudarmos de PostgreSQL para MongoDB, só mexemos no repositório, o resto do código continua igual.
-
----
-
-### 3. Mensageria (Filas)
-
-**O que é**: Ao invés de fazer tudo na hora, colocamos tarefas em uma "fila" para serem processadas depois.
-
-**Exemplo prático**:
-```
-Cliente cria solicitação
-    ↓
-Sistema coloca na fila do RabbitMQ
-    ↓
-Cliente recebe resposta rápida: "Solicitação criada!"
-    ↓
-(Em segundo plano) Sistema notifica profissionais
-```
-
-**Por que usar**: 
-- Cliente não fica esperando
-- Se o sistema cair, as mensagens não se perdem
-- Atende o requisito da banca (mensageria obrigatória)
-
----
-
-### 4. Injeção de Dependência (Dependency Injection)
-
-**O que é**: Ao invés de criar objetos dentro da classe, recebemos eles prontos.
-
-**Exemplo prático**:
-```java
-// ❌ Ruim (criando dentro)
-public class SolicitacaoService {
-    private SolicitacaoRepository repo = new SolicitacaoRepository();
+public interface NotificacaoStrategy {
+    TipoNotificacao getTipo();
+    String montarTitulo(ContextoNotificacao contexto);
+    String montarMensagem(ContextoNotificacao contexto);
 }
+```
 
-// ✅ Bom (recebendo pronto)
-public class SolicitacaoService {
-    private SolicitacaoRepository repo;
-    
-    public SolicitacaoService(SolicitacaoRepository repo) {
-        this.repo = repo;
+**Exemplo de implementação:**
+```java
+@Component
+public class OrcamentoRecebidoStrategy implements NotificacaoStrategy {
+
+    @Override
+    public TipoNotificacao getTipo() {
+        return TipoNotificacao.ORCAMENTO_RECEBIDO;
+    }
+
+    @Override
+    public String montarTitulo(ContextoNotificacao contexto) {
+        return "Orçamento recebido";
+    }
+
+    @Override
+    public String montarMensagem(ContextoNotificacao contexto) {
+        return "Você recebeu um orçamento no valor de R$ " + contexto.getValor();
     }
 }
 ```
 
-**Por que usar**: Facilita testes (podemos passar um repositório fake).
+**Como o NotificacaoService usa:**
+```java
+@Service
+public class NotificacaoService {
+
+    private final Map<TipoNotificacao, NotificacaoStrategy> mapaEstrategias;
+
+    @PostConstruct
+    void registrarEstrategias() {
+        estrategias.forEach(s -> mapaEstrategias.put(s.getTipo(), s));
+    }
+
+    public Notificacao notificar(Long idUsuario, TipoNotificacao tipo,
+                                  ContextoNotificacao contexto, ...) {
+        NotificacaoStrategy estrategia = mapaEstrategias.get(tipo);
+        // Usa a estratégia correta automaticamente
+        String titulo = estrategia.montarTitulo(contexto);
+        String mensagem = estrategia.montarMensagem(contexto);
+        // ...
+    }
+}
+```
+
+**Benefício:** Para adicionar um novo tipo de notificação, basta criar uma nova classe que implementa `NotificacaoStrategy`. Não precisa mexer no `NotificacaoService` — respeita o princípio Open/Closed (SOLID).
+
+---
+
+### 2. Factory Pattern — Criação de Eventos
+
+**Problema:** Os eventos de mensageria (SolicitacaoCriadaEvento, OrcamentoEnviadoEvento, etc.) precisam ser criados em vários lugares do código, sempre com data/hora preenchida e campos validados.
+
+**Solução:** Uma classe `EventoFactory` centraliza a criação de todos os eventos.
+
+**Implementação:**
+```java
+@Component
+public class EventoFactory {
+
+    public SolicitacaoCriadaEvento criarSolicitacaoCriada(
+            Long solicitacaoId, Long clienteId, String categoria,
+            String descricao, String endereco) {
+        SolicitacaoCriadaEvento evento = new SolicitacaoCriadaEvento();
+        evento.setSolicitacaoId(solicitacaoId);
+        evento.setClienteId(clienteId);
+        evento.setCategoria(categoria);
+        evento.setDescricao(descricao);
+        evento.setEndereco(endereco);
+        evento.setDataCriacao(LocalDateTime.now());  // Sempre preenchido
+        return evento;
+    }
+
+    public OrcamentoEnviadoEvento criarOrcamentoEnviado(...) { ... }
+    public StatusAtualizadoEvento criarStatusAtualizado(...) { ... }
+    public AvaliacaoCriadaEvento criarAvaliacaoCriada(...) { ... }
+}
+```
+
+**Benefício:** 
+- Garante que todos os eventos são criados de forma consistente (data sempre preenchida)
+- Se a estrutura do evento mudar, só altera em um lugar
+- Facilita testes (pode mockar a factory)
+
+---
+
+### 3. Injeção de Dependência (Dependency Injection)
+
+**Problema:** Se uma classe cria suas próprias dependências, fica impossível testar isoladamente e trocar implementações.
+
+**Solução:** O Spring injeta as dependências automaticamente via construtor.
+
+**Exemplo:**
+```java
+@Service
+@RequiredArgsConstructor  // Lombok gera o construtor
+public class SolicitacaoService {
+
+    private final SolicitacaoProducer solicitacaoProducer;  // Injetado
+    private final EventoFactory eventoFactory;              // Injetado
+
+    public void criarSolicitacao(...) {
+        // Usa as dependências sem precisar criá-las
+    }
+}
+```
+
+**Benefício:** Nos testes, podemos injetar mocks:
+```java
+@Mock private SolicitacaoProducer solicitacaoProducer;
+@Mock private EventoFactory eventoFactory;
+@InjectMocks private SolicitacaoService solicitacaoService;
+```
+
+---
+
+### 4. Repository Pattern
+
+**Problema:** O código de negócio não deve conhecer detalhes do banco de dados (SQL, JPA, etc.).
+
+**Solução:** Interfaces de repositório abstraem o acesso a dados.
+
+**Exemplo:**
+```java
+@Repository
+public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> {
+    List<Solicitacao> findByClienteIdUsuarioOrderByCriadoEmDesc(Long idCliente);
+    List<Solicitacao> findByProfissionalIdUsuarioOrderByCriadoEmDesc(Long idProfissional);
+}
+```
+
+**Benefício:** O serviço chama `solicitacaoRepository.findByClienteIdUsuario(id)` sem saber se é MySQL, PostgreSQL ou MongoDB por baixo.
 
 ---
 
 ### 5. DTO (Data Transfer Object)
 
-**O que é**: Objetos simples só para transportar dados entre camadas.
+**Problema:** Expor a entidade JPA diretamente na API pode vazar dados sensíveis e acoplar o banco à interface.
 
-**Exemplo prático**:
+**Solução:** DTOs controlam exatamente o que entra e sai da API.
+
+**Exemplo:**
 ```java
-// Cliente envia isso:
-{
-  "servicoId": "123",
-  "endereco": "Rua X",
-  "dataHora": "2026-04-15T10:00:00"
-}
-
-// Vira um DTO:
+@Data @Builder
 public class CriarSolicitacaoDTO {
-    private String servicoId;
-    private String endereco;
-    private LocalDateTime dataHora;
+    private Long idCliente;
+    private Integer idServico;
+    private String titulo;
+    private String descricao;
+    private String enderecoAtendimento;
+    // Não tem campos internos como criadoEm, status, etc.
 }
 ```
 
-**Por que usar**: 
-- Não expõe dados sensíveis (senha, etc.)
-- Controla exatamente o que entra e sai da API
-
 ---
 
-### 6. Strategy (Estratégia)
+### 6. Arquitetura em Camadas (Layered Architecture)
 
-**O que é**: Ter várias formas de fazer a mesma coisa e escolher qual usar.
-
-**Exemplo prático no Desenrola**:
+**Estrutura:**
 ```
-Calcular preço do serviço:
-- Preço fixo: R$ 50,00
-- Preço por hora: R$ 30,00 x 3 horas = R$ 90,00
-- Preço com desconto: R$ 50,00 - 10% = R$ 45,00
+Controladores  →  Serviços de Aplicação  →  Serviços de Domínio  →  Repositórios
+     (HTTP)          (orquestração)          (mensageria)            (banco)
 ```
 
-**Por que usar**: Fácil adicionar novos tipos de cálculo sem mexer no código existente.
+**Regra:** Cada camada só conhece a camada imediatamente abaixo. Um repositório nunca chama um controlador.
 
 ---
 
-## Resumo Visual
+## Princípios SOLID Aplicados
 
-| Padrão | Onde Usar | Benefício Principal |
-|--------|-----------|---------------------|
-| **Camadas** | Estrutura geral | Organização e divisão de trabalho |
-| **Repository** | Acesso ao banco | Facilita trocar banco de dados |
-| **Mensageria** | Tarefas assíncronas | Sistema mais rápido e resiliente |
-| **Injeção de Dependência** | Todas as classes | Facilita testes |
-| **DTO** | API (entrada/saída) | Segurança e controle |
-| **Strategy** | Cálculo de preços | Flexibilidade |
+| Princípio | Onde |
+|-----------|------|
+| **S** — Single Responsibility | Cada classe tem uma responsabilidade (Controller só roteia, Service só processa, Repository só persiste) |
+| **O** — Open/Closed | Strategy permite adicionar novos tipos de notificação sem alterar código existente |
+| **L** — Liskov Substitution | Todas as strategies são intercambiáveis via interface `NotificacaoStrategy` |
+| **I** — Interface Segregation | Interfaces de repositório expõem apenas os métodos necessários |
+| **D** — Dependency Inversion | Serviços dependem de abstrações (interfaces), não de implementações concretas |
 
 ---
 
-## Conclusão
+## Resumo
 
-Os padrões de projeto selecionados para o sistema Desenrola foram escolhidos com base nas necessidades específicas do projeto e nas melhores práticas de desenvolvimento de software. A implementação destes padrões será realizada na fase N2, garantindo um código limpo, testável e de fácil manutenção.
+| Padrão | Arquivo Principal | Propósito |
+|--------|-------------------|-----------|
+| Strategy | `strategy/NotificacaoStrategy.java` + `strategy/impl/` | Montar notificações por tipo |
+| Factory | `factory/EventoFactory.java` | Criar eventos de mensageria |
+| DI | Todo o projeto (Spring `@RequiredArgsConstructor`) | Desacoplamento |
+| Repository | `repositorios/*Repository.java` | Abstração do banco |
+| DTO | `controladores/dto/` | Controle de entrada/saída da API |
+| Layered | Estrutura de pacotes | Separação de responsabilidades |
