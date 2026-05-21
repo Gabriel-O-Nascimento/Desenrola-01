@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronRight, Star } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import SearchBar from "../../components/ui/SearchBar";
+import ActionButton from "../../components/ui/ActionButton";
 import SegmentedControl from "../../components/ui/SegmentedControl";
-import { professionals, services } from "../../data/SearchData";
+import { api } from "../../services/api";
+import { normalizeServiceList } from "../../utils/normalize";
 import "../../styles/global.css";
 
 const searchTabs = [
@@ -11,6 +14,8 @@ const searchTabs = [
 ];
 
 function ProfessionalCard({ professional }) {
+  const navigate = useNavigate();
+
   return (
     <article className="search-result-card search-result-card--professional">
       <span className="search-result-card__avatar" aria-hidden="true">
@@ -27,9 +32,11 @@ function ProfessionalCard({ professional }) {
         </span>
       </div>
 
-      <button className="search-result-card__action" type="button">
-        Saiba mais
-      </button>
+      <ActionButton
+        text="Saiba mais"
+        className="search-result-card__action"
+        onClick={() => navigate(`/perfil/profissional/${professional.id}`)}
+      />
     </article>
   );
 }
@@ -55,13 +62,35 @@ function ServiceCard({ service }) {
 
 function Search() {
   const [activeTab, setActiveTab] = useState("professional");
+  const [professionals, setProfessionals] = useState([]);
+  const [services, setServices] = useState([]);
   const isProfessionalTab = activeTab === "professional";
+
+  useEffect(() => {
+    let active = true;
+
+    api.getSearch()
+      .then((response) => {
+        if (!active) {
+          return;
+        }
+
+        setProfessionals(response.professionals || []);
+        setServices(normalizeServiceList(response.services || []));
+      })
+      .catch((error) => {
+        console.error("Erro ao carregar busca:", error);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <section className="search-page">
       <SearchBar />
 
-      {/* SegmentedControl controla visualmente qual lista sera exibida. */}  
       <SegmentedControl
         options={searchTabs}
         activeValue={activeTab}
@@ -69,7 +98,6 @@ function Search() {
         className="search-page__tabs"
       />
 
-      {/* Lista visual de resultados, sem busca real por enquanto. */}
       <div className="search-results">
         {isProfessionalTab
           ? professionals.map((professional) => (

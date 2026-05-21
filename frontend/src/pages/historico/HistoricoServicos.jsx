@@ -1,7 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SegmentedControl from "../../components/ui/SegmentedControl";
 import ServiceHistory from "../../components/ui/ServiceHistory";
-import { servicesHistory } from "../../data/ServicesData";
+import { api } from "../../services/api";
 import "../../styles/global.css";
 
 const statusOptions = [
@@ -15,6 +15,15 @@ const statusOptions = [
 
 function HistoricoServicos() {
   const [activeStatus, setActiveStatus] = useState("todos");
+  const [servicesHistory, setServicesHistory] = useState([]);
+
+  useEffect(() => {
+    api.getServicesHistory()
+      .then(setServicesHistory)
+      .catch((error) => {
+        console.error("Erro ao carregar historico:", error);
+      });
+  }, []);
 
   const filteredServices = useMemo(() => {
     if (activeStatus === "todos") {
@@ -22,7 +31,7 @@ function HistoricoServicos() {
     }
 
     return servicesHistory.filter((service) => service.status === activeStatus);
-  }, [activeStatus]);
+  }, [activeStatus, servicesHistory]);
 
   return (
     <section className="historico-servicos">
@@ -30,7 +39,6 @@ function HistoricoServicos() {
         <h1 className="historico-servicos__title">Historico de servicos</h1>
       </header>
 
-      {/* Wrapper permite rolagem horizontal apenas quando as 6 opcoes nao couberem. */}
       <div className="historico-servicos__filter-scroll">
         <SegmentedControl
           options={statusOptions}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Bell,
   ChevronRight,
@@ -15,10 +15,12 @@ import {
   Shield,
   User,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import ActionButton from "../../components/ui/ActionButton";
 import SegmentedControl from "../../components/ui/SegmentedControl";
 import ToggleSwitch from "../../components/ui/ToggleSwitch";
-import { profileData } from "../../data/ProfileData";
+import { api } from "../../services/api";
+import { clearSession, getCurrentUserId } from "../../services/session";
 import "../../styles/global.css";
 
 const contactOptions = [
@@ -63,9 +65,30 @@ function Profile() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);
   const [contactPreference, setContactPreference] = useState("chat");
+  const [profileData, setProfileData] = useState({
+    name: "",
+    phone: "",
+    address: "",
+    email: "",
+    accountType: "",
+  });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    api.getProfile(getCurrentUserId())
+      .then(setProfileData)
+      .catch((error) => {
+        console.error("Erro ao carregar perfil:", error);
+      });
+  }, []);
 
   function handleOpenProfileOption(option) {
     console.log("Abrir opcao:", option);
+  }
+
+  function handleLogout() {
+    clearSession();
+    navigate("/login");
   }
 
   return (
@@ -178,12 +201,12 @@ function Profile() {
         <ActionButton
           text="Tornar-se profissional"
           className="profile-actions__button"
-          onClick={() => console.log("Tornar-se profissional")}
+          onClick={() => navigate("/cadastro/profissional")}
         />
 
         <ActionButton
           className="action-button__danger profile-actions__button"
-          onClick={() => console.log("Sair da conta")}
+          onClick={handleLogout}
         >
           <LogOut aria-hidden="true" />
           Sair da conta

@@ -1,9 +1,9 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowLeft, Calendar, Clock, MapPin, User } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import ActionButton from "../../components/ui/ActionButton";
 import SegmentedControl from "../../components/ui/SegmentedControl";
-import { budgetsData } from "../../data/BudgetData";
+import { api } from "../../services/api";
 import "../../styles/global.css";
 
 const budgetTabs = [
@@ -33,23 +33,39 @@ function BudgetItem({ item, type }) {
 
 function Orcamento() {
   const [activeTab, setActiveTab] = useState("labor");
+  const [budget, setBudget] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const budget = useMemo(
-    () => budgetsData.find((item) => String(item.id) === String(id)) || budgetsData[0],
-    [id]
-  );
+  useEffect(() => {
+    api.getBudgetById(id)
+      .then(setBudget)
+      .catch((error) => {
+        console.error("Erro ao carregar orcamento:", error);
+        setBudget(null);
+      });
+  }, [id]);
+
+  async function handleDecision(decision) {
+    try {
+      await api.decideBudget(id, decision);
+
+      if (decision === "approve") {
+        navigate("/historico/orcamento-aprovado");
+        return;
+      }
+
+      navigate("/historico/orcamento-recusado");
+    } catch (error) {
+      console.error("Erro ao atualizar orcamento:", error);
+    }
+  }
+
+  if (!budget) {
+    return null;
+  }
 
   const activeItems = activeTab === "labor" ? budget.labor : budget.materials;
-
-  function handleRejectBudget() {
-    console.log("Recusar orcamento", budget.id);
-  }
-
-  function handleApproveBudget() {
-    console.log("Aprovar orcamento", budget.id);
-  }
 
   return (
     <section className="budget-page">
@@ -131,13 +147,13 @@ function Orcamento() {
         <ActionButton
           text="Aprovar"
           className="action-button--primary budget-actions__button"
-          onClick={handleApproveBudget}
+          onClick={() => handleDecision("approve")}
         />
 
         <ActionButton
           text="Recusar"
           className="action-button--danger-outline budget-actions__button"
-          onClick={handleRejectBudget}
+          onClick={() => handleDecision("reject")}
         />
       </div>
     </section>

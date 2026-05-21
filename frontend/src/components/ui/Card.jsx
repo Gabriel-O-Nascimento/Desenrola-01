@@ -8,7 +8,11 @@ export default function Card({ item }) {
   const Icon = item.icon || Package;
 
   return (
-    <Link to={item.route} className="card-service" aria-label={`Abrir ${item.name}`}>
+    <Link
+      to={`/servicos/solicitar/${item.id}`}
+      className="card-service"
+      aria-label={`Solicitar ${item.name}`}
+    >
       {/* Area visual do card: vazia, proporcional e com icone centralizado. */}
       <span className="card-service__container">
         <Icon className="card-service__icon" aria-hidden="true" />

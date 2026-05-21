@@ -1,9 +1,14 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import SearchBar from "../components/ui/SearchBar";
 import ListaDeCards from "../components/ui/ListaDeCards";
-import { professionalsLists } from "../data/Professionals";
 import ActionButton from "../components/ui/ActionButton";
+import { api } from "../services/api";
+import { normalizeSection } from "../utils/normalize";
 
 function HomeDestaque() {
+  const navigate = useNavigate();
+
   return (
     <section className="home-destaque" aria-labelledby="home-destaque-title">
       <h2 className="home-destaque__title" id="home-destaque-title">
@@ -11,20 +16,41 @@ function HomeDestaque() {
       </h2>
 
       <p className="home-destaque__description">
-        Faça o seu perfil profissional no desenrola e comece a trabalhar para você mesmo, hoje.
-        <br></br>
-        trabalhe conosco, seja um desenrolado.
+        Faca o seu perfil profissional no desenrola e comece a trabalhar para voce mesmo, hoje.
+        <br />
+        Trabalhe conosco, seja um desenrolado.
       </p>
 
-      <ActionButton>
-        Seja Desenrolado!
-      </ActionButton>
+      <ActionButton
+        text="Seja Desenrolado!"
+        onClick={() => navigate("/cadastro/profissional")}
+      />
     </section>
   );
 }
 
 function Home() {
-  const [firstList, secondList, thirdList] = professionalsLists;
+  const [lists, setLists] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+
+    api.getHome()
+      .then((response) => {
+        if (active) {
+          setLists(response.map(normalizeSection));
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao carregar a home:", error);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const [firstList, secondList, thirdList] = lists;
 
   return (
     <div className="home">

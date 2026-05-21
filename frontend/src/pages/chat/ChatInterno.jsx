@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
 import { ArrowLeft, MoreVertical, Paperclip, Send } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ChatData } from "../../data/ChatData";
+import { api } from "../../services/api";
 import "../../styles/global.css";
 
 function getInitials(chat) {
@@ -30,9 +31,43 @@ function getMessagesWithDateSeparators(messages) {
 }
 
 function ChatInterno() {
-  const { chatId } = useParams();
+  const { chatId, professionalId } = useParams();
   const navigate = useNavigate();
-  const chat = ChatData.find((item) => String(item.id) === chatId);
+  const [chat, setChat] = useState(null);
+  const [draft, setDraft] = useState("");
+
+  useEffect(() => {
+    const request = professionalId
+      ? api.getChatByProfessionalId(professionalId)
+      : api.getChatById(chatId);
+
+    request
+      .then(setChat)
+      .catch((error) => {
+        console.error("Erro ao carregar conversa:", error);
+        setChat(null);
+      });
+  }, [chatId, professionalId]);
+
+  async function handleSendMessage(event) {
+    event.preventDefault();
+
+    if (!draft.trim()) {
+      return;
+    }
+
+    try {
+      const updatedChat = await api.sendChatMessage({
+        chatId,
+        professionalId,
+        text: draft.trim(),
+      });
+      setChat(updatedChat);
+      setDraft("");
+    } catch (error) {
+      console.error("Erro ao enviar mensagem:", error);
+    }
+  }
 
   if (!chat) {
     return (
@@ -41,7 +76,7 @@ function ChatInterno() {
           <ArrowLeft aria-hidden="true" />
           Voltar
         </button>
-        <p>Conversa nao encontrada.</p>
+        <p>Profissional ou conversa nao encontrada.</p>
       </section>
     );
   }
@@ -50,7 +85,6 @@ function ChatInterno() {
 
   return (
     <section className="chat-interno">
-      {/* Header interno com dados da conversa atual. */}
       <header className="chat-interno__header">
         <button className="chat-interno__icon-button" type="button" onClick={() => navigate("/chat")} aria-label="Voltar">
           <ArrowLeft aria-hidden="true" />
@@ -67,12 +101,16 @@ function ChatInterno() {
 
         <button className="chat-interno__icon-button chat-interno__menu" type="button" aria-label="Abrir menu da conversa">
           <MoreVertical aria-hidden="true" />
-        </button> {/*Incluir opções - Ver perfil, Silenciar, Bloquear, Denunciar*/}
+        </button>
       </header>
 
-
-      {/* Area de mensagens renderizada a partir de ChatData. */}
       <div className="chat-interno__messages" aria-label="Mensagens da conversa">
+        {messages.length === 0 && (
+          <p className="chat-interno__empty-message">
+            Nenhuma mensagem ainda. Envie a primeira mensagem.
+          </p>
+        )}
+
         {messages.map((message) => (
           <div className="chat-interno__message-group" key={message.id}>
             {message.shouldShowDate && (
@@ -87,8 +125,7 @@ function ChatInterno() {
         ))}
       </div>
 
-      {/* Barra visual de envio, sem logica funcional por enquanto. */}
-      <form className="chat-interno__composer">
+      <form className="chat-interno__composer" onSubmit={handleSendMessage}>
         <button className="chat-interno__icon-button" type="button" aria-label="Anexar arquivo">
           <Paperclip aria-hidden="true" />
         </button>
@@ -97,9 +134,11 @@ function ChatInterno() {
           className="chat-interno__input"
           type="text"
           placeholder="Digite uma mensagem..."
+          value={draft}
+          onChange={(event) => setDraft(event.target.value)}
         />
 
-        <button className="chat-interno__send" type="button" aria-label="Enviar mensagem">
+        <button className="chat-interno__send" type="submit" aria-label="Enviar mensagem">
           <Send aria-hidden="true" />
         </button>
       </form>
