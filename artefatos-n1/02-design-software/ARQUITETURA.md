@@ -1,4 +1,4 @@
-# Por que Arquitetura em Camadas?
+# Arquitetura em Camadas
 
 ## O que é
 
@@ -18,37 +18,27 @@ A Arquitetura em Camadas (Layered Architecture) organiza o código em camadas ho
 └──────────┬──────────┘
            ↓
 ┌─────────────────────┐
-│    Repositórios      │  Acesso ao banco de dados (PostgreSQL)
+│    Repositórios      │  Acesso ao banco de dados (MySQL)
 └─────────────────────┘
 ```
 
-## Por que escolhemos essa arquitetura
+## Justificativa da escolha
 
-### 1. Simplicidade
-É a arquitetura mais ensinada e documentada. Qualquer tutorial de Node.js, Java ou Python segue esse padrão. Isso significa que quando alguém do grupo travar, vai encontrar ajuda fácil.
+### 1. Separação de responsabilidades
+Cada camada tem uma responsabilidade clara, facilitando a manutenção, testes e evolução do sistema. Mudanças em uma camada (ex: trocar o banco de dados) não afetam as demais.
 
-### 2. Divisão natural pra 4 integrantes
-Cada camada é uma responsabilidade clara que pode ser atribuída a uma pessoa:
+### 2. Adequada ao escopo do projeto
+A arquitetura em camadas é a abordagem mais adequada para o escopo deste projeto, oferecendo o nível certo de desacoplamento sem a complexidade adicional de padrões como Hexagonal ou Clean Architecture, que são mais indicados para sistemas de maior porte e múltiplos contextos.
 
-| Camada | Integrante | O que faz |
-|--------|-----------|-----------|
-| Controladores | Integrante 1 | API REST, rotas, validações |
-| Serviços | Integrante 2 | Lógica de negócio, RabbitMQ |
-| Repositórios | Integrante 3 | Banco de dados, queries, ORM |
-| Frontend | Integrante 4 | Interface, WebSocket |
-
-### 3. Menos conflitos de código
-Como cada pessoa trabalha em uma camada diferente, as chances de dois integrantes editarem o mesmo arquivo são baixas.
-
-### 4. Fácil de testar
+### 3. Testabilidade
 Cada camada pode ser testada isoladamente:
-- Controladores: testes de integração (a rota responde certo?)
+- Controladores: testes de integração (a rota responde corretamente?)
 - Serviços: testes unitários (a regra de negócio funciona?)
-- Repositórios: testes de integração com banco
+- Repositórios: testes de integração com o banco de dados
 - Frontend: testes de componentes
 
-### 5. Atende os critérios da banca
-A banca pede desacoplamento e separação de responsabilidades — a arquitetura em camadas entrega isso de forma clara e demonstrável, sem a complexidade de padrões como Hexagonal ou Clean Architecture que são mais adequados para sistemas maiores.
+### 4. Atende aos requisitos do projeto
+A arquitetura em camadas entrega o desacoplamento e a separação de responsabilidades exigidos pelo projeto integrador, com clareza para demonstrar e justificar as decisões técnicas.
 
 ## Regra de dependência
 

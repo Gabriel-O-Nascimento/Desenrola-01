@@ -2,7 +2,7 @@
 
 ## Entrega N1 - Artefatos Iniciais
 
-Este diretório contém toda a documentação necessária para a **Etapa N1** do Projeto Integrador ADS 2026/1.
+Este diretório contém toda a documentação produzida para a **Etapa N1** do Projeto Integrador ADS 2026/1.
 
 ---
 
@@ -11,7 +11,7 @@ Este diretório contém toda a documentação necessária para a **Etapa N1** do
 ### 1. Identificação do Projeto
 
 - **Arquivo**: [`guia_projeto_integrador.md`](./01-identificacao-projeto/guia_projeto_integrador.md)
-- **Conteúdo**: Resumo do projeto, divisão de entregas, critérios de avaliação e divisão de tarefas.
+- **Conteúdo**: Resumo do projeto, divisão de entregas e critérios de avaliação.
 
 ---
 
@@ -19,7 +19,7 @@ Este diretório contém toda a documentação necessária para a **Etapa N1** do
 
 #### 2.1 Arquitetura do Sistema
 - **Arquivo**: [`ARQUITETURA.md`](./02-design-software/ARQUITETURA.md)
-- **Conteúdo**: Descrição da arquitetura em camadas utilizada no projeto.
+- **Conteúdo**: Descrição e justificativa da arquitetura em camadas utilizada no projeto.
 
 #### 2.2 Diagramas C4
 - **Arquivo**: [`diagrama-c4.md`](./02-design-software/diagrama-c4.md)
@@ -32,9 +32,9 @@ Este diretório contém toda a documentação necessária para a **Etapa N1** do
 - **Arquivo**: [`diagrama-classes-dominio.md`](./02-design-software/diagrama-classes-dominio.md)
 - **Conteúdo**: Classes principais, relacionamentos, cardinalidades e regras de negócio.
 
-#### 2.4 Design Patterns (Padrões de Projeto)
+#### 2.4 Design Patterns
 - **Arquivo**: [`design-patterns.md`](./02-design-software/design-patterns.md)
-- **Conteúdo**: Repository, Strategy, Observer, Factory, Dependency Injection, DTO e Singleton Pattern.
+- **Conteúdo**: Strategy, Factory, Repository, Dependency Injection, DTO, Layered Architecture e princípios SOLID aplicados ao projeto.
 
 ---
 
@@ -61,6 +61,10 @@ Este diretório contém toda a documentação necessária para a **Etapa N1** do
 - **Arquivo**: [`requisitos-nao-funcionais.md`](./04-qualidade/requisitos-nao-funcionais.md)
 - **Conteúdo**: Performance, escalabilidade, segurança, usabilidade e conformidade legal.
 
+#### 4.3 Relatório de Testes
+- **Arquivo**: [`relatorio-testes.md`](./04-qualidade/relatorio-testes.md)
+- **Conteúdo**: Resumo da execução dos testes unitários, cobertura por pacote (JaCoCo) e cenários cobertos.
+
 ---
 
 ### 5. Web/Mensageria
@@ -69,13 +73,9 @@ Este diretório contém toda a documentação necessária para a **Etapa N1** do
 - **Arquivo**: [`repositorio-git.md`](./05-mensageria/repositorio-git.md)
 - **URL**: https://github.com/Gabriel-O-Nascimento/Desenrola-01
 
-#### 5.2 Estrutura Inicial (Docker + Hello World)
+#### 5.2 Estrutura Inicial (Docker + Integração)
 - **Arquivo**: [`estrutura-inicial.md`](./05-mensageria/estrutura-inicial.md)
-- **Conteúdo**: Evidência do uso de Docker (RabbitMQ e PostgreSQL) e demonstração "Hello World" da conexão entre frontend e backend.
-
-#### 5.3 MVP - Como Rodar o Projeto
-- **Arquivo**: [`MVP-README.md`](./MVP-README.md)
-- **Conteúdo**: Instruções completas para executar o MVP, testar a arquitetura e resolver problemas comuns.
+- **Conteúdo**: Configuração do Docker (RabbitMQ e MySQL) e descrição do fluxo de mensageria entre frontend e backend.
 
 ---
 
@@ -101,11 +101,11 @@ artefatos-n1/
 │   └── prototipo.md
 ├── 04-qualidade/
 │   ├── plano-de-testes.md
+│   ├── relatorio-testes.md
 │   └── requisitos-nao-funcionais.md
 ├── 05-mensageria/
 │   ├── estrutura-inicial.md
 │   └── repositorio-git.md
-├── MVP-README.md
 └── README.md
 ```
 
@@ -124,9 +124,9 @@ artefatos-n1/
 | | Guia de Estilos (Design System) | Concluído |
 | **Qualidade** | Plano de Testes | Concluído |
 | | Requisitos Não-Funcionais | Concluído |
+| | Relatório de Testes (N2) | Concluído |
 | **Mensageria** | Repositório Git | Concluído |
-| | Docker Compose + Hello World | Concluído |
-| | MVP (Instruções de Execução) | Concluído |
+| | Docker Compose + Integração | Concluído |
 
 ---
 
@@ -134,5 +134,3 @@ artefatos-n1/
 
 - [README Principal do Projeto](../README.md)
 - [Docker Compose](../docker-compose.yml)
-
----

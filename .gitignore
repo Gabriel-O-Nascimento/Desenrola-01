@@ -21,12 +21,6 @@ hs_err_pid*
 # Cobertura de testes
 jacoco.exec
 
-# Arquivos internos do grupo (NÃO COMMITAR)
-GUIA-INTERNO-GRUPO.md
-*INTERNO*.md
-*RASCUNHO*.md
-INSTRUCOES.md
-
 # Logs
 logs
 *.log

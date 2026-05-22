@@ -1,148 +1,83 @@
-# 🔧 Desenrola — Plataforma de Serviços Residenciais
+# Desenrola
 
-Solução Web Full-Stack distribuída com **Arquitetura em Camadas**, **Mensageria Assíncrona** (RabbitMQ) e **Notificações em Tempo Real** (WebSocket).
+Plataforma que conecta clientes a profissionais de serviços residenciais (hidráulica, elétrica, pintura e outros).
 
-**Repositório:** [https://github.com/Gabriel-O-Nascimento/Desenrola-01](https://github.com/Gabriel-O-Nascimento/Desenrola-01)
+Repositório: https://github.com/Gabriel-O-Nascimento/Desenrola-01
 
----
+## Sobre o projeto
 
-## 📋 Sobre o Projeto
+O cliente cria uma solicitação no app, profissionais qualificados recebem essa solicitação e enviam orçamentos. Depois que o serviço é realizado, o cliente avalia o profissional. Todo o fluxo passa por uma fila de mensageria, e o cliente recebe atualizações em tempo real na tela.
 
-O Desenrola conecta **clientes** que precisam de serviços residenciais (hidráulica, elétrica, pintura, etc.) com **profissionais** qualificados. O sistema gerencia todo o fluxo: desde a criação da solicitação até a avaliação do serviço prestado.
-
-### Fluxo Principal
+## Como o sistema está organizado
 
 ```
-Cliente cria solicitação
-    ↓ (API REST)
-Backend salva no banco e publica evento no RabbitMQ
-    ↓ (Mensageria assíncrona)
-Consumer processa evento e gera notificação
-    ↓ (WebSocket)
-Cliente recebe notificação em tempo real na tela
+Frontend (React)
+       ↓ HTTP / WebSocket
+Controladores (API REST)
+       ↓
+Serviços (regras de negócio)
+       ↓
+Repositórios (acesso ao banco)
+       ↓
+MySQL
 ```
 
----
+Para ações importantes (criar solicitação, enviar orçamento, mudar status, avaliar), os serviços publicam um evento no RabbitMQ. Um consumer escuta a fila, processa o evento e envia uma notificação para o usuário pelo WebSocket. A justificativa completa da arquitetura está em [`artefatos-n1/02-design-software/ARQUITETURA.md`](artefatos-n1/02-design-software/ARQUITETURA.md).
 
-## 🏗️ Arquitetura
+## Tecnologias
 
-Arquitetura em Camadas com comunicação assíncrona via RabbitMQ.
+- Frontend: React + Vite
+- Backend: Java 21 + Spring Boot 3.4
+- Banco de dados: MySQL 8.0
+- Mensageria: RabbitMQ 3
+- WebSocket: Spring WebSocket (STOMP)
+- Testes: JUnit 5, Mockito, AssertJ
+- Cobertura: JaCoCo
+- Infraestrutura: Docker Compose
 
-```
-┌─────────────────────┐
-│      Frontend        │  React — Interface do usuário
-└──────────┬──────────┘
-           ↓ HTTP / WebSocket
-┌─────────────────────┐
-│    Controladores     │  API REST (endpoints)
-└──────────┬──────────┘
-           ↓
-┌─────────────────────┐
-│      Serviços        │  Regras de negócio + Mensageria (RabbitMQ)
-└──────────┬──────────┘
-           ↓
-┌─────────────────────┐
-│    Repositórios      │  JPA/Hibernate → MySQL
-└─────────────────────┘
-```
+## Padrões de projeto aplicados
 
-> Justificativa detalhada em [artefatos-n1/02-design-software/ARQUITETURA.md](artefatos-n1/02-design-software/ARQUITETURA.md)
+- Strategy: cada tipo de notificação tem sua própria estratégia para montar título e mensagem (`servicos/strategy/`)
+- Factory: a `EventoFactory` centraliza a criação dos eventos de mensageria (`servicos/factory/`)
+- Repository: as interfaces JPA isolam o acesso ao banco (`repositorios/`)
+- DTO: controla o que entra e sai da API (`controladores/dto/`)
+- Injeção de Dependência: o Spring resolve as dependências entre as camadas
 
----
+Detalhamento em [`artefatos-n1/02-design-software/design-patterns.md`](artefatos-n1/02-design-software/design-patterns.md).
 
-## 🛠️ Tecnologias
+## Endpoints principais
 
-| Camada | Tecnologia |
-|--------|-----------|
-| Frontend | React |
-| Backend | Java 21 + Spring Boot 3.4 |
-| Banco de Dados | MySQL 8.0 |
-| Mensageria | RabbitMQ 3 |
-| WebSocket | Spring WebSocket (STOMP) |
-| Testes | JUnit 5 + Mockito + AssertJ |
-| Cobertura | JaCoCo |
-| Build | Maven |
-| Infraestrutura | Docker Compose |
-
----
-
-## 🎨 Design Patterns Aplicados
-
-| Padrão | Onde | Propósito |
-|--------|------|-----------|
-| **Strategy** | `NotificacaoService` + `strategy/impl/` | Cada tipo de notificação tem sua própria estratégia de montar título e mensagem |
-| **Factory** | `EventoFactory` | Centraliza a criação dos eventos de mensageria |
-| **Injeção de Dependência** | Todo o projeto (Spring) | Desacoplamento entre camadas |
-| **Repository** | `repositorios/` | Abstração do acesso a dados |
-| **DTO** | `controladores/dto/` | Controle do que entra e sai da API |
-| **Layered Architecture** | Estrutura geral | Separação de responsabilidades |
-
-> Detalhes em [artefatos-n1/02-design-software/design-patterns.md](artefatos-n1/02-design-software/design-patterns.md)
-
----
-
-## 📡 Endpoints da API
-
-### Clientes
 | Método | Rota | Descrição |
 |--------|------|-----------|
 | POST | `/api/clientes` | Cadastrar cliente |
-
-### Profissionais
-| Método | Rota | Descrição |
-|--------|------|-----------|
 | POST | `/api/profissionais` | Cadastrar profissional |
 | GET | `/api/profissionais` | Listar profissionais disponíveis |
-| GET | `/api/profissionais?idCategoria=1` | Filtrar por categoria |
+| POST | `/api/solicitacoes` | Criar solicitação (dispara mensageria) |
+| GET | `/api/solicitacoes/{id}` | Buscar solicitação por id |
+| GET | `/api/solicitacoes?idCliente=X` | Listar solicitações de um cliente |
+| PUT | `/api/solicitacoes/{id}/status` | Atualizar status (dispara mensageria) |
+| POST | `/api/orcamentos` | Enviar orçamento (dispara mensageria) |
+| POST | `/api/avaliacoes` | Avaliar serviço (dispara mensageria) |
 
-### Solicitações
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| POST | `/api/solicitacoes` | Criar solicitação → dispara mensageria |
-| GET | `/api/solicitacoes/{id}` | Buscar por ID |
-| GET | `/api/solicitacoes?idCliente=1` | Listar por cliente |
-| GET | `/api/solicitacoes?idProfissional=1` | Listar por profissional |
-| PUT | `/api/solicitacoes/{id}/status` | Atualizar status → dispara mensageria |
+## Filas RabbitMQ
 
-### Orçamentos
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| POST | `/api/orcamentos` | Enviar orçamento → dispara mensageria |
+| Fila | Quando publica |
+|------|----------------|
+| `solicitacao.criada` | Cliente cria uma solicitação |
+| `orcamento.enviado` | Profissional envia orçamento |
+| `status.atualizado` | Status da solicitação muda |
+| `avaliacao.criada` | Cliente avalia o serviço |
 
-### Avaliações
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| POST | `/api/avaliacoes` | Criar avaliação → dispara mensageria |
-| GET | `/api/avaliacoes/profissional/{id}` | Listar avaliações do profissional |
+## Como rodar
 
----
+Antes de começar, é preciso ter Java 21, Maven e Docker Desktop instalados.
 
-## 🐇 Filas RabbitMQ
-
-| Fila | Evento | Consumer |
-|------|--------|----------|
-| `solicitacao.criada` | Nova solicitação criada | `SolicitacaoConsumer` |
-| `orcamento.enviado` | Profissional enviou orçamento | `OrcamentoConsumer` |
-| `status.atualizado` | Status da solicitação mudou | `StatusConsumer` |
-| `avaliacao.criada` | Cliente avaliou o serviço | `AvaliacaoConsumer` |
-
-Cada consumer processa o evento e gera uma notificação via WebSocket para o usuário.
-
----
-
-## 🚀 Como Rodar
-
-### Pré-requisitos
-- Java 21+
-- Maven
-- Docker Desktop
-
-### 1. Subir infraestrutura (MySQL + RabbitMQ)
+1. Subir o MySQL e o RabbitMQ:
 ```bash
 docker compose up -d
 ```
 
-### 2. Rodar o backend
+2. Rodar o backend:
 ```bash
 cd backend
 mvn spring-boot:run
@@ -150,75 +85,50 @@ mvn spring-boot:run
 
 O servidor inicia em `http://localhost:8080`.
 
-### 3. Acessar painéis
-- **RabbitMQ Management:** http://localhost:15672 (admin / admin123)
-- **MySQL:** localhost:3306 (desenrola_user / desenrola_pass)
+3. Rodar o frontend (em outro terminal):
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
----
+A interface fica disponível em `http://localhost:5173`.
 
-## ✅ Testes e Cobertura
+4. Painéis de administração:
+- RabbitMQ: http://localhost:15672 (usuário `admin`, senha `admin123`)
+- MySQL: porta 3306, usuário `desenrola_user`, senha `desenrola_pass`
 
-### Rodar testes
+## Testes e cobertura
+
+Para rodar os testes:
 ```bash
 cd backend
 mvn test
 ```
 
-**Resultado:** 48 testes unitários passando (0 falhas).
+Resultado atual: 48 testes, 0 falhas. A cobertura geral fica em torno de 67%, com os pacotes de domínio e factory cobertos em 100%.
 
-### Ver relatório de cobertura (JaCoCo)
-Após rodar `mvn test`, abra no navegador:
+Depois de rodar os testes, o relatório HTML do JaCoCo é gerado em:
 ```
 backend/target/site/jacoco/index.html
 ```
 
-**Cobertura atual: 67%** (excluindo entidades, DTOs, eventos e configurações).
+Basta abrir esse arquivo no navegador para ver a cobertura por pacote, classe e método.
 
-| Pacote | Cobertura |
-|--------|-----------|
-| `servicos/` (domínio) | 100% |
-| `servicos/factory/` | 100% |
-| `servicos/strategy/impl/` | 80% |
-| `servicos/aplicacao/` | 71% |
-| `controladores/` | 68% |
-| `servicos/producers/` | 50% |
-| `servicos/consumers/` | 21% |
-
----
-
-## 📁 Estrutura do Projeto
+## Estrutura de pastas
 
 ```
 Desenrola-01/
-├── backend/
+├── backend/                 Spring Boot (API + mensageria)
 │   ├── src/main/java/com/desenrola/
-│   │   ├── config/                    # RabbitMQ, WebSocket, CORS
-│   │   ├── controladores/            # Endpoints REST
-│   │   │   └── dto/                   # Objetos de transferência
-│   │   ├── repositorios/             # Interfaces JPA
-│   │   │   └── entidades/            # Mapeamento do banco
-│   │   └── servicos/                  # Lógica de negócio
-│   │       ├── aplicacao/             # Orquestração (AppServices)
-│   │       ├── consumers/            # Consumidores RabbitMQ
-│   │       ├── eventos/              # Objetos de evento
-│   │       ├── factory/              # Factory de eventos
-│   │       ├── producers/            # Publicadores RabbitMQ
-│   │       └── strategy/             # Strategy de notificações
-│   │           └── impl/             # Implementações concretas
-│   └── src/test/java/com/desenrola/  # Testes unitários
-├── frontend/                          # Interface React
-├── DataBase/                          # Script SQL inicial
-├── artefatos-n1/                      # Documentação (diagramas, protótipo, etc.)
-└── docker-compose.yml                 # MySQL + RabbitMQ
+│   │   ├── config/          RabbitMQ, WebSocket, CORS
+│   │   ├── controladores/   Endpoints REST e DTOs
+│   │   ├── repositorios/    Interfaces JPA e entidades
+│   │   └── servicos/        Regras de negócio, producers, consumers,
+│   │                        eventos, factory e strategies
+│   └── src/test/            Testes unitários (JUnit 5)
+├── frontend/                React + Vite
+├── DataBase/                Script SQL inicial
+├── artefatos-n1/            Documentação (diagramas, plano de testes, etc.)
+└── docker-compose.yml       MySQL + RabbitMQ
 ```
-
----
-
-## 👥 Equipe
-
-| Responsabilidade | Camada |
-|-----------------|--------|
-| API REST + Controladores | `controladores/` |
-| Mensageria + Regras de Negócio | `servicos/` |
-| Banco de Dados + Entidades | `repositorios/` |
-| Interface Web | `frontend/` |

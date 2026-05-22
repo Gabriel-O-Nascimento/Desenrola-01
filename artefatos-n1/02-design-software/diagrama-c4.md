@@ -14,7 +14,7 @@ O Diagrama de Contexto mostra o sistema Desenrola no centro, rodeado por seus us
 
 ## Nível 2: Diagrama de Container
 
-O Diagrama de Container dá um "zoom" no sistema Desenrola, mostrando os containers (aplicativos e bancos de dados) que fazem o sistema funcionar (ex: Frontend App, Backend API Spring Boot, PostgreSQL, RabbitMQ).
+O Diagrama de Container dá um "zoom" no sistema Desenrola, mostrando os containers (aplicativos e bancos de dados) que fazem o sistema funcionar (ex: Frontend App, Backend API Spring Boot, MySQL, RabbitMQ).
 
 > **Visualize a Imagem Original abaixo:**
 

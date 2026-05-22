@@ -361,6 +361,20 @@ img {
   border-color: #fca5a5;
 }
 
+.action-button:disabled,
+.action-button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.action-button:disabled:hover,
+.action-button[disabled]:hover {
+  background-color: inherit;
+  border-color: inherit;
+  box-shadow: none;
+}
+
 /* TOGGLE SWITCH */
 .toggle-switch {
   position: relative;

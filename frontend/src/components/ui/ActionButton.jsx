@@ -6,6 +6,7 @@ export default function ActionButton({
   onClick,
   type = "button",
   className = "",
+  disabled = false,
 }) {
 
   /* Mantem a classe base do componente e permite classes extras por pagina. */
@@ -18,6 +19,7 @@ export default function ActionButton({
       className={buttonClassName}
       type={type}
       onClick={onClick}
+      disabled={disabled}
     >
       {text || children}
     </button>

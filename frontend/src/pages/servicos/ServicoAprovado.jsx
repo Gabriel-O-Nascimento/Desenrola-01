@@ -34,7 +34,7 @@ function ServicoAprovado() {
         <ActionButton
           text="Ir para Meus Serviços"
           className="service-result-page__button"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/historico")}
         />
       </div>
     </section>

@@ -13,7 +13,7 @@ const Header = () => {
 
         {/* LOGO */}
         <div className="logo">
-          <Link to="/">
+          <Link to="/home">
             <img src={Logo} alt="Desenrola Logo" />
           </Link>
         </div>
@@ -30,10 +30,10 @@ const Header = () => {
             </button>
 
           <ul>
-            <li><Link to="/" onClick={() => setMenuOpen(false)}>Início</Link></li>
+            <li><Link to="/home" onClick={() => setMenuOpen(false)}>Início</Link></li>
             <li><Link to="/chat" onClick={() => setMenuOpen(false)}>Chat</Link></li>
             <li><Link to="/search" onClick={() => setMenuOpen(false)}>Pesquisar</Link></li>
-            <li><Link to="/services" onClick={() => setMenuOpen(false)}>Serviços</Link></li>
+            <li><Link to="/historico" onClick={() => setMenuOpen(false)}>Serviços</Link></li>
             <li><Link to="/profile" onClick={() => setMenuOpen(false)}>Perfil</Link></li>
           </ul>
         </nav>

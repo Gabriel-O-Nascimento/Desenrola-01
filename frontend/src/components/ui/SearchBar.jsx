@@ -1,21 +1,31 @@
 import { Search } from "lucide-react";
 import "../../styles/global.css";
 
-export default function SearchBar() {
+/**
+ * Barra de pesquisa reutilizavel.
+ * Pode ser usada de forma controlada (com value/onChange) ou apenas visual.
+ */
+export default function SearchBar({
+  value,
+  onChange,
+  placeholder = "Pesquisar serviços ou profissionais...",
+  id = "home-search",
+}) {
   return (
-    /* Container externo usado para centralizar a barra na Home. */
+    /* Container externo usado para centralizar a barra. */
     <div className="search-bar">
-      <label className="search-bar__field" htmlFor="home-search">
+      <label className="search-bar__field" htmlFor={id}>
         {/* Icone visual da busca, alinhado a esquerda do input. */}
         <Search className="search-bar__icon" aria-hidden="true" />
 
-        {/* Input preparado para receber texto quando a busca funcional for criada. */}
         <input
           className="search-bar__input"
-          id="home-search"
-          name="home-search"
+          id={id}
+          name={id}
           type="search"
-          placeholder="Pesquisar serviços ou profissionais..."
+          placeholder={placeholder}
+          value={value ?? ""}
+          onChange={onChange}
         />
       </label>
     </div>

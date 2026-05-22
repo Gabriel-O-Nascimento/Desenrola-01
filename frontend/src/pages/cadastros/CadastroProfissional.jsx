@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
-import { ArrowLeft, Camera } from "lucide-react";
+import { ArrowLeft, Camera, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ActionButton from "../../components/ui/ActionButton";
 import FormInput from "../../components/ui/FormInput";
 import SegmentedControl from "../../components/ui/SegmentedControl";
 import { categorias } from "../../data/Categorias";
+import { profissionalService } from "../../services/profissionalService";
 import "../../styles/global.css";
 
 const documentTypeOptions = [
@@ -150,6 +151,7 @@ export default function CadastroProfissional() {
   const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const isCpfSelected = formData.documentType === "cpf";
   const documentFieldName = isCpfSelected ? "cpf" : "cnpj";
@@ -205,7 +207,8 @@ export default function CadastroProfissional() {
         if (!fieldValue || fieldValue.length < 50) return "Descreva seus serviços com pelo menos 50 caracteres.";
         return "";
       case "personalDocument":
-        if (!value) return "Envie uma foto do documento pessoal.";
+        // Documento pessoal e opcional. Validamos apenas o tipo do arquivo quando enviado.
+        if (!value) return "";
         if (!isValidPersonalDocument(value)) return "Envie um arquivo PNG ou JPG.";
         return "";
       default:
@@ -224,7 +227,6 @@ export default function CadastroProfissional() {
       "state",
       "mainCategory",
       "serviceDescription",
-      "personalDocument",
     ];
     const newTouched = requiredFields.reduce((fields, field) => ({ ...fields, [field]: true }), {});
     const newErrors = requiredFields.reduce((fieldErrors, field) => {
@@ -322,7 +324,14 @@ export default function CadastroProfissional() {
       return;
     }
 
-    console.log("Cadastro profissional realizado:", formData);
+    profissionalService
+      .cadastrar(formData)
+      .then(() => {
+        navigate("/login");
+      })
+      .catch(() => {
+        navigate("/login");
+      });
   }
 
   return (
@@ -376,12 +385,22 @@ export default function CadastroProfissional() {
           <FormInput
             label="Senha *"
             name="password"
-            type="senha"
+            type={showPassword ? "texto" : "senha"}
             value={formData.password}
             onChange={handleFieldChange}
             onBlur={handleFieldBlur}
             placeholder="Digite sua senha"
             errorMessage={errors.password}
+            rightElement={
+              <button
+                className="form-input__icon-button"
+                type="button"
+                onClick={() => setShowPassword((current) => !current)}
+                aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+              >
+                {showPassword ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}
+              </button>
+            }
           />
 
           <FormInput

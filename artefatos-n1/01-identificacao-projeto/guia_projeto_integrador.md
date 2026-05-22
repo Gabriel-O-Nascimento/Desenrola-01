@@ -58,12 +58,15 @@ _____________________________________________________________________________
 
 _____________________________________________________________________________
 
-## Divisão de Tarefas Sugerida
+## Divisão de Tarefas
 
-| Quem | Responsabilidade Principal | Foco em Pastas |
-| **Integrante 1** | **Backend Principal + API** | `src/controladores/` |
-| **Integrante 2** | **Regras de Negócio + Mensageria** | `src/servicos/` |
-| **Integrante 3** | **Banco de Dados** | `src/repositorios/` |
-| **Integrante 4** | **Frontend + Real-time (WebSocket)** | `src/frontend/` |
+A organização do trabalho seguiu a divisão em camadas da arquitetura:
+
+| Camada | Foco em Pastas |
+|--------|----------------|
+| **Backend Principal + API** | `backend/src/main/java/com/desenrola/controladores/` |
+| **Regras de Negócio + Mensageria** | `backend/src/main/java/com/desenrola/servicos/` |
+| **Banco de Dados** | `backend/src/main/java/com/desenrola/repositorios/` |
+| **Frontend + Real-time (WebSocket)** | `frontend/src/` |
 
 _____________________________________________________________________________

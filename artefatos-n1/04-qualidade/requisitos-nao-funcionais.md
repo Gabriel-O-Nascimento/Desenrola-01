@@ -177,7 +177,7 @@ Os Requisitos Não-Funcionais (RNFs) definem as características de qualidade do
 
 - Uso de ORM para facilitar migração entre bancos
 - Migrations versionadas e reversíveis
-- Suporte inicial: PostgreSQL 14+
+- Suporte: MySQL 8.0+
 
 ### 8.3 Dependências
 

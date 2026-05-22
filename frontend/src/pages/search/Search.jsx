@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ChevronRight, Star } from "lucide-react";
 import SearchBar from "../../components/ui/SearchBar";
 import ActionButton from "../../components/ui/ActionButton";
@@ -60,13 +60,52 @@ function ServiceCard({ service }) {
 
 function Search() {
   const [activeTab, setActiveTab] = useState("professional");
+  const [searchTerm, setSearchTerm] = useState("");
   const isProfessionalTab = activeTab === "professional";
+
+  // Filtra a lista correta com base no tab ativo e no termo digitado.
+  const filteredProfessionals = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+
+    if (!term) {
+      return professionals;
+    }
+
+    return professionals.filter((professional) =>
+      [professional.name, professional.category]
+        .filter(Boolean)
+        .some((field) => field.toLowerCase().includes(term))
+    );
+  }, [searchTerm]);
+
+  const filteredServices = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+
+    if (!term) {
+      return services;
+    }
+
+    return services.filter((service) =>
+      [service.name, service.description]
+        .filter(Boolean)
+        .some((field) => field.toLowerCase().includes(term))
+    );
+  }, [searchTerm]);
 
   return (
     <section className="search-page">
-      <SearchBar />
+      <SearchBar
+        value={searchTerm}
+        onChange={(event) => setSearchTerm(event.target.value)}
+        placeholder={
+          isProfessionalTab
+            ? "Pesquisar profissionais..."
+            : "Pesquisar servicos..."
+        }
+        id="search-page-input"
+      />
 
-      {/* SegmentedControl controla visualmente qual lista sera exibida. */}  
+      {/* SegmentedControl controla visualmente qual lista sera exibida. */}
       <SegmentedControl
         options={searchTabs}
         activeValue={activeTab}
@@ -74,13 +113,27 @@ function Search() {
         className="search-page__tabs"
       />
 
-      {/* Lista visual de resultados, sem busca real por enquanto. */}
+      {/* Lista filtrada de resultados. */}
       <div className="search-results">
-        {isProfessionalTab
-          ? professionals.map((professional) => (
+        {isProfessionalTab ? (
+          filteredProfessionals.length > 0 ? (
+            filteredProfessionals.map((professional) => (
               <ProfessionalCard key={professional.id} professional={professional} />
             ))
-          : services.map((service) => <ServiceCard key={service.id} service={service} />)}
+          ) : (
+            <p style={{ textAlign: "center", padding: "24px", color: "#6b7280" }}>
+              Nenhum profissional encontrado.
+            </p>
+          )
+        ) : filteredServices.length > 0 ? (
+          filteredServices.map((service) => (
+            <ServiceCard key={service.id} service={service} />
+          ))
+        ) : (
+          <p style={{ textAlign: "center", padding: "24px", color: "#6b7280" }}>
+            Nenhum servico encontrado.
+          </p>
+        )}
       </div>
     </section>
   );

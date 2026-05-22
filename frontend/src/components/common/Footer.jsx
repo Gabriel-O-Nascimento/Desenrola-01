@@ -10,7 +10,7 @@ const Footer = () => {
 
         {/* LOGO (ESQUERDA) */}
         <div className="logo">
-          <Link to="/">
+          <Link to="/home">
             <img src={Logo} alt="Desenrola Logo" />
           </Link>
         </div>
@@ -18,10 +18,10 @@ const Footer = () => {
         {/* NAV (DIREITA) */}
         <nav className="footer-nav">
           <ul>
-            <li><Link to="/">Início</Link></li>
+            <li><Link to="/home">Início</Link></li>
             <li><Link to="/chat">Chat</Link></li>
             <li><Link to="/search">Pesquisar</Link></li>
-            <li><Link to="/services">Serviços</Link></li>
+            <li><Link to="/historico">Serviços</Link></li>
             <li><Link to="/profile">Perfil</Link></li>
           </ul>
         </nav>

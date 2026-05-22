@@ -13,15 +13,27 @@ const statusOptions = [
   { label: "Cancelados", value: "cancelado" },
 ];
 
+function parseDateBr(dateString) {
+  // Converte "DD/MM/AAAA" em objeto Date para ordenacao confiavel.
+  if (!dateString) {
+    return new Date(0);
+  }
+
+  const [day, month, year] = dateString.split("/").map(Number);
+  return new Date(year, month - 1, day);
+}
+
 function HistoricoServicos() {
   const [activeStatus, setActiveStatus] = useState("todos");
 
   const filteredServices = useMemo(() => {
-    if (activeStatus === "todos") {
-      return servicesHistory;
-    }
+    const list =
+      activeStatus === "todos"
+        ? servicesHistory
+        : servicesHistory.filter((service) => service.status === activeStatus);
 
-    return servicesHistory.filter((service) => service.status === activeStatus);
+    // Ordena do mais recente para o mais antigo (data da solicitacao).
+    return [...list].sort((a, b) => parseDateBr(b.date) - parseDateBr(a.date));
   }, [activeStatus]);
 
   return (

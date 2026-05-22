@@ -31,7 +31,6 @@ export default function DetalhesCancelamento() {
 
   function handleSolicitarNovamente() {
     if (!service?.professionalId) {
-      console.warn("Profissional não encontrado para este serviço cancelado.");
       return;
     }
 

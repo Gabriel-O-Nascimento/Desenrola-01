@@ -37,7 +37,6 @@ export default function ServiceHistory({ service }) {
   function handlePrimaryAction() {
     if (service.status === "aguardando_orcamento") {
       navigate(`/orcamento/${service.id}`);
-      console.log("Ver orcamento", service.id);
       return;
     }
 
@@ -115,7 +114,7 @@ export default function ServiceHistory({ service }) {
             <ActionButton
               text="Mensagem"
               className="action-button__outline service-history__button"
-              onClick={() => console.log("Abrir mensagem", service.id)}
+              onClick={() => navigate(`/chat`)}
             />
           </>
         )}

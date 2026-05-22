@@ -56,7 +56,6 @@ export default function AvaliarServico() {
       checks,
     };
 
-    console.log("Avaliação enviada:", reviewData);
     navigate("/");
   }
 

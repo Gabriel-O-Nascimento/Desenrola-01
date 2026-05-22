@@ -7,7 +7,7 @@ Este documento define a estratégia de testes para o sistema Desenrola, garantin
 
 ### 1.2 Escopo
 O plano cobre testes em todas as camadas do sistema:
-- Frontend (React/Vue)
+- Frontend (React)
 - API REST (Controladores)
 - Lógica de Negócio (Serviços)
 - Acesso a Dados (Repositórios)
@@ -118,7 +118,7 @@ O plano cobre testes em todas as camadas do sistema:
 
 #### 3.2.3 Banco de Dados
 
-- ✅ Deve persistir dados corretamente no PostgreSQL
+- ✅ Deve persistir dados corretamente no MySQL
 - ✅ Deve respeitar constraints de integridade referencial
 - ✅ Deve executar transações com rollback em caso de erro
 - ✅ Deve aplicar migrations corretamente
@@ -255,13 +255,15 @@ O plano cobre testes em todas as camadas do sistema:
 
 ## 7. Responsabilidades
 
-| Integrante | Responsabilidade |
-|------------|------------------|
-| **Integrante 1** | Testes dos Controladores |
-| **Integrante 2** | Testes dos Serviços e Mensageria |
-| **Integrante 3** | Testes dos Repositórios |
-| **Integrante 4** | Testes E2E do Frontend |
-| **Todos** | Code review e testes de integração |
+A divisão das responsabilidades de teste segue a estrutura de camadas do projeto:
+
+| Camada | Escopo |
+|--------|--------|
+| **Controladores** | Testes de integração dos endpoints REST |
+| **Serviços e Mensageria** | Testes unitários das regras de negócio, producers e consumers |
+| **Repositórios** | Testes de integração com o banco de dados |
+| **Frontend** | Testes E2E dos fluxos críticos |
+| **Geral** | Code review e testes de integração ponta a ponta |
 
 ---
 

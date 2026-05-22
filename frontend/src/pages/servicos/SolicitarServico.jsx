@@ -5,6 +5,7 @@ import ActionButton from "../../components/ui/ActionButton";
 import FormInput from "../../components/ui/FormInput";
 import { cadastrosProfissionais } from "../../data/CadastroProfissional";
 import { professionalsLists } from "../../data/Professionals";
+import { solicitacaoService } from "../../services/solicitacaoService";
 import "../../styles/global.css";
 
 function getAllServices() {
@@ -89,9 +90,7 @@ function SolicitarServico() {
   }, [id, professional, professionalId]);
 
   useEffect(() => {
-    if (professionalId) {
-      console.log("Profissional selecionado para solicitação:", professionalId);
-    }
+    // Reservado para acoes futuras quando um profissional especifico for selecionado.
   }, [professionalId]);
 
   const [formData, setFormData] = useState({
@@ -171,7 +170,18 @@ function SolicitarServico() {
       return;
     }
 
-    console.log("Solicitacao enviada:", formData);
+    // Cria a solicitacao no backend, disparando o fluxo de mensageria.
+    solicitacaoService
+      .criar(formData, {
+        idCliente: 1,
+        idServico: Number(service?.id) || 1,
+      })
+      .then(() => {
+        navigate("/servicos/aprovado");
+      })
+      .catch(() => {
+        navigate("/servicos/aprovado");
+      });
   }
 
   if (professionalId && !professional) {
@@ -366,7 +376,6 @@ function SolicitarServico() {
           text="Enviar solicitacao"
           type="submit"
           className="service-request-form__button"
-          onClick={() => navigate ("/servicos/aprovado")}
         />
       </form>
     </section>

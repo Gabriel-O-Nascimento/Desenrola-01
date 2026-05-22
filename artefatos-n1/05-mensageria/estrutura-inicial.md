@@ -1,34 +1,35 @@
 # Artefatos de Web/Mensageria
 
-Este documento descreve a localização dos artefatos técnicos iniciais do projeto Desenrola, demonstrando a configuração do ambiente, o uso de Docker e a conexão básica entre os componentes da arquitetura.
+Este documento descreve a localização dos artefatos técnicos do projeto Desenrola, demonstrando a configuração do ambiente, o uso de Docker e a integração entre os componentes da arquitetura.
 
-## Evidência da Configuração Inicial do Ambiente
+## Configuração do Ambiente
 O ambiente está configurado para suportar o desenvolvimento com:
-- **Backend**: Spring Boot.
-- **Frontend**: HTML/JS.
-- **Infraestrutura**: Docker Compose para serviços de suporte.
+- **Backend**: Java 21 + Spring Boot 3.4
+- **Frontend**: React + Vite
+- **Infraestrutura**: Docker Compose para os serviços de suporte (banco de dados e mensageria)
 
-## Evidência do Uso de Docker (Fila/Broker e Banco de Dados)
-A infraestrutura de serviços necessários (RabbitMQ para mensageria e PostgreSQL para banco de dados) foi isolada em containers Docker para garantir a paridade do ambiente entre os desenvolvedores.
+## Uso de Docker (Fila/Broker e Banco de Dados)
+A infraestrutura de serviços necessários (RabbitMQ para mensageria e MySQL para banco de dados) foi isolada em containers Docker para garantir a paridade do ambiente entre os desenvolvedores.
 
-- **Arquivo de Configuração**: [`docker-compose.yml`](../../docker-compose.yml) localizado na raiz da pasta `Desenrola-01`.
-- **Serviços Definidos**:
-  - `servidor-mensageria`: RabbitMQ
-  - `banco-dados`: PostgreSQL
+- **Arquivo de configuração**: [`docker-compose.yml`](../../docker-compose.yml) na raiz do projeto.
+- **Serviços definidos**:
+  - `servidor-mensageria`: RabbitMQ 3 (Management UI em http://localhost:15672)
+  - `banco-dados`: MySQL 8.0 (porta 3306)
 
-## Estrutura Inicial "Hello World" (Conexão Frontend-Backend)
-Para demonstrar que a arquitetura está integrada e funcional, criamos uma estrutura "Hello World" que realiza uma conexão real entre as camadas:
+## Integração entre Frontend, Backend e Mensageria
 
-1.  **Frontend (Consumidor)**: 
-    - Localização: [`frontend/index.html`](../../frontend/index.html)
-    - Função: Realiza chamadas `fetch` para os endpoints do backend e exibe o status da conexão em tempo real.
+A arquitetura está integrada com comunicação assíncrona via RabbitMQ e atualização em tempo real via WebSocket:
 
-2.  **Backend (Provedor)**: 
-    - Localização: [`backend/src/main/java/com/desenrola/controladores/TesteController.java`](../../backend/src/main/java/com/desenrola/controladores/TesteController.java)
-    - Função: Expõe endpoints de `/health` para verificação de status e `/teste-mensageria` para integração com o RabbitMQ.
+1. **Frontend (React)**:
+   - Localização: [`frontend/`](../../frontend/)
+   - Função: Faz chamadas HTTP para a API REST do backend e mantém uma conexão WebSocket (STOMP/SockJS) para receber notificações em tempo real.
 
-3.  **Fluxo da Demonstração**:
-    - O usuário acessa a página no navegador.
-    - O JavaScript envia uma mensagem para o Backend.
-    - O Backend processa e publica essa mensagem na fila do RabbitMQ (conforme definido no `docker-compose`).
-    - O status é atualizado na tela, confirmando a saúde de toda a pilha tecnológica.
+2. **Backend (Spring Boot)**:
+   - Localização: [`backend/src/main/java/com/desenrola/`](../../backend/src/main/java/com/desenrola/)
+   - Função: Expõe endpoints REST sob o prefixo `/api`, publica eventos no RabbitMQ e envia notificações via WebSocket no canal `/topic/notificacoes/{idUsuario}`.
+
+3. **Fluxo da Mensageria**:
+   - Cliente cria uma solicitação no frontend → `POST /api/solicitacoes`
+   - Backend salva a solicitação no MySQL e publica um evento na fila do RabbitMQ
+   - Um consumer assíncrono escuta a fila, processa o evento e gera uma notificação
+   - A notificação é enviada via WebSocket e exibida em tempo real na tela do usuário

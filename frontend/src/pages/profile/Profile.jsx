@@ -10,7 +10,6 @@ import {
   LogOut,
   Mail,
   MapPin,
-  Moon,
   Phone,
   Shield,
   User,
@@ -62,12 +61,11 @@ function ProfilePreferenceItem({ icon: Icon, title, children }) {
 
 function Profile() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const [darkModeEnabled, setDarkModeEnabled] = useState(false);
   const [contactPreference, setContactPreference] = useState("chat");
   const navigate = useNavigate();
 
   function handleOpenProfileOption(option) {
-    console.log("Abrir opcao:", option);
+    // Reservado para futuras acoes de edicao do perfil.
   }
 
   return (
@@ -89,7 +87,8 @@ function Profile() {
 
         <ActionButton
           className="action-button__outline profile-card__button"
-          onClick={() => console.log("Editar perfil")}
+          disabled
+          onClick={() => {}}
         >
           <Edit2 aria-hidden="true" />
           Editar perfil
@@ -128,14 +127,6 @@ function Profile() {
               checked={notificationsEnabled}
               ariaLabel="Ativar notificacoes"
               onChange={() => setNotificationsEnabled((current) => !current)}
-            />
-          </ProfilePreferenceItem>
-
-          <ProfilePreferenceItem icon={Moon} title="Modo escuro">
-            <ToggleSwitch
-              checked={darkModeEnabled}
-              ariaLabel="Ativar modo escuro"
-              onChange={() => setDarkModeEnabled((current) => !current)}
             />
           </ProfilePreferenceItem>
 

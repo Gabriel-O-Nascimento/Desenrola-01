@@ -54,9 +54,7 @@ function ChatInterno() {
   );
 
   useEffect(() => {
-    if (professionalId) {
-      console.log("Profissional selecionado para chat:", professionalId);
-    }
+    // Reservado para acoes futuras quando um profissional especifico for selecionado.
   }, [professionalId]);
 
   if (!chat) {

@@ -8,6 +8,6 @@ public class DesenrolaApplication {
     
     public static void main(String[] args) {
         SpringApplication.run(DesenrolaApplication.class, args);
-        System.out.println("🚀 Desenrola Backend iniciado em http://localhost:8080");
+        System.out.println("Desenrola Backend iniciado em http://localhost:8080");
     }
 }

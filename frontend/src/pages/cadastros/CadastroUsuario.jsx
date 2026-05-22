@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
-import { ArrowLeft, Camera } from "lucide-react";
+import { ArrowLeft, Camera, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ActionButton from "../../components/ui/ActionButton";
 import FormInput from "../../components/ui/FormInput";
 import SegmentedControl from "../../components/ui/SegmentedControl";
+import { clienteService } from "../../services/clienteService";
 import "../../styles/global.css";
 
 const documentTypeOptions = [
@@ -146,6 +147,7 @@ export default function CadastroUsuario() {
   const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const isCpfSelected = formData.documentType === "cpf";
   const documentFieldName = isCpfSelected ? "cpf" : "cnpj";
@@ -194,7 +196,8 @@ export default function CadastroUsuario() {
         if (!fieldValue) return "Informe seu estado.";
         return "";
       case "personalDocument":
-        if (!value) return "Envie uma foto do documento pessoal.";
+        // Documento pessoal e opcional. Validamos apenas o tipo do arquivo quando enviado.
+        if (!value) return "";
         if (!isValidPersonalDocument(value)) return "Envie um arquivo PNG, JPG ou PDF.";
         return "";
       default:
@@ -211,7 +214,6 @@ export default function CadastroUsuario() {
       documentFieldName,
       "city",
       "state",
-      "personalDocument",
     ];
     const newTouched = requiredFields.reduce((fields, field) => ({ ...fields, [field]: true }), {});
     const newErrors = requiredFields.reduce((fieldErrors, field) => {
@@ -309,7 +311,14 @@ export default function CadastroUsuario() {
       return;
     }
 
-    console.log("Cadastro realizado:", formData);
+    clienteService
+      .cadastrar(formData)
+      .then(() => {
+        navigate("/login");
+      })
+      .catch(() => {
+        navigate("/login");
+      });
   }
 
   return (
@@ -355,12 +364,22 @@ export default function CadastroUsuario() {
           <FormInput
             label="Senha *"
             name="password"
-            type="senha"
+            type={showPassword ? "texto" : "senha"}
             value={formData.password}
             onChange={handleFieldChange}
             onBlur={handleFieldBlur}
             placeholder="Digite sua senha"
             errorMessage={errors.password}
+            rightElement={
+              <button
+                className="form-input__icon-button"
+                type="button"
+                onClick={() => setShowPassword((current) => !current)}
+                aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+              >
+                {showPassword ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}
+              </button>
+            }
           />
 
           <FormInput

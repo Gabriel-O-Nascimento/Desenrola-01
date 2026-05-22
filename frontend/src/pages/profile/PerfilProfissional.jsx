@@ -193,7 +193,7 @@ export default function PerfilProfissional() {
           <button
             className="professional-profile-all-reviews"
             type="button"
-            onClick={() => console.log("Ver todas as avaliações")}
+            onClick={() => {}}
           >
             Ver todas as avaliações
             <ChevronRight aria-hidden="true" />
