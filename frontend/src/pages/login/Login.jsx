@@ -130,10 +130,6 @@ export default function Login() {
             />
           </div>
 
-          <button className="login-form__forgot" type="button">
-            Esqueci minha senha
-          </button>
-
           {generalError && <p className="login-form__error">{generalError}</p>}
 
           <ActionButton text="Entrar" type="submit" className="login-form__submit" />

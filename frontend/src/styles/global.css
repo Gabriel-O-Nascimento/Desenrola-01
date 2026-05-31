@@ -3202,17 +3202,6 @@ select.form-input__control {
   margin-top: var(--space-2);
 }
 
-.login-form__forgot {
-  align-self: flex-end;
-  margin-top: calc(-1 * var(--space-3));
-  color: var(--color-primary-hover);
-  font: inherit;
-  font-size: var(--font-size-lg);
-  background-color: transparent;
-  border: 0;
-  cursor: pointer;
-}
-
 .login-form__error {
   color: var(--color-error);
   font-size: var(--font-size-xl);
