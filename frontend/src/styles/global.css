@@ -317,18 +317,6 @@ img {
   outline-offset: 2px;
 }
 
-.action-button__outline {
-  color: var(--color-text);
-  background-color: var(--color-bg);
-  border-color: var(--color-border-strong);
-}
-
-.action-button__outline:hover,
-.action-button__outline:focus-visible {
-  background-color: var(--color-bg-tertiary);
-  border-color: var(--color-border-strong);
-}
-
 .action-button__danger {
   color: var(--color-error);
   background-color: transparent;
@@ -1984,7 +1972,6 @@ select.form-input__control {
 }
 
 .profile-card__avatar-wrap {
-  position: relative;
   margin-bottom: var(--space-6);
 }
 
@@ -2006,27 +1993,6 @@ select.form-input__control {
   stroke-width: 1.8;
 }
 
-.profile-card__edit-avatar {
-  position: absolute;
-  right: 0;
-  bottom: 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  color: var(--color-text);
-  background-color: var(--color-primary);
-  border: 0;
-  border-radius: var(--radius-full);
-  box-shadow: var(--shadow-md);
-  cursor: pointer;
-}
-
-.profile-card__edit-avatar svg {
-  width: 26px;
-  height: 26px;
-}
 
 .profile-card__name {
   margin-bottom: var(--space-4);
@@ -2038,22 +2004,6 @@ select.form-input__control {
   color: var(--color-text-secondary);
   font-size: var(--font-size-xl);
   line-height: var(--line-height-tight);
-}
-
-.profile-card__button {
-  width: min(60%, 580px);
-  max-width: none;
-  min-height: 56px;
-  margin-top: var(--space-8);
-  gap: var(--space-4);
-  font-size: var(--font-size-xl);
-  border-color: var(--color-primary);
-}
-
-.profile-card__button svg,
-.profile-actions__button svg {
-  width: 22px;
-  height: 22px;
 }
 
 .profile-section {
@@ -4568,12 +4518,6 @@ select.form-input__control {
     height: 52px;
   }
 
-  .profile-card__edit-avatar {
-    width: 48px;
-    height: 48px;
-    bottom: 8px;
-  }
-
   .profile-card__name,
   .profile-section__title {
     font-size: var(--font-size-2xl);
@@ -4582,11 +4526,6 @@ select.form-input__control {
   .profile-card__contact {
     font-size: var(--font-size-lg);
     overflow-wrap: anywhere;
-  }
-
-  .profile-card__button {
-    min-height: 52px;
-    font-size: var(--font-size-lg);
   }
 
   .profile-list {

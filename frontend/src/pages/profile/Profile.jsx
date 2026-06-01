@@ -76,23 +76,12 @@ function Profile() {
             <User />
           </span>
 
-          <button className="profile-card__edit-avatar" type="button" aria-label="Editar foto">
-            <Edit2 aria-hidden="true" />
-          </button>
         </div>
 
         <h1 className="profile-card__name">{profileData.name}</h1>
         <p className="profile-card__contact">{profileData.phone}</p>
         <p className="profile-card__contact">{profileData.email}</p>
 
-        <ActionButton
-          className="action-button__outline profile-card__button"
-          disabled
-          onClick={() => {}}
-        >
-          <Edit2 aria-hidden="true" />
-          Editar perfil
-        </ActionButton>
       </article>
 
       <section className="profile-section">
