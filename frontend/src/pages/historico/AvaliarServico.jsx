@@ -56,7 +56,7 @@ export default function AvaliarServico() {
       checks,
     };
 
-    navigate("/");
+    navigate("/historico");
   }
 
   if (!service) {
