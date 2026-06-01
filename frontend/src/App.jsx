@@ -26,8 +26,9 @@ function Layout() {
 
   /* Oculta o footer em todas as rotas do chat */
   const isLoginPage = location.pathname === "/login";
+  const isRegisterPage = location.pathname.startsWith("/cadastro/");
   const hideFooter = location.pathname.startsWith("/chat") || isLoginPage;
-  const hideHeader = isLoginPage;
+  const hideHeader = isLoginPage || isRegisterPage;
 
   return (
     <>
