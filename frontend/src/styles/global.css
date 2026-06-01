@@ -3818,7 +3818,7 @@ select.form-input__control {
   position: fixed;
   bottom: 0;
   display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--space-3);
   width: 100%;
@@ -5025,7 +5025,7 @@ select.form-input__control {
   }
 
   .chat-interno__composer {
-    grid-template-columns: 40px minmax(0, 1fr) 40px;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: var(--space-2);
     padding: var(--space-3) 20px;
   }

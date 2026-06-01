@@ -114,10 +114,6 @@ function ChatInterno() {
 
       {/* Barra visual de envio, sem logica funcional por enquanto. */}
       <form className="chat-interno__composer">
-        <button className="chat-interno__icon-button" type="button" aria-label="Anexar arquivo">
-          <Paperclip aria-hidden="true" />
-        </button>
-
         <input
           className="chat-interno__input"
           type="text"
