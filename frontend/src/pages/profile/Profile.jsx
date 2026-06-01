@@ -3,10 +3,8 @@ import {
   Bell,
   ChevronRight,
   CreditCard,
-  Edit2,
   FileText,
   Headphones,
-  HelpCircle,
   LogOut,
   Mail,
   MapPin,
@@ -62,6 +60,7 @@ function ProfilePreferenceItem({ icon: Icon, title, children }) {
 function Profile() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [contactPreference, setContactPreference] = useState("chat");
+  const [activeSupportItem, setActiveSupportItem] = useState("terms");
   const navigate = useNavigate();
 
   function handleOpenProfileOption(option) {
@@ -132,27 +131,92 @@ function Profile() {
 
       <section className="profile-section">
         <h2 className="profile-section__title">Suporte e Informacoes</h2>
-        <div className="profile-list">
-          <ProfileListItem
-            icon={HelpCircle}
-            title="Central de ajuda"
-            onClick={() => handleOpenProfileOption("central_de_ajuda")}
-          />
-          <ProfileListItem
-            icon={FileText}
-            title="Termos de uso"
-            onClick={() => handleOpenProfileOption("termos_de_uso")}
-          />
-          <ProfileListItem
-            icon={Shield}
-            title="Politica de privacidade"
-            onClick={() => handleOpenProfileOption("politica_de_privacidade")}
-          />
-          <ProfileListItem
-            icon={Headphones}
-            title="Fale conosco"
-            onClick={() => handleOpenProfileOption("fale_conosco")}
-          />
+        <div className="accordion accordion-flush profile-support-flush" id="profile-support-accordion">
+          <div className="accordion-item profile-support-flush__item">
+            <h3 className="accordion-header profile-support-flush__header" id="profile-support-terms-heading">
+              <button
+                className={`accordion-button profile-support-flush__button${
+                  activeSupportItem === "terms" ? "" : " collapsed"
+                }`}
+                type="button"
+                aria-expanded={activeSupportItem === "terms"}
+                aria-controls="profile-support-terms"
+                onClick={() => setActiveSupportItem((current) => (current === "terms" ? "" : "terms"))}
+              >
+                <span className="profile-list__icon" aria-hidden="true">
+                  <FileText />
+                </span>
+                <span className="profile-support-flush__title">Termos de uso</span>
+              </button>
+            </h3>
+            <div
+              className={`accordion-collapse collapse${activeSupportItem === "terms" ? " show" : ""}`}
+              id="profile-support-terms"
+              aria-labelledby="profile-support-terms-heading"
+            >
+              <div className="accordion-body profile-support-flush__body">
+                Ao usar o Desenrola, voce concorda em manter informacoes verdadeiras e respeitar as regras de contratacao da plataforma.
+              </div>
+            </div>
+          </div>
+
+          <div className="accordion-item profile-support-flush__item">
+            <h3 className="accordion-header profile-support-flush__header" id="profile-support-privacy-heading">
+              <button
+                className={`accordion-button profile-support-flush__button${
+                  activeSupportItem === "privacy" ? "" : " collapsed"
+                }`}
+                type="button"
+                aria-expanded={activeSupportItem === "privacy"}
+                aria-controls="profile-support-privacy"
+                onClick={() => setActiveSupportItem((current) => (current === "privacy" ? "" : "privacy"))}
+              >
+                <span className="profile-list__icon" aria-hidden="true">
+                  <Shield />
+                </span>
+                <span className="profile-support-flush__title">Politica de privacidade</span>
+              </button>
+            </h3>
+            <div
+              className={`accordion-collapse collapse${activeSupportItem === "privacy" ? " show" : ""}`}
+              id="profile-support-privacy"
+              aria-labelledby="profile-support-privacy-heading"
+            >
+              <div className="accordion-body profile-support-flush__body">
+                Seus dados sao usados apenas para login, contato, seguranca da conta e melhoria da experiencia no aplicativo.
+              </div>
+            </div>
+          </div>
+
+          <div className="accordion-item profile-support-flush__item">
+            <h3 className="accordion-header profile-support-flush__header" id="profile-support-contact-heading">
+              <button
+                className={`accordion-button profile-support-flush__button${
+                  activeSupportItem === "contact" ? "" : " collapsed"
+                }`}
+                type="button"
+                aria-expanded={activeSupportItem === "contact"}
+                aria-controls="profile-support-contact"
+                onClick={() => setActiveSupportItem((current) => (current === "contact" ? "" : "contact"))}
+              >
+                <span className="profile-list__icon" aria-hidden="true">
+                  <Headphones />
+                </span>
+                <span className="profile-support-flush__title">Fale conosco</span>
+              </button>
+            </h3>
+            <div
+              className={`accordion-collapse collapse${activeSupportItem === "contact" ? " show" : ""}`}
+              id="profile-support-contact"
+              aria-labelledby="profile-support-contact-heading"
+            >
+              <div className="accordion-body profile-support-flush__body">
+                Telefone: (11) 4002-8922. 
+                <br/>
+                SAC: atendimento@desenrola.com.br.
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
