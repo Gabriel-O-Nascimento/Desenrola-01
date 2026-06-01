@@ -87,10 +87,6 @@ function ChatInterno() {
           <h1 className="chat-interno__name">{chat.name}</h1>
           <span className="chat-interno__status">{chat.status}</span>
         </div>
-
-        <button className="chat-interno__icon-button chat-interno__menu" type="button" aria-label="Abrir menu da conversa">
-          <MoreVertical aria-hidden="true" />
-        </button> {/*Incluir opções - Ver perfil, Silenciar, Bloquear, Denunciar*/}
       </header>
 
 

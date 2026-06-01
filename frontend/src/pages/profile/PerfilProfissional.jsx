@@ -76,13 +76,6 @@ export default function PerfilProfissional() {
           <ArrowLeft aria-hidden="true" />
         </button>
         <h1 className="professional-profile-header__title">Perfil do profissional</h1>
-        <button
-          className="professional-profile-header__button"
-          type="button"
-          aria-label="Abrir menu"
-        >
-          <MoreVertical aria-hidden="true" />
-        </button>
       </header>
 
       <main className="professional-profile-content">
