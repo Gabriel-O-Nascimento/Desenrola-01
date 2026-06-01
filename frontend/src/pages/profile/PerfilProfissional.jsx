@@ -160,7 +160,7 @@ export default function PerfilProfissional() {
         </section>
 
         <section className="professional-profile-section">
-          <h2 className="professional-profile-section__title">Avaliações dos clientes</h2>
+          <h2 className="professional-profile-section__title">Últimas Avaliações</h2>
           <div className="professional-profile-reviews">
             {professional.reviews.map((review) => (
               <article className="professional-profile-review" key={review.id}>
@@ -182,15 +182,6 @@ export default function PerfilProfissional() {
               </article>
             ))}
           </div>
-
-          <button
-            className="professional-profile-all-reviews"
-            type="button"
-            onClick={() => {}}
-          >
-            Ver todas as avaliações
-            <ChevronRight aria-hidden="true" />
-          </button>
         </section>
       </main>
 
