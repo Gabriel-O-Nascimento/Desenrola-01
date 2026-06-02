@@ -6,6 +6,7 @@ import FormInput from "../../components/ui/FormInput";
 import SegmentedControl from "../../components/ui/SegmentedControl";
 import { categorias } from "../../data/Categorias";
 import { profissionalService } from "../../services/profissionalService";
+import { usuarioService } from "../../services/usuarioService";
 import "../../styles/global.css";
 
 const documentTypeOptions = [
@@ -150,8 +151,10 @@ export default function CadastroProfissional() {
 
   const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
+  const [generalError, setGeneralError] = useState("");
   const [touched, setTouched] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isCpfSelected = formData.documentType === "cpf";
   const documentFieldName = isCpfSelected ? "cpf" : "cnpj";
@@ -262,6 +265,7 @@ export default function CadastroProfissional() {
 
     setFormData(nextData);
     updateFieldError(name, nextValue, nextData);
+    setGeneralError("");
   }
 
   function handleFieldBlur(event) {
@@ -317,21 +321,36 @@ export default function CadastroProfissional() {
     }));
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (!validateForm()) {
       return;
     }
 
-    profissionalService
-      .cadastrar(formData)
-      .then(() => {
-        navigate("/login");
-      })
-      .catch(() => {
-        navigate("/login");
-      });
+    setIsSubmitting(true);
+    setGeneralError("");
+
+    try {
+      await profissionalService.cadastrar(formData);
+
+      const usuarioLogado = usuarioService.getUsuarioLogado();
+      const emailPerfil = usuarioLogado?.email || formData.email;
+
+      if (emailPerfil) {
+        try {
+          await usuarioService.buscarPerfil(emailPerfil);
+        } catch {
+          usuarioService.atualizarTipoContaLocal(emailPerfil, "Profissional");
+        }
+      }
+
+      navigate("/profile");
+    } catch (error) {
+      setGeneralError(error.message || "Nao foi possivel realizar o cadastro profissional.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -582,11 +601,14 @@ export default function CadastroProfissional() {
           )}
         </section>
 
+        {generalError && <p className="user-register-form__error">{generalError}</p>}
+
         <div className="user-register-actions">
           <ActionButton
-            text="Realizar Cadastro"
+            text={isSubmitting ? "Cadastrando..." : "Realizar Cadastro"}
             type="submit"
             className="user-register-actions__button"
+            disabled={isSubmitting}
           />
           <ActionButton
             text="Voltar"

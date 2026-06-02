@@ -26,29 +26,37 @@ public class ProfissionalAppService {
 
     @Transactional
     public Profissional cadastrar(CadastroProfissionalDTO dto) {
-        if (usuarioRepository.existsByEmail(dto.getEmail())) {
-            throw new IllegalArgumentException("Já existe um usuário cadastrado com esse e-mail.");
-        }
-
         CategoriaServico categoria = null;
         if (dto.getIdCategoria() != null) {
             categoria = categoriaServicoRepository.findById(dto.getIdCategoria())
-                    .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada."));
+                    .orElseThrow(() -> new IllegalArgumentException("Categoria nao encontrada."));
         }
 
         LocalDateTime agora = LocalDateTime.now();
 
-        Usuario usuario = Usuario.builder()
-                .nome(dto.getNome())
-                .email(dto.getEmail())
-                .senhaHash(BCrypt.hashpw(dto.getSenha(), BCrypt.gensalt()))
-                .telefone(dto.getTelefone())
-                .tipo(TipoUsuario.PROFISSIONAL)
-                .ativo(true)
-                .emailVerificado(false)
-                .criadoEm(agora)
-                .atualizadoEm(agora)
-                .build();
+        Usuario usuario = usuarioRepository.findByEmail(dto.getEmail())
+                .map(usuarioExistente -> {
+                    if (profissionalRepository.existsById(usuarioExistente.getId())) {
+                        throw new IllegalArgumentException("Este usuario ja possui cadastro profissional.");
+                    }
+
+                    usuarioExistente.setNome(dto.getNome());
+                    usuarioExistente.setTelefone(dto.getTelefone());
+                    usuarioExistente.setTipo(TipoUsuario.PROFISSIONAL);
+                    usuarioExistente.setAtualizadoEm(agora);
+                    return usuarioExistente;
+                })
+                .orElseGet(() -> Usuario.builder()
+                        .nome(dto.getNome())
+                        .email(dto.getEmail())
+                        .senhaHash(BCrypt.hashpw(dto.getSenha(), BCrypt.gensalt()))
+                        .telefone(dto.getTelefone())
+                        .tipo(TipoUsuario.PROFISSIONAL)
+                        .ativo(true)
+                        .emailVerificado(false)
+                        .criadoEm(agora)
+                        .atualizadoEm(agora)
+                        .build());
 
         Usuario usuarioSalvo = usuarioRepository.save(usuario);
 

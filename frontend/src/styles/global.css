@@ -1479,6 +1479,16 @@ select.form-input__control {
   min-width: 0;
 }
 
+.user-register-form__error {
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-error);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  background-color: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.22);
+  border-radius: var(--radius-md);
+}
+
 .user-register-card {
   display: flex;
   flex-direction: column;

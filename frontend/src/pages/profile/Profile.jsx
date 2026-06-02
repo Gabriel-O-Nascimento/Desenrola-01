@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Bell,
   ChevronRight,
@@ -16,6 +16,7 @@ import ActionButton from "../../components/ui/ActionButton";
 import SegmentedControl from "../../components/ui/SegmentedControl";
 import ToggleSwitch from "../../components/ui/ToggleSwitch";
 import { profileData } from "../../data/ProfileData";
+import { usuarioService } from "../../services/usuarioService";
 import "../../styles/global.css";
 import { useNavigate } from "react-router-dom";
 
@@ -61,10 +62,35 @@ function Profile() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [contactPreference, setContactPreference] = useState("chat");
   const [activeSupportItem, setActiveSupportItem] = useState("terms");
+  const [profile, setProfile] = useState(() => usuarioService.getUsuarioLogado() || profileData);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const usuarioLogado = usuarioService.getUsuarioLogado();
+
+    if (!usuarioLogado?.email) {
+      return;
+    }
+
+    usuarioService
+      .buscarPerfil(usuarioLogado.email)
+      .then((perfilAtualizado) => {
+        if (perfilAtualizado) {
+          setProfile(perfilAtualizado);
+        }
+      })
+      .catch(() => {
+        setProfile(usuarioLogado);
+      });
+  }, []);
 
   function handleOpenProfileOption(option) {
     // Reservado para futuras acoes de edicao do perfil.
+  }
+
+  function handleLogout() {
+    usuarioService.limparSessao();
+    navigate("/login");
   }
 
   return (
@@ -77,9 +103,9 @@ function Profile() {
 
         </div>
 
-        <h1 className="profile-card__name">{profileData.name}</h1>
-        <p className="profile-card__contact">{profileData.phone}</p>
-        <p className="profile-card__contact">{profileData.email}</p>
+        <h1 className="profile-card__name">{profile.name}</h1>
+        <p className="profile-card__contact">{profile.phone}</p>
+        <p className="profile-card__contact">{profile.email}</p>
 
       </article>
 
@@ -89,19 +115,19 @@ function Profile() {
           <ProfileListItem
             icon={Phone}
             title="Telefone"
-            description={profileData.phone}
+            description={profile.phone}
             onClick={() => handleOpenProfileOption("telefone")}
           />
           <ProfileListItem
             icon={MapPin}
             title="Endereco principal"
-            description={profileData.address}
+            description={profile.address}
             onClick={() => handleOpenProfileOption("endereco")}
           />
           <ProfileListItem
             icon={CreditCard}
             title="Tipo de conta"
-            description={profileData.accountType}
+            description={profile.accountType}
             onClick={() => handleOpenProfileOption("tipo_de_conta")}
           />
         </div>
@@ -229,7 +255,7 @@ function Profile() {
 
         <ActionButton
           className="action-button__danger profile-actions__button"
-          onClick={() => navigate("/login")}
+          onClick={handleLogout}
         >
           <LogOut aria-hidden="true" />
           Sair da conta

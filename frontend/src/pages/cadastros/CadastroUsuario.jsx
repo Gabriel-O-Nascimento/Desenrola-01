@@ -5,6 +5,7 @@ import ActionButton from "../../components/ui/ActionButton";
 import FormInput from "../../components/ui/FormInput";
 import SegmentedControl from "../../components/ui/SegmentedControl";
 import { clienteService } from "../../services/clienteService";
+import { usuarioService } from "../../services/usuarioService";
 import "../../styles/global.css";
 
 const documentTypeOptions = [
@@ -146,8 +147,10 @@ export default function CadastroUsuario() {
 
   const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
+  const [generalError, setGeneralError] = useState("");
   const [touched, setTouched] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isCpfSelected = formData.documentType === "cpf";
   const documentFieldName = isCpfSelected ? "cpf" : "cnpj";
@@ -249,6 +252,7 @@ export default function CadastroUsuario() {
 
     setFormData(nextData);
     updateFieldError(name, nextValue, nextData);
+    setGeneralError("");
   }
 
   function handleFieldBlur(event) {
@@ -304,21 +308,25 @@ export default function CadastroUsuario() {
     }));
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (!validateForm()) {
       return;
     }
 
-    clienteService
-      .cadastrar(formData)
-      .then(() => {
-        navigate("/login");
-      })
-      .catch(() => {
-        navigate("/login");
-      });
+    setIsSubmitting(true);
+    setGeneralError("");
+
+    try {
+      await clienteService.cadastrar(formData);
+      usuarioService.registrarUsuarioLocal(formData);
+      navigate("/login");
+    } catch (error) {
+      setGeneralError(error.message || "Nao foi possivel realizar o cadastro.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -493,11 +501,14 @@ export default function CadastroUsuario() {
           )}
         </section>
 
+        {generalError && <p className="user-register-form__error">{generalError}</p>}
+
         <div className="user-register-actions">
           <ActionButton
-            text="Realizar Cadastro"
+            text={isSubmitting ? "Cadastrando..." : "Realizar Cadastro"}
             type="submit"
             className="user-register-actions__button"
+            disabled={isSubmitting}
           />
           <ActionButton
             text="Voltar"

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import ActionButton from "../../components/ui/ActionButton";
 import FormInput from "../../components/ui/FormInput";
-import { cadastroUsers } from "../../data/CadastroUser";
+import { usuarioService } from "../../services/usuarioService";
 import "../../styles/global.css";
 
 const initialFormData = {
@@ -22,6 +22,7 @@ export default function Login() {
   const [errors, setErrors] = useState({});
   const [generalError, setGeneralError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function validateForm() {
     const newErrors = {};
@@ -29,7 +30,7 @@ export default function Login() {
     if (!formData.email.trim()) {
       newErrors.email = "Informe seu e-mail.";
     } else if (!isValidEmail(formData.email)) {
-      newErrors.email = "Informe um e-mail válido.";
+      newErrors.email = "Informe um e-mail valido.";
     }
 
     if (!formData.password) {
@@ -55,31 +56,24 @@ export default function Login() {
     setGeneralError("");
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (!validateForm()) {
       return;
     }
 
-    // Validacao contra a base de usuarios cadastrados.
-    const userFound = cadastroUsers.find(
-      (user) => user.email === formData.email && user.password === formData.password
-    );
+    setIsSubmitting(true);
+    setGeneralError("");
 
-    if (userFound) {
+    try {
+      await usuarioService.login(formData);
       navigate("/home");
-      return;
+    } catch (error) {
+      setGeneralError(error.message || "E-mail ou senha invalidos.");
+    } finally {
+      setIsSubmitting(false);
     }
-
-    // Tambem aceita usuarios cadastrados via formulario (persistidos no backend),
-    // ate que o endpoint de autenticacao seja integrado.
-    if (formData.email && formData.password.length >= 6) {
-      navigate("/home");
-      return;
-    }
-
-    setGeneralError("E-mail ou senha inválidos.");
   }
 
   return (
@@ -132,7 +126,12 @@ export default function Login() {
 
           {generalError && <p className="login-form__error">{generalError}</p>}
 
-          <ActionButton text="Entrar" type="submit" className="login-form__submit" />
+          <ActionButton
+            text={isSubmitting ? "Entrando..." : "Entrar"}
+            type="submit"
+            className="login-form__submit"
+            disabled={isSubmitting}
+          />
 
           <div className="login-divider" aria-hidden="true">
             <span />
@@ -141,7 +140,7 @@ export default function Login() {
           </div>
 
           <div className="login-register">
-            <p>Não tem uma conta?</p>
+            <p>Nao tem uma conta?</p>
             <button type="button" onClick={() => navigate("/cadastro/usuario")}>
               Cadastre-se
             </button>
@@ -149,7 +148,7 @@ export default function Login() {
         </form>
 
         <p className="login-terms">
-          Ao continuar, você concorda com nossos Termos de Uso e Política de Privacidade
+          Ao continuar, voce concorda com nossos Termos de Uso e Politica de Privacidade
         </p>
       </div>
     </section>

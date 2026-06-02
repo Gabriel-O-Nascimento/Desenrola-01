@@ -16,10 +16,16 @@ async function request(path, { method = "GET", body, headers = {} } = {}) {
   });
 
   const text = await response.text();
-  const data = text ? JSON.parse(text) : null;
+  let data = null;
+
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch {
+    data = null;
+  }
 
   if (!response.ok) {
-    const message = data?.mensagem || data?.message || `Erro ${response.status}`;
+    const message = data?.erro || data?.mensagem || data?.message || `Erro ${response.status}`;
     throw new Error(message);
   }
 
