@@ -26,6 +26,8 @@ public class ProfissionalAppService {
 
     @Transactional
     public Profissional cadastrar(CadastroProfissionalDTO dto) {
+        validarCnpjObrigatorio(dto);
+
         CategoriaServico categoria = null;
         if (dto.getIdCategoria() != null) {
             categoria = categoriaServicoRepository.findById(dto.getIdCategoria())
@@ -78,5 +80,18 @@ public class ProfissionalAppService {
                 .build();
 
         return profissionalRepository.save(profissional);
+    }
+
+    private void validarCnpjObrigatorio(CadastroProfissionalDTO dto) {
+        if (dto.getTipoDocumento() != Profissional.TipoDocumento.CNPJ) {
+            throw new IllegalArgumentException("Cadastro profissional exige CNPJ.");
+        }
+
+        String documento = dto.getDocumento() == null ? "" : dto.getDocumento().replaceAll("\\D", "");
+        if (documento.length() != 14) {
+            throw new IllegalArgumentException("Informe um CNPJ valido para cadastro profissional.");
+        }
+
+        dto.setDocumento(documento);
     }
 }

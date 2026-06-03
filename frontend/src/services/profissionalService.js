@@ -14,11 +14,8 @@ export const profissionalService = {
       email: formData.email,
       senha: formData.password,
       telefone: formData.phone?.replace(/\D/g, ""),
-      documento:
-        formData.documentType === "cpf"
-          ? formData.cpf?.replace(/\D/g, "")
-          : formData.cnpj?.replace(/\D/g, ""),
-      tipoDocumento: formData.documentType === "cpf" ? "CPF" : "CNPJ",
+      documento: formData.cnpj?.replace(/\D/g, ""),
+      tipoDocumento: "CNPJ",
       idCategoria: formData.mainCategory ? Number(formData.mainCategory) : null,
       especialidade: formData.serviceDescription,
       descricaoPerfil: formData.professionalExperience,

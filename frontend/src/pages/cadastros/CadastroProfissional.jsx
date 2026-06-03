@@ -3,24 +3,16 @@ import { ArrowLeft, Camera, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ActionButton from "../../components/ui/ActionButton";
 import FormInput from "../../components/ui/FormInput";
-import SegmentedControl from "../../components/ui/SegmentedControl";
 import { categorias } from "../../data/Categorias";
 import { profissionalService } from "../../services/profissionalService";
 import { usuarioService } from "../../services/usuarioService";
 import "../../styles/global.css";
-
-const documentTypeOptions = [
-  { label: "CPF", value: "cpf" },
-  { label: "CNPJ", value: "cnpj" },
-];
 
 const initialFormData = {
   fullName: "",
   email: "",
   password: "",
   phone: "",
-  documentType: "cpf",
-  cpf: "",
   cnpj: "",
   city: "",
   state: "",
@@ -50,15 +42,6 @@ function formatPhone(value) {
   return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
 }
 
-function formatCpf(value) {
-  const digits = onlyDigits(value).slice(0, 11);
-
-  return digits
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-}
-
 function formatCnpj(value) {
   const digits = onlyDigits(value).slice(0, 14);
 
@@ -71,28 +54,6 @@ function formatCnpj(value) {
 
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function isValidCpf(value) {
-  const cpf = onlyDigits(value);
-
-  if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
-    return false;
-  }
-
-  const calculateDigit = (base, factor) => {
-    const total = base
-      .split("")
-      .reduce((sum, digit) => sum + Number(digit) * factor--, 0);
-    const rest = (total * 10) % 11;
-
-    return rest === 10 ? 0 : rest;
-  };
-
-  const firstDigit = calculateDigit(cpf.slice(0, 9), 10);
-  const secondDigit = calculateDigit(cpf.slice(0, 10), 11);
-
-  return firstDigit === Number(cpf[9]) && secondDigit === Number(cpf[10]);
 }
 
 function isValidCnpj(value) {
@@ -134,10 +95,6 @@ function getFormattedValue(name, value) {
     return formatPhone(value);
   }
 
-  if (name === "cpf") {
-    return formatCpf(value);
-  }
-
   if (name === "cnpj") {
     return formatCnpj(value);
   }
@@ -156,14 +113,11 @@ export default function CadastroProfissional() {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const isCpfSelected = formData.documentType === "cpf";
-  const documentFieldName = isCpfSelected ? "cpf" : "cnpj";
   const serviceDescriptionLength = formData.serviceDescription.trim().length;
-  const documentDescription = isCpfSelected
-    ? "Envie fotos frente e verso de algum documento pessoal para verificação (CNH ou RG)"
-    : "Envie fotos frente e verso de algum documento pessoal para verificação (Contrato Social e documento do Sócio administrador)";
+  const documentDescription =
+    "Envie fotos frente e verso dos documentos para verificação (Contrato Social e documento do Sócio administrador)";
 
-  function validateField(name, value, data = formData) {
+  function validateField(name, value) {
     const fieldValue = typeof value === "string" ? value.trim() : value;
 
     switch (name) {
@@ -185,14 +139,7 @@ export default function CadastroProfissional() {
         if (!fieldValue) return "Informe seu telefone.";
         if (!/^\(\d{2}\) \d{5}-\d{4}$/.test(fieldValue)) return "Informe um telefone no formato (00) 00000-0000.";
         return "";
-      case "cpf":
-        if (data.documentType !== "cpf") return "";
-        if (!fieldValue) return "Informe seu CPF.";
-        if (!/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(fieldValue)) return "Informe um CPF no formato 000.000.000-00.";
-        if (!isValidCpf(fieldValue)) return "Informe um CPF válido.";
-        return "";
       case "cnpj":
-        if (data.documentType !== "cnpj") return "";
         if (!fieldValue) return "Informe seu CNPJ.";
         if (!/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/.test(fieldValue)) return "Informe um CNPJ no formato 00.000.000/0000-00.";
         if (!isValidCnpj(fieldValue)) return "Informe um CNPJ válido.";
@@ -225,7 +172,7 @@ export default function CadastroProfissional() {
       "email",
       "password",
       "phone",
-      documentFieldName,
+      "cnpj",
       "city",
       "state",
       "mainCategory",
@@ -233,7 +180,7 @@ export default function CadastroProfissional() {
     ];
     const newTouched = requiredFields.reduce((fields, field) => ({ ...fields, [field]: true }), {});
     const newErrors = requiredFields.reduce((fieldErrors, field) => {
-      const error = validateField(field, formData[field], formData);
+      const error = validateField(field, formData[field]);
 
       return error ? { ...fieldErrors, [field]: error } : fieldErrors;
     }, {});
@@ -251,7 +198,7 @@ export default function CadastroProfissional() {
 
     setErrors((currentErrors) => ({
       ...currentErrors,
-      [name]: validateField(name, value, nextData),
+      [name]: validateField(name, value),
     }));
   }
 
@@ -277,28 +224,7 @@ export default function CadastroProfissional() {
     }));
     setErrors((currentErrors) => ({
       ...currentErrors,
-      [name]: validateField(name, formData[name], formData),
-    }));
-  }
-
-  function handleDocumentTypeChange(value) {
-    const previousDocumentField = value === "cpf" ? "cnpj" : "cpf";
-    const nextData = {
-      ...formData,
-      documentType: value,
-      [previousDocumentField]: "",
-    };
-
-    setFormData(nextData);
-    setTouched((currentTouched) => ({
-      ...currentTouched,
-      cpf: false,
-      cnpj: false,
-    }));
-    setErrors((currentErrors) => ({
-      ...currentErrors,
-      cpf: "",
-      cnpj: "",
+      [name]: validateField(name, formData[name]),
     }));
   }
 
@@ -308,7 +234,7 @@ export default function CadastroProfissional() {
       ...formData,
       personalDocument: file,
     };
-    const error = validateField("personalDocument", file, nextData);
+    const error = validateField("personalDocument", file);
 
     setFormData(nextData);
     setTouched((currentTouched) => ({
@@ -433,39 +359,16 @@ export default function CadastroProfissional() {
             errorMessage={errors.phone}
           />
 
-          <div className="user-register-field-group">
-            <span className="user-register-field-group__label">Tipo de Documento</span>
-            <SegmentedControl
-              options={documentTypeOptions}
-              activeValue={formData.documentType}
-              onChange={handleDocumentTypeChange}
-              className="user-register-segmented"
-            />
-          </div>
-
-          {isCpfSelected ? (
-            <FormInput
-              label="CPF *"
-              name="cpf"
-              type="cpf"
-              value={formData.cpf}
-              onChange={handleFieldChange}
-              onBlur={handleFieldBlur}
-              placeholder="000.000.000-00"
-              errorMessage={errors.cpf}
-            />
-          ) : (
-            <FormInput
-              label="CNPJ *"
-              name="cnpj"
-              type="cnpj"
-              value={formData.cnpj}
-              onChange={handleFieldChange}
-              onBlur={handleFieldBlur}
-              placeholder="00.000.000/0000-00"
-              errorMessage={errors.cnpj}
-            />
-          )}
+          <FormInput
+            label="CNPJ *"
+            name="cnpj"
+            type="cnpj"
+            value={formData.cnpj}
+            onChange={handleFieldChange}
+            onBlur={handleFieldBlur}
+            placeholder="00.000.000/0000-00"
+            errorMessage={errors.cnpj}
+          />
         </section>
 
         <section className="user-register-card">
@@ -582,7 +485,7 @@ export default function CadastroProfissional() {
               setTouched((currentTouched) => ({ ...currentTouched, personalDocument: true }));
               setErrors((currentErrors) => ({
                 ...currentErrors,
-                personalDocument: validateField("personalDocument", formData.personalDocument, formData),
+                personalDocument: validateField("personalDocument", formData.personalDocument),
               }));
             }}
             onClick={() => documentInputRef.current?.click()}
